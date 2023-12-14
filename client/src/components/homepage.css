@@ -1,0 +1,22 @@
+.zoom-on-hover {
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1); /* Stile di base */
+  }
+  
+  .zoom-on-hover:hover {
+    transform: scale(1.2);
+  }
+  
+  .homepage-background {
+    background-image: url('./images/background-webapp.png');  
+    background-size: 85%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .homepage-background a {
+    margin-top: -8%;
+    text-decoration: none;
+    color:black;
+  }
+  
