@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import HomePage from './components/HomePage';
+import Features from './components/Features';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Results from './components/Results';
+import FilteredPosts from './components/FilteredPosts';
+import './components/homepage.css';
+import './components/features.css';
+import './components/header.css';
+import './components/card.css';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/filtered_posts" element={<FilteredPosts />} />
+        <Route path="/hot_themes" element={<Features />} />
+        <Route path="/trends" element={<Features />} />
+        <Route path="/keywords" element={<Features />} />
+        <Route path="/shadow" element={<Features />} />
+        <Route path='/results' element={<Results />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
