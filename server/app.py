@@ -17,7 +17,7 @@ def index():
 
 reddit = praw.Reddit(client_id='YZkjgjGapEzLr1RxGHBTuQ',
                      client_secret='oF9EAnkmh0VIWR_5uIPtg3OnIv20oA',
-                     user_agent='scraping_dati')
+                     user_agent='redditAnalysis by (@HonesltyNoReaction)')
 
 @app.route('/filtered_posts', methods=['GET'])
 def get_filtered_posts():
