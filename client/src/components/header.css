@@ -1,0 +1,15 @@
+/* Stile per la classe nav-link */
+.header-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: #c4c4c4; /* Colore del testo per i link */
+    text-decoration: none;
+  }
+  
+  /* Stile quando il link è attivo o viene selezionato */
+  .header-link.active,
+  .header-link:hover {
+    color: #ffffff; /* Colore del testo quando il link è attivo o in hover */
+  }
+
+  
