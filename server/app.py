@@ -1,64 +1,42 @@
-# app.py
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, render_template
 from flask_cors import CORS
-from prawcore.exceptions import PrawcoreException
-from praw.exceptions import RedditAPIException
-from datetime import datetime
+from dotenv import load_dotenv
+from routes.posts import post_routes
+from pymongo import MongoClient
 import praw
+from datetime import datetime
+import os
 
 app = Flask(__name__)
 CORS(app)
 
+# Carica le variabili di ambiente dal file .env
+load_dotenv()
+print(os.getenv("REDDIT_CLIENT_ID"))
+print(os.getenv("REDDIT_CLIENT_SECRET"))
+print(os.getenv("REDDIT_USER_AGENT"))
+
+# Configura l'istanza di Reddit
+reddit = praw.Reddit(
+    client_id=os.getenv('REDDIT_CLIENT_ID'),
+    client_secret=os.getenv('REDDIT_CLIENT_SECRET'),
+    user_agent=os.getenv('REDDIT_USER_AGENT')
+)
+
+# Configura la connessione a MongoDB
+mongo_uri = os.getenv("MONGO_URI")
+mongo_client = MongoClient(mongo_uri)
+db = mongo_client.get_database()
+
+# Registra il Blueprint delle routes per i post e passa l'app Flask come parametro
+app.register_blueprint(post_routes, app=app)
+
+# Definisci le routes per la homepage e le features
 @app.route('/')
 @app.route('/homepage')
 @app.route('/features')
 def index():
     return render_template('index.html')
-
-reddit = praw.Reddit(client_id='YZkjgjGapEzLr1RxGHBTuQ',
-                     client_secret='oF9EAnkmh0VIWR_5uIPtg3OnIv20oA',
-                     user_agent='redditAnalysis by (@HonesltyNoReaction)')
-
-@app.route('/filtered_posts', methods=['GET'])
-def get_filtered_posts():
-    try:
-        subreddit_name = request.args.get('subreddit')
-        keywords = request.args.get('keywords', '').split(',')
-
-        subreddit = reddit.subreddit(subreddit_name)
-        posts = []
-
-        filtered_posts = [
-            {
-                'title': submission.title,
-                'url': submission.url,
-                'text': submission.selftext,
-                'num_comments': submission.num_comments,
-                'score': submission.score,
-                'author': submission.author.name if submission.author else 'NOT-DEFINED',
-                'pubdate': datetime.utcfromtimestamp(submission.created_utc)
-            }
-            for submission in subreddit.hot(limit=None)
-            if any(keyword.lower() in submission.title.lower() or keyword.lower() in submission.selftext.lower() for keyword in keywords)
-        ]
-
-        #Rimuovo i post senza autore
-        filtered_posts = [post for post in filtered_posts if post['author'] is not None]
-
-        print("Posts: ")
-        print()
-        for post in filtered_posts:
-            for key, value in post.items():
-                if key != 'text':
-                    print(f"{key}: {value}")
-                if key == 'author':
-                    if value == None:
-                        filtered_posts.remove(post)
-            print()
-        return jsonify({'posts': filtered_posts})
-
-    except Exception as e:
-        return jsonify({'error: ', str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
