@@ -1,0 +1,19 @@
+.my-link{
+    text-decoration: none;
+    color: #808080;
+    font-size: 1.5em;
+    transition: 0.4s;
+}
+
+.my-link:hover{
+    color: #171717;
+    font-size: 1.8em;
+}
+
+.my-link:hover ~ .my-link {
+    margin-top: 10px; /* Sposta gli altri link in basso */
+}
+
+.my-link:hover ~ .my-link:last-child {
+    margin-bottom: 10px; /* Sposta gli altri link in alto */
+}
