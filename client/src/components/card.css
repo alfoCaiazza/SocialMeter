@@ -1,0 +1,25 @@
+.card {
+    max-width: 100%;
+    margin: 0 auto;
+    color: #171717;
+}
+.card-title{
+    color: #333333;
+}
+  
+.card-body{
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.information span{
+    color: #333;
+    display: 'flex';
+    align-items: 'center';
+    margin-right: 20px;
+}
+
+h6{
+    border-bottom: 1px solid #ccc;
+    max-width: 80%;
+}
