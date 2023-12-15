@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from datetime import datetime
+from pymongo import MongoClient
 
 def get_filtered_posts(reddit, app, database):
     @app.route('/filtered_posts', methods=['GET'])
@@ -20,17 +21,21 @@ def get_filtered_posts(reddit, app, database):
                     'author': submission.author.name if submission.author else 'NOT-DEFINED',
                     'pubdate': datetime.utcfromtimestamp(submission.created_utc)
                 }
-                for submission in subreddit.hot(limit=None)
+                for submission in subreddit.new(limit=None)
                 if any(keyword.lower() in submission.title.lower() or keyword.lower() in submission.selftext.lower() for keyword in keywords)
             ]
 
-            collection = database['posts']
-            for post in filtered_posts:
-                try:
-                    collection.insert_one(post)
-                    print(f"Post inserted successfully: {post['title']}")
-                except Exception as e:
-                    print(f"Error inserting post into the database: {str(e)}")
+            print(f"Total posts retieved: '{str(len(filtered_posts))}'")
+
+            #Prova per verificare l'inserimento dei documenti nel db
+
+            # collection = database['posts']
+            # for post in filtered_posts:
+            #     try:
+            #         collection.insert_one(post)
+            #         print(f"Post inserted successfully: {post['title']}")
+            #     except Exception as e:
+            #         print(f"Error inserting post into the database: {str(e)}")
 
             return jsonify({'posts': filtered_posts})
 
