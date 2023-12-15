@@ -10,7 +10,7 @@ import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
 import './components/card.css';
-
+import './components/filteredposts.css';
 
 function App() {
   return (

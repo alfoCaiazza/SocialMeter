@@ -11,7 +11,7 @@ const HomePage = () => {
   ];
 
   return (
-    <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
+    <div className='container-fluid d-flex flex-column min-vh-100 p-0 features-background'>
       <div className="text-center mt-5">
         <h2 className='display-4' style={{marginTop: '7%', color: '#171717'}}><strong>Features</strong></h2>
         <ul className="list-unstyled" style={{marginTop: '2%'}}>

@@ -1,6 +1,6 @@
 .my-link{
     text-decoration: none;
-    color: #808080;
+    color: #2b2b2b;
     font-size: 1.5em;
     transition: 0.4s;
 }
@@ -16,4 +16,11 @@
 
 .my-link:hover ~ .my-link:last-child {
     margin-bottom: 10px; /* Sposta gli altri link in alto */
+}
+
+.features-background{
+    background-image: url('./images/features.png');  
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
