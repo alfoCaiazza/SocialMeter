@@ -24,11 +24,16 @@ reddit = praw.Reddit(
 
 # Configura la connessione a MongoDB
 mongo_uri = os.getenv("MONGO_URI")
-mongo_client = MongoClient(mongo_uri)
-db = mongo_client.get_database(os.getenv("MONGO_DB_NAME"))
+db_name = os.getenv("MONGO_DB_NAME")
+try:
+    mongo_client = MongoClient(mongo_uri)
+    db = mongo_client.get_database(db_name)
+    print(f" * Connected to '{db_name}' database")
+except Exception as e:
+    print(f"Error while connecting to database: {str(e)}")
 
 setup_routes(app)
-get_filtered_posts(reddit, app)
+get_filtered_posts(reddit, app, db)
 
 if __name__ == '__main__':
     app.run(debug=True)
