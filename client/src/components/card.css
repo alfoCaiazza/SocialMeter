@@ -1,10 +1,6 @@
 .card {
     max-width: 100%;
     margin: 0 auto;
-    color: #171717;
-}
-.card-title{
-    color: #333333;
 }
   
 .card-body{
@@ -19,7 +15,8 @@
     margin-right: 20px;
 }
 
-h6{
-    border-bottom: 1px solid #ccc;
-    max-width: 80%;
+.card .card-header{
+    background-color: #666666;
+    color: white;
+    font-weight: lighter;
 }
