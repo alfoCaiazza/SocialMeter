@@ -27,27 +27,29 @@ const App = () => {
     };
   
     return (
-        <div className='container-fluid d-flex flex-column min-vh-100 p-0 filtered-posts-background'>
-            <div className='mb-3 mx-auto' style={{marginTop: '1.5%', width: '55%'}}>
-                <div className='text-center' style={{marginTop:'10%', marginBottom: '6%'}}>
-                    <p className='display-6'>Filtra i post della subreddit desiderata.</p>
-                </div>
-                <div className='mb-3 text-center' style={{marginLeft: '4%'}}>
-                    <div className="row align-items-center">
-                        <div className="col-md-5">
-                            <label htmlFor='formGroupExampleElementInput' className='form-label d-block text-start'>
-                                Subreddit:
-                                <input type="text" className='form-control' id='formGroupExampleElementInput' placeholder='subreddit' value={subreddit} onChange={(e) => setSubreddit(e.target.value)} />
-                            </label>
-                        </div>
-                        <div className="col-md-5">
-                            <label htmlFor='formGroupExampleElementInput2' className='form-label d-block text-start'>
-                                Parole Chiavi:
-                                <input type="text" className='form-control' id='formGroupExampleElementInput2' placeholder='parola, parola' value={keywords} onChange={(e) => setKeywords(e.target.value)} />
-                            </label>
-                        </div>
-                        <div className="col-md-1">
-                            <button type='button' className='btn btn-dark mt-3' style={{width: '90px'}} onClick={getFilteredPosts}>Filtra</button>
+        <div className='container-fluid d-flex flex-column min-vh-100 p-0 z'>
+            <div className='mb-3 mx-auto' style={{marginTop: '1.5%', width: '70%'}}>
+                <div className='container filtered-posts-background'>
+                    <div className='text-center' style={{marginTop:'6%', marginBottom: '6%'}}>
+                        <p className='display-6'>Filtra i post della subreddit desiderata.</p>
+                    </div>
+                    <div className='mb-3 text-center' style={{marginLeft: '4%'}}>
+                        <div className="row align-items-center">
+                            <div className="col-md-5">
+                                <label htmlFor='formGroupExampleElementInput' className='form-label d-block text-start'>
+                                    Subreddit:
+                                    <input type="text" className='form-control' id='formGroupExampleElementInput' placeholder='subreddit' value={subreddit} onChange={(e) => setSubreddit(e.target.value)} />
+                                </label>
+                            </div>
+                            <div className="col-md-5">
+                                <label htmlFor='formGroupExampleElementInput2' className='form-label d-block text-start'>
+                                    Parole Chiavi:
+                                    <input type="text" className='form-control' id='formGroupExampleElementInput2' placeholder='parola, parola' value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+                                </label>
+                            </div>
+                            <div className="col-md-1">
+                                <button type='button' className='btn btn-dark mt-3' style={{width: '100px'}} onClick={getFilteredPosts}>Filtra</button>
+                            </div>
                         </div>
                     </div>
                 </div>
