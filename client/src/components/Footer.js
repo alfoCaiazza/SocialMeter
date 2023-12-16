@@ -1,6 +1,5 @@
 // Footer.js
 import React from 'react';
-import logo from './images/logo.png'
 
 const Footer = () => {
     const as = [
@@ -10,15 +9,15 @@ const Footer = () => {
         { href: '/keywords', label: 'Parole Chiavi' },
         { href: '/shadow', label: 'Shadow' },
       ];
+    const logo = require('./images/Black.png');
+  
 
   return (
         <div className="container">
             <footer className="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top border-dark-subtle">
                 <div className="col mb-3">
                 <a href="/" className="d-flex align-items-center mb-3 a-dark text-decoration-none">
-                    <svg className="bi me-2" style={{width: '40px', height: '32px'}}>
-                        <use xlinkHref={logo}></use>
-                    </svg>
+                    <img className='bi me-2' style={{width: '50px', height: '50px'}} alt='logo.png' src={logo}/>
                 </a>
                 <p className="text-muted">© 2023</p>
                 </div>
