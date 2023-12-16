@@ -28,8 +28,8 @@ const App = () => {
   
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0 filtered-posts-background'>
-            <div className='mb-3 mx-auto' style={{marginTop: '1.5%', width: '70%'}}>
-                <div className='text-center' style={{marginTop:'6%', marginBottom: '6%'}}>
+            <div className='mb-3 mx-auto' style={{marginTop: '1.5%', width: '55%'}}>
+                <div className='text-center' style={{marginTop:'10%', marginBottom: '6%'}}>
                     <p className='display-6'>Filtra i post della subreddit desiderata.</p>
                 </div>
                 <div className='mb-3 text-center' style={{marginLeft: '4%'}}>
@@ -47,7 +47,7 @@ const App = () => {
                             </label>
                         </div>
                         <div className="col-md-1">
-                            <button type='button' className='btn btn-dark mt-3' style={{width: '100px'}} onClick={getFilteredPosts}>Filtra</button>
+                            <button type='button' className='btn btn-dark mt-3' style={{width: '90px'}} onClick={getFilteredPosts}>Filtra</button>
                         </div>
                     </div>
                 </div>
