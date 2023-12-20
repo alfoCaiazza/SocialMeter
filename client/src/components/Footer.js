@@ -44,7 +44,7 @@ const Footer = () => {
                 </div>
 
                 <div className="col mb-3">
-                <h5><a href='/results' style={{textDecoration: 'None', color: 'black'}}>Results</a></h5>
+                <h5><a href='/results' style={{textDecoration: 'None', color: 'black'}}>Risultati</a></h5>
                 <ul className="nav flex-column">
                     
                 </ul>

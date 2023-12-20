@@ -44,7 +44,7 @@ const App = () => {
                             <div className="col-md-5">
                                 <label htmlFor='formGroupExampleElementInput2' className='form-label d-block text-start'>
                                     Parole Chiavi:
-                                    <input type="text" className='form-control' id='formGroupExampleElementInput2' placeholder='parola, parola' value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+                                    <input type="text" className='form-control' id='formGroupExampleElementInput2' placeholder='parola,parola,...' value={keywords} onChange={(e) => setKeywords(e.target.value)} />
                                 </label>
                             </div>
                             <div className="col-md-1">
