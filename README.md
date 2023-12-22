@@ -58,6 +58,8 @@ L'applicazione utilizza diverse librerie e framework, tra cui:
 - [Bootstrap](https://getbootstrap.com/) per lo stile e il layout.
 - [Pymongo](https://pymongo.readthedocs.io/) per la connessione al database MongoDB.
 - [React Router DOM](https://reactrouter.com/web/guides/quick-start) per la gestione delle rotte nel client React.
+- [Pandas](https://pandas.pydata.org/) per la manipolazione e l'analisi dei dati.
+
 
 ---
 
