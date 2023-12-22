@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const links = [
-    { to: '/filtered_posts', label: 'Filtra Post' },
+    { to: '/filtered_posts', label: 'Sentiment Analysis' },
     { to: '/hot_themes', label: 'Temi Caldi' },
     { to: '/trends', label: 'Tendenze' },
     { to: '/keywords', label: 'Parole Chiavi' },
-    { to: '/shadow', label: 'Shadow' },
+    { to: '/shadow', label: 'Shadow (Analisi di Reti)' },
   ];
 
   return (
