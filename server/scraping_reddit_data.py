@@ -41,11 +41,22 @@ def save_existing_df(existing_df, file_path="existing_posts.csv"):
     logging.info(f"Saved existing DataFrame to {file_path}")
 
 #Cambia il limit successivamente
-def scrape_reddit(subreddit, limit=10, existing_df=None):
+def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None):
     titles, texts, scores, ids, pub_dates, posts_data = [], [], [], [], [], []
 
     for iteration, submission in enumerate(subreddit.hot(limit=limit)):
         logging.info(f"Processing post {iteration + 1}/{limit}")
+        # Check for kewywords in the title or text
+        contains_keyword = any(keyword.lower() in submission.title.lower() or
+                            keyword.lower() in submission.selftext.lower()
+                            for keyword in keywords) if keywords else True
+        
+        print(f"Post ID: {submission.id}, Contains Keyword: {contains_keyword}")
+
+        # Skip to the next iteration if keywords are specified and not present
+        if keywords and not contains_keyword:
+            print("Skipping post due to missing keywords.")
+            continue
 
         # Check for duplicate submissions using existing_df
         if existing_df is None or submission.id not in existing_df["id"].values:
@@ -86,6 +97,8 @@ def main():
     load_dotenv()
 
     targeted_subreddits = ["italy", "italia", "napoli", "milano", "torino", "venezia", "oknotizie"]
+    keywords = ["Femminicidio", "Molestie", "Stupro", "MeToo","Femminismo",
+                "GenderEquality", "Sessismo", "Misoginia", "Maschilismo"]
 
     reddit = praw.Reddit(
         client_id=os.getenv('REDDIT_CLIENT_ID'),
@@ -102,7 +115,7 @@ def main():
         subreddit = reddit.subreddit(sub)
         logging.info(f"Processing subreddit: {subreddit.display_name}")
 
-        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, existing_df=existing_df)
+        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, existing_df=existing_df, keywords=keywords)
 
         #Verifica se la lista dei post recuperati è non vuota
         if posts_data: 
