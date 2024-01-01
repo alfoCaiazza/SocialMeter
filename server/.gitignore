@@ -2,3 +2,6 @@
 
 # Environment variables
 .env
+
+# DataFrame
+.csv
