@@ -4,4 +4,4 @@
 .env
 
 # DataFrame
-.csv
+*.csv
