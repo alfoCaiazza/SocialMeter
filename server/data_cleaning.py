@@ -7,6 +7,7 @@ import string
 
 
 def clean_text(text):
+
     #Eliminazione dei caratteri speciali e degli spazi in eccesso
     cleaned_text = re.sub(r'[^\w\s]', ' ', text).strip()
 
