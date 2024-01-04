@@ -1,11 +1,8 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from scraping_reddit_data import setup_logging, connect_to_mongo
-from pymongo import MongoClient
 from dotenv import load_dotenv
 from prettytable import PrettyTable
 import nltk
-import os
-import logging
 
 def calculate_comments_setiment(comments):
     sid = SentimentIntensityAnalyzer()
