@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import logging
 import re
 import emoji
-import string
+import time
 
 
 def clean_text(text):
@@ -37,8 +37,9 @@ def main():
     collection = db['posts']
     reddit_posts = collection.find({})
     clean_reddit_posts = db['cleanedPosts']
-
+    index = 1
     for post in reddit_posts:
+        logging.info(f"Cleaning post {index} with ID: {post['id']}")
         cleaned_text = clean_text(post['text'])
 
         post_comments = post.get('comments', [])
@@ -46,18 +47,15 @@ def main():
         for comment in post_comments:
             comment['text'] = clean_text(comment.get('text', ''))
             comment['score'] = comment.get('score', '')
-            
-            if len(comment['text']) == 0:
-                continue
-
-            cleaned_comments.append(comment)
         
-        if len(cleaned_text) == 0:
-            continue
+            cleaned_comments.append(comment)
 
         post['text'] = cleaned_text
         post['comments'] = cleaned_comments
         clean_reddit_posts.insert_one(post)
+
+        index += 1
+        time.sleep(0.25)
 
     mongo_client.close()
 
