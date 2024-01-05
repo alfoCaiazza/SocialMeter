@@ -63,6 +63,9 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
 
         # Check for duplicate submissions using existing_df
         if existing_df is None or submission.id not in existing_df["id"].values:
+            if submission.selftext == "":
+                print("Skipping post due to empty self text.")
+                continue
             titles.append(submission.title)
             texts.append(submission.selftext)
             scores.append(submission.score)
@@ -74,6 +77,9 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
             submission.comments.replace_more(limit=None)
             comments_data = []
             for comment in submission.comments.list():
+                if comment.body == "":
+                    continue
+
                 comment_data = {
                     "score": comment.score,
                     "text": comment.body
@@ -89,6 +95,11 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
                 "comments": comments_data
             }
             posts_data.append(post_data) 
+
+            time.sleep(5)
+        else:
+            print("Skipping post: already in DataFrame.")
+            continue
 
     # Creazione di un DataFrame per gestire gli ID
     new_df = pd.DataFrame({"id": ids})
@@ -115,11 +126,15 @@ def main():
     # Caricamento del DataFrame esistente
     existing_df = load_existing_df()
 
+    start_time = time.time()
+
     for sub in targeted_subreddits:
         subreddit = reddit.subreddit(sub)
         logging.info(f"Processing subreddit: {subreddit.display_name}")
 
-        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=10, existing_df=existing_df, keywords=keywords)
+        time.sleep(60)
+
+        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=250, existing_df=existing_df, keywords=keywords)
 
         #Verifica se la lista dei post recuperati è non vuota
         if posts_data: 
@@ -128,6 +143,9 @@ def main():
 
             # Perform bulk insert for posts into MongoDB
             db.posts.insert_many(posts_data)
+    
+    elapsed_time = time.time() - start_time
+    print(f"Execution time: {elapsed_time} sec")
 
     # Salvataggio del DataFrame esistente
     save_existing_df(existing_df)
