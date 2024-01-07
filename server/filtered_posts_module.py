@@ -27,16 +27,6 @@ def get_filtered_posts(reddit, app, database):
 
             print(f"Total posts retieved: '{str(len(filtered_posts))}'")
 
-            #Prova per verificare l'inserimento dei documenti nel db
-
-            # collection = database['posts']
-            # for post in filtered_posts:
-            #     try:
-            #         collection.insert_one(post)
-            #         print(f"Post inserted successfully: {post['title']}")
-            #     except Exception as e:
-            #         print(f"Error inserting post into the database: {str(e)}")
-
             return jsonify({'posts': filtered_posts})
 
         except Exception as e:

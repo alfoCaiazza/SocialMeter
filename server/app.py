@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
+from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from prawcore.exceptions import PrawcoreException
 from praw.exceptions import RedditAPIException
@@ -7,6 +8,7 @@ from pymongo import MongoClient
 from datetime import datetime
 from filtered_posts_module import get_filtered_posts
 from default_routes_module import setup_routes
+from trends_module import get_sentiments
 import praw
 import os
 
@@ -35,6 +37,8 @@ except Exception as e:
 #Richiamo delle route nell'applicazione di avvio
 setup_routes(app)
 get_filtered_posts(reddit, app, db)
+get_sentiments(app, db)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
