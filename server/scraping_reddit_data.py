@@ -1,7 +1,7 @@
 from prawcore.exceptions import PrawcoreException
 from praw.exceptions import RedditAPIException
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 import praw
 import os
@@ -58,7 +58,7 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
             texts.append(submission.selftext)
             scores.append(submission.score)
             ids.append(submission.id)
-            pub_dates.append(datetime.utcfromtimestamp(submission.created_utc))
+            pub_dates.append(datetime.fromtimestamp(submission.created_utc, timezone.utc))
 
             # Retrieve comments for the current submission
             time.sleep(2)
@@ -128,7 +128,7 @@ def main():
 
         #time.sleep(60)
 
-        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=15, existing_df=existing_df, keywords=keywords, category="woman_condition")
+        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=250, existing_df=existing_df, keywords=keywords, category="woman_condition")
 
         #Verifica se la lista dei post recuperati è non vuota
         if posts_data: 
