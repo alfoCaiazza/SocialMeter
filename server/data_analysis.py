@@ -1,7 +1,6 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from scraping_reddit_data import setup_logging, connect_to_mongo
 from dotenv import load_dotenv
-from prettytable import PrettyTable
 import nltk
 import logging
 
@@ -50,11 +49,13 @@ def calculate_setiment():
 
     collection = db['cleanedPosts']
     posts = collection.find({})
-    collection = db['dataAnalysis']
+    data_analysis = db['dataAnalysis']
 
     index = 1
 
     for post in posts:
+        logging.info(f"Analizing post {index} with ID: {post['id']}")
+        
         sentiment_scores = sid.polarity_scores(post['text'])
         if sentiment_scores['compound'] >= 0.05:
             sentiment = 'Positivo'
@@ -67,8 +68,12 @@ def calculate_setiment():
         avg_comments_sentiment, compound, comments_sentiment = calculate_comments_setiment(comments=comments)
 
         info = {
+            'category' : post['category'],
             'id' : post['id'],
             'pub_date' : post['pub_date'],
+            'year' : post['year'],
+            'month' : post['month'],
+            'day' : post['day'],
             'sentiment' : sentiment,
             'compound' : sentiment_scores['compound'],
             'score': post['score'],
@@ -78,30 +83,16 @@ def calculate_setiment():
             'comments': comments_sentiment
         }
 
-        collection.insert_one(info)
-        logging.info(f"Iteration {index}. Added posts {post['id']} to collection")
-
+        data_analysis.insert_one(info)
         index += 1
 
-def order_posts_by_pub_date():
-    mongo_client, db = connect_to_mongo()
-    collection = db['dataAnalysis']
-    ordered_collection = db['dataAnalysisOrdered']
-
-    results = collection.find().sort('pub_date',1)
-    ordered_collection.insert_many(results)
-
-    
-
-        
+    mongo_client.close()
 
 def main():
     setup_logging()
     load_dotenv()
 
     calculate_setiment()
-    order_posts_by_pub_date()
-
 
 
 if __name__ == "__main__":
