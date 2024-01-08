@@ -74,7 +74,7 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
                 }
                 comments_data.append(comment_data)
 
-            pub_date = datetime.utcfromtimestamp(submission.created_utc)
+            pub_date = datetime.fromtimestamp(submission.created_utc, timezone.utc)
 
             post_data = {
                 "category" : category,
@@ -103,8 +103,7 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
 def main():
     setup_logging()
     load_dotenv()
-
-    targeted_subreddits = ["italy", "italia", "napoli", "milano", "torino", "venezia", "oknotizie"]
+    targeted_subreddits = ["italy", "italia", "napoli", "milano", "torino", "venezia", "oknotizie", "xxitaly"]
     keywords = ["Femminicidio", "Molestie", "Stupro", "MeToo","Femminismo",
                 "GenderEquality", "Sessismo", "Misoginia", "Maschilismo",
                 "Giulia", "Violenza", "Donna", "Donne"]
@@ -126,9 +125,9 @@ def main():
         subreddit = reddit.subreddit(sub)
         logging.info(f"Processing subreddit: {subreddit.display_name}")
 
-        #time.sleep(60)
+        time.sleep(60)
 
-        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=250, existing_df=existing_df, keywords=keywords, category="woman_condition")
+        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=999, existing_df=existing_df, keywords=keywords, category="woman_condition")
 
         #Verifica se la lista dei post recuperati è non vuota
         if posts_data: 
