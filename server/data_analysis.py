@@ -70,6 +70,7 @@ def calculate_setiment():
             'id' : post['id'],
             'pub_date' : post['pub_date'],
             'sentiment' : sentiment,
+            'compound' : sentiment_scores['compound'],
             'score': post['score'],
             'tot_comments': len(post.get('comments', [])),
             'avg_comments_sentiment': avg_comments_sentiment,
