@@ -6,10 +6,14 @@ def get_sentiments(app, db):
         try:
             sentiments = db["dataAnalysis"].find({})
             result = [{
+                'category' : sentiment['category'],
                 'id': sentiment['id'],
-                'score': sentiment['sentiment'],
+                'sentiment': sentiment['sentiment'],
                 'compound' : sentiment['compound'],
-                'date': sentiment['pub_date']
+                'date': sentiment['pub_date'],
+                'year' : sentiment['year'],
+                'month' : sentiment['month'],
+                'day' : sentiment['day'],
             } for sentiment in sentiments]
 
             return jsonify(result)

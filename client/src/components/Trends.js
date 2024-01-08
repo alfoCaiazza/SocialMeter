@@ -1,43 +1,99 @@
 import React, { useState, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from 'recharts';
+import MonthlyCompoundChart from './MonthlyCompundChart';
 
 const Trends = () => {
   const [sentiments, setSentiments] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios('http://localhost:5000/api/get_trends');
-      setSentiments(result.data.map(item => ({
-        ...item,
-        fill: getBarColor(item.score) // Assegna un colore in base al sentiment
-      })));
+      try {
+        const result = await axios('http://localhost:5000/api/get_trends');
+        const processedData = processSentimentsData(result.data);
+        setSentiments(processedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
     fetchData();
   }, []);
 
-  // Funzione per determinare il colore della barra in base al sentiment
-  const getBarColor = (score) => {
-    if (score === "Positivo") return '#4caf50'; // Verde per i valori positivi
-    if (score === "Negativo") return '#f44336'; // Rosso per i valori negativi
-    return '#2196f3'; // Blu per i valori neutri
+  const processSentimentsData = (data) => {
+    const compoundByYear = {};
+  
+    data.forEach(item => {
+      if (compoundByYear[item.year]) {
+        compoundByYear[item.year].totalCompound += item.compound;
+        compoundByYear[item.year].count += 1;
+      } else {
+        compoundByYear[item.year] = { totalCompound: item.compound, count: 1 };
+      }
+    });
+  
+    const processedData = Object.keys(compoundByYear).map(year => {
+      const averageCompound = compoundByYear[year].totalCompound / compoundByYear[year].count;
+      let sentimentLabel;
+  
+      if (averageCompound >= 0.05) {
+        sentimentLabel = "Positivo";
+      } else if (averageCompound <= -0.05) {
+        sentimentLabel = "Negativo";
+      } else {
+        sentimentLabel = "Neutro";
+      }
+  
+      return {
+        year: year,
+        averageCompound: averageCompound,
+        sentiment: sentimentLabel
+      };
+    });
+  
+    return processedData;
+  };
+  
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+          <p>{payload[0].payload.sentiment}</p>
+        </div>
+      );
+    }
+  
+    return null;
   };
 
+  const handleBarClick = (data, index) => {
+    setSelectedYear(data.year);
+  };
+
+  const goBackToAnnualChart = () => {
+    setSelectedYear(null);
+  };
+  
   return (
-    <div>
-      <h1>Sentiment Analysis Results</h1>
-      <BarChart width={600} height={300} data={sentiments}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {sentiments.map((entry, index) => (
-          <Bar key={`bar-${index}`} dataKey="score" fill={entry.fill} />
-        ))}
-      </BarChart>
+    <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
+      <div className='position-absolute top-50 start-50 translate-middle'>
+        {sentiments.length > 0 ? (
+          <BarChart width={600} height={300} data={sentiments}>
+            <XAxis dataKey="year"/>
+            <YAxis />
+            <Tooltip content={<CustomTooltip />}/>
+            <Legend />
+            <CartesianGrid stroke="#f5f5f5" />
+            <Bar dataKey="averageCompound" fill="#ef98f8" name='Sentimento' onClick={handleBarClick}/>
+          </BarChart>
+        ) : (
+          <p>Caricamento dati...</p>
+        )}
+      </div>
+      {selectedYear && <MonthlyCompoundChart year={selectedYear} />}
     </div>
-  );
+  );  
 }
 
 export default Trends;
