@@ -17,9 +17,6 @@ def clean_text(text):
     #Eliminazione dei link
     cleaned_text = re.sub(r'http\S+', ' ', cleaned_text)
 
-    #Eliminazione del tag "[meta]" --> devono essere rimossi direttamente i post e i commenti non solo il tag
-    #cleaned_text = cleaned_text.replace('[meta]', '')
-
     #Eliminazione degli spazi multipli
     cleaned_text = re.sub(r'\s+', ' ', cleaned_text)
 
@@ -37,7 +34,9 @@ def main():
     collection = db['posts']
     reddit_posts = collection.find({})
     clean_reddit_posts = db['cleanedPosts']
+
     index = 1
+
     for post in reddit_posts:
         logging.info(f"Cleaning post {index} with ID: {post['id']}")
         cleaned_text = clean_text(post['text'])
@@ -45,9 +44,7 @@ def main():
         post_comments = post.get('comments', [])
         cleaned_comments = []
         for comment in post_comments:
-            comment['text'] = clean_text(comment.get('text', ''))
-            comment['score'] = comment.get('score', '')
-        
+            comment['text'] = clean_text(comment.get('text', ''))      
             cleaned_comments.append(comment)
 
         post['text'] = cleaned_text
@@ -55,7 +52,7 @@ def main():
         clean_reddit_posts.insert_one(post)
 
         index += 1
-        time.sleep(0.25)
+        time.sleep(0.5)
 
     mongo_client.close()
 
