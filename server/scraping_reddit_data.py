@@ -42,24 +42,12 @@ def save_existing_df(existing_df, file_path="existing_posts.csv"):
     logging.info(f"Saved existing DataFrame to {file_path}")
 
 #Cambia il limit successivamente
-def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_posts=None):
+def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_posts=None, category= None):
     titles, texts, scores, ids, pub_dates, posts_data = [], [], [], [], [], []
     query = ' OR '.join(keywords)
 
     for iteration, submission in enumerate(subreddit.search(query, limit=limit)):
         logging.info(f"Processing post {iteration + 1}/{limit}")
-
-        # Check for kewywords in the title or text
-        contains_keyword = any(keyword.lower() in submission.title.lower() or
-                            keyword.lower() in submission.selftext.lower()
-                            for keyword in keywords) if keywords else True
-        
-        print(f"Post ID: {submission.id}, Contains Keyword: {contains_keyword}")
-
-        # Skip to the next iteration if keywords are specified and not present
-        if keywords and not contains_keyword:
-            print("Skipping post due to missing keywords.")
-            continue
 
         # Check for duplicate submissions using existing_df
         if existing_df is None or submission.id not in existing_df["id"].values:
@@ -86,12 +74,18 @@ def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_po
                 }
                 comments_data.append(comment_data)
 
+            pub_date = datetime.utcfromtimestamp(submission.created_utc)
+
             post_data = {
+                "category" : category,
                 "title": submission.title,
                 "text": submission.selftext,
                 "score": submission.score,
                 "id": submission.id,
-                "pub_date": datetime.utcfromtimestamp(submission.created_utc),
+                "pub_date": pub_date,
+                "year" : pub_date.year,
+                "month" : pub_date.month,
+                "day" : pub_date.day,
                 "comments": comments_data
             }
             posts_data.append(post_data) 
@@ -132,9 +126,9 @@ def main():
         subreddit = reddit.subreddit(sub)
         logging.info(f"Processing subreddit: {subreddit.display_name}")
 
-        time.sleep(60)
+        #time.sleep(60)
 
-        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=250, existing_df=existing_df, keywords=keywords)
+        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=15, existing_df=existing_df, keywords=keywords, category="woman_condition")
 
         #Verifica se la lista dei post recuperati è non vuota
         if posts_data: 

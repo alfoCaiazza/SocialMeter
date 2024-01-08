@@ -8,6 +8,7 @@ def get_sentiments(app, db):
             result = [{
                 'id': sentiment['id'],
                 'score': sentiment['sentiment'],
+                'compound' : sentiment['compound'],
                 'date': sentiment['pub_date']
             } for sentiment in sentiments]
 
