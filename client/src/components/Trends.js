@@ -37,12 +37,12 @@ const Trends = () => {
       const averageCompound = compoundByYear[year].totalCompound / compoundByYear[year].count;
       let sentimentLabel;
   
-      if (averageCompound >= 0.05) {
-        sentimentLabel = "Positivo";
-      } else if (averageCompound <= -0.05) {
+      if (averageCompound < 0.66) {
         sentimentLabel = "Negativo";
-      } else {
+      } else if (averageCompound < 1.33) {
         sentimentLabel = "Neutro";
+      } else {
+        sentimentLabel = "Positivo";
       }
   
       return {
