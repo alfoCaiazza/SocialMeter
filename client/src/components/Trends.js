@@ -70,30 +70,34 @@ const Trends = () => {
   const handleBarClick = (data, index) => {
     setSelectedYear(data.year);
   };
-
-  const goBackToAnnualChart = () => {
+  
+  const goBack = () => {
     setSelectedYear(null);
   };
-  
+
   return (
     <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
       <div className='position-absolute top-50 start-50 translate-middle'>
-        {sentiments.length > 0 ? (
-          <BarChart width={600} height={300} data={sentiments}>
-            <XAxis dataKey="year"/>
-            <YAxis />
-            <Tooltip content={<CustomTooltip />}/>
-            <Legend />
-            <CartesianGrid stroke="#f5f5f5" />
-            <Bar dataKey="averageCompound" fill="#ef98f8" name='Sentimento' onClick={handleBarClick}/>
-          </BarChart>
+        {selectedYear === null ? (
+          sentiments.length > 0 ? (
+            <BarChart width={600} height={300} data={sentiments}>
+              <XAxis dataKey="year"/>
+              <YAxis />
+              <Tooltip content={<CustomTooltip />}/>
+              <Legend />
+              <CartesianGrid stroke="#f5f5f5" />
+              <Bar dataKey="averageCompound" fill="#ac84d9" name='Sentimento' onClick={handleBarClick}/>
+            </BarChart>
+          ) : (
+            <p>Caricamento dati...</p>
+          )
         ) : (
-          <p>Caricamento dati...</p>
+          <MonthlyCompoundChart year={selectedYear} goBack={goBack}/>
         )}
       </div>
-      {selectedYear && <MonthlyCompoundChart year={selectedYear} />}
     </div>
-  );  
+  );
+  
 }
 
 export default Trends;

@@ -1,0 +1,12 @@
+.icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.header-container {
+    display: flex;
+    align-items: center; /* Allinea verticalmente */
+    gap: 10px; /* Distanza tra il pulsante e l'h3 */
+  }
