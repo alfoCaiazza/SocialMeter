@@ -7,7 +7,7 @@ const HomePage = () => {
     { to: '/hot_themes', label: 'Temi Caldi' },
     { to: '/trends', label: 'Tendenze' },
     { to: '/keywords', label: 'Parole Chiavi' },
-    { to: '/shadow', label: 'Shadow (Analisi di Reti)' },
+    { to: '/shadow', label: 'Analisi di Reti' },
   ];
 
   return (
