@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import MonthlyCompoundChart from './MonthlyCompundChart';
 
 const Trends = () => {
@@ -37,9 +36,9 @@ const Trends = () => {
       const averageCompound = compoundByYear[year].totalCompound / compoundByYear[year].count;
       let sentimentLabel;
   
-      if (averageCompound < 0.66) {
+      if (averageCompound <= 0.5) {
         sentimentLabel = "Negativo";
-      } else if (averageCompound < 1.33) {
+      } else if (averageCompound <= 1) {
         sentimentLabel = "Neutro";
       } else {
         sentimentLabel = "Positivo";

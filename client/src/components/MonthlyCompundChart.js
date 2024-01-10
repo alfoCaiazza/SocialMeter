@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import DailyCompoundChart from './DailyCompoundChart';
 
 
 const MonthlyCompoundChart = ({ year, goBack }) => {
   const [monthlyData, setMonthlyData] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -18,6 +20,21 @@ const MonthlyCompoundChart = ({ year, goBack }) => {
     }
     fetchData();
   }, [year]);
+
+  const monthNames = {
+    1: "Gen",
+    2: "Feb",
+    3: "Mar",
+    4: "Apr",
+    5: "Mag",
+    6: "Giu",
+    7: "Lug",
+    8: "Ago",
+    9: "Set",
+    10: "Ott",
+    11: "Nov",
+    12: "Dic"
+  };  
 
   const processSentimentsData = (data) => {
     const compoundByMonth = {};
@@ -36,16 +53,17 @@ const MonthlyCompoundChart = ({ year, goBack }) => {
       const averageCompound = compoundByMonth[month].totalCompound / compoundByMonth[month].count;
       let sentimentLabel;
   
-      if (averageCompound >= 0.05) {
-        sentimentLabel = "Positivo";
-      } else if (averageCompound <= -0.05) {
+      if (averageCompound <= 0.5) {
         sentimentLabel = "Negativo";
-      } else {
+      } else if (averageCompound <= 1) {
         sentimentLabel = "Neutro";
+      } else {
+        sentimentLabel = "Positivo";
       }
   
       return {
-        month: month,
+        month: monthNames[month],
+        month_numb: month,
         averageCompound: averageCompound,
         sentiment: sentimentLabel
       };
@@ -66,22 +84,40 @@ const MonthlyCompoundChart = ({ year, goBack }) => {
     return null;
   };
 
+  const handleBarClick = (data, index) => {
+    setSelectedMonth(data.month_numb);
+  };
+
+  const goBackMonth = () => {
+    setSelectedMonth(null);
+  };
+
   return (
-    <div>
-      <div className="header-container">
-        <button onClick={goBack} className='icon-button'>
-          <i className="bi bi-arrow-left"></i>
-        </button>
-        <h3>Sentimento medio per l'anno {year}</h3>
+    <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
+      <div className='position-absolute top-50 start-50 translate-middle'>
+        <div className="header-container">
+          <button onClick={goBack} className='icon-button'>
+            <i className="bi bi-arrow-left"></i>
+          </button>
+          <h3>Sentimento medio per l'anno {year}</h3>
+        </div>
+        {selectedMonth === null ? (
+          monthlyData.length > 0 ? (
+            <BarChart width={600} height={300} data={monthlyData}>
+              <XAxis dataKey="month"/>
+              <YAxis />
+              <Tooltip content={<CustomTooltip />}/>
+              <Legend />
+              <CartesianGrid stroke="#f5f5f5" />
+              <Bar dataKey="averageCompound" fill="#ac84d9" name='Sentimento' onClick={handleBarClick}/>
+            </BarChart>
+          ) : (
+            <p>Caricamento dati...</p>
+          )
+        ) : (
+          <DailyCompoundChart year={year} month={selectedMonth} goBack={goBackMonth}/>
+        )}
       </div>
-      <BarChart width={600} height={300} data={monthlyData}>
-        <XAxis dataKey="month" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />}/>
-        <Legend />
-        <CartesianGrid stroke="#f5f5f5" />
-        <Bar dataKey="averageCompound" fill="#ac84d9"  name='Sentimento'/>
-      </BarChart>
     </div>
   );
 };
