@@ -7,12 +7,14 @@ import Footer from './components/Footer';
 import Results from './components/Results';
 import FilteredPosts from './components/FilteredPosts';
 import Trends from './components/Trends';
+import HotTopics from './components/HotTopics';
 import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
 import './components/card.css';
 import './components/filteredposts.css';
 import './components/monthlyTrends.css';
+
 
 function App() {
   return (
@@ -22,7 +24,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/features" element={<Features />} />
         <Route path="/filtered_posts" element={<FilteredPosts />} />
-        <Route path="/hot_themes" element={<Features />} />
+        <Route path="/hot_themes" element={<HotTopics />} />
         <Route path="/trends" element={<Trends />} />
         <Route path="/keywords" element={<Features />} />
         <Route path="/shadow" element={<Features />} />
