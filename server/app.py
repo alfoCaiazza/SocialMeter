@@ -36,7 +36,7 @@ except Exception as e:
 
 #Richiamo delle route nell'applicazione di avvio
 setup_routes(app)
-get_filtered_posts(reddit, app, db)
+get_filtered_posts(app, db)
 get_sentiments(app, db)
 
 
