@@ -42,7 +42,9 @@ def save_existing_df(existing_df, file_path="existing_posts.csv"):
     logging.info(f"Saved existing DataFrame to {file_path}")
 
 #Cambia il limit successivamente
-def scrape_reddit(subreddit, limit=None, existing_df=None, keywords=None, max_posts=None, category= None):
+def scrape_reddit(subreddit, limit=None, category_keywords=None, existing_df=None):
+    category = category_keywords['category']
+    keywords = category_keywords['keywords']
     titles, texts, scores, ids, pub_dates, posts_data = [], [], [], [], [], []
     query = ' OR '.join(keywords)
 
@@ -104,9 +106,12 @@ def main():
     setup_logging()
     load_dotenv()
     targeted_subreddits = ["italy", "italia", "napoli", "milano", "torino", "venezia", "oknotizie", "xxitaly"]
-    keywords = ["Femminicidio", "Molestie", "Stupro", "MeToo","Femminismo",
-                "GenderEquality", "Sessismo", "Misoginia", "Maschilismo",
-                "Giulia", "Violenza", "Donna", "Donne"]
+    categories_keywords = {
+        'woman_condition' : ["Femminicidio", "Molestie", "Stupro", "MeToo","Femminismo", "GenderEquality", "Sessismo", "Misoginia", "Maschilismo", "Giulia", "Violenza", "Donna", "Donne"],
+        'racism' : ["Negro", "Razzismo", "Raziale", "Africa", "Immigrato"],
+        'climate_change': ["Cambiamento", "Climatico", "Temperature", "Caldo", "Estremo"],
+        'conspiracy' : ["Negazionismo", "Negazionisti", "Vaccini", "Covid"],
+    }
 
     reddit = praw.Reddit(
         client_id=os.getenv('REDDIT_CLIENT_ID'),
@@ -122,20 +127,19 @@ def main():
     start_time = time.time()
 
     for sub in targeted_subreddits:
+        time.sleep(30)
         subreddit = reddit.subreddit(sub)
-        logging.info(f"Processing subreddit: {subreddit.display_name}")
 
-        time.sleep(60)
+        for category, keywords in categories_keywords.items():
+            logging.info(f"Processing category: {category} in subreddit: {subreddit.display_name}")
 
-        titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit(subreddit, limit=999, existing_df=existing_df, keywords=keywords, category="woman_condition")
+            time.sleep(30)
 
-        #Verifica se la lista dei post recuperati è non vuota
-        if posts_data: 
-            # Aggiornamento del DataFrame con gli ID dei nuovi post
-            existing_df = pd.concat([existing_df, new_df]).drop_duplicates()
+            titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit( subreddit, limit = 3, category_keywords={'category': category, 'keywords': keywords}, existing_df=existing_df)
 
-            # Perform bulk insert for posts into MongoDB
-            db.posts.insert_many(posts_data)
+            if posts_data: 
+                existing_df = pd.concat([existing_df, new_df]).drop_duplicates()
+                db.posts.insert_many(posts_data)
     
     elapsed_time = time.time() - start_time
     print(f"Execution time: {elapsed_time} sec")
