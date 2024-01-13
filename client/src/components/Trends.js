@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import MonthlyCompoundChart from './MonthlyCompundChart';
+import { useParams } from 'react-router-dom';
 
 const Trends = () => {
   const [sentiments, setSentiments] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
+  const {category} = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios('http://localhost:5000/api/get_trends');
+        const result = await axios(`http://localhost:5000/api/get_trends?category=${category}`);
         const processedData = processSentimentsData(result.data);
         setSentiments(processedData);
       } catch (error) {
@@ -18,7 +20,7 @@ const Trends = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [category]);
 
   const processSentimentsData = (data) => {
     const compoundByYear = {};

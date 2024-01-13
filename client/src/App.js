@@ -8,6 +8,7 @@ import Results from './components/Results';
 import FilteredPosts from './components/FilteredPosts';
 import Trends from './components/Trends';
 import HotTopics from './components/HotTopics';
+import TrendsCategory from './components/TrendsCategory';
 import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
@@ -25,7 +26,8 @@ function App() {
         <Route path="/features" element={<Features />} />
         <Route path="/filtered_posts" element={<FilteredPosts />} />
         <Route path="/hot_themes" element={<HotTopics />} />
-        <Route path="/trends" element={<Trends />} />
+        <Route path="/trends_category" element={<TrendsCategory />} />
+        <Route path="/trends/:category" element={<Trends />} />
         <Route path="/keywords" element={<Features />} />
         <Route path="/shadow" element={<Features />} />
         <Route path='/results' element={<Results />} />

@@ -81,6 +81,10 @@ const FilteredPosts = () => {
                                 <td>{post.title}</td>
                                 <td className="truncate-text">{truncateText(post.text, 50)}</td>
                                 <td>{formatDate(post.date)}</td>
+                                <td>{post.postivity}</td>
+                                <td>{post.neutrality}</td>
+                                <td>{post.negativity}</td>
+                                <td>{post.sentiment}</td>
                             </tr>
                         ))}
                     </tbody>

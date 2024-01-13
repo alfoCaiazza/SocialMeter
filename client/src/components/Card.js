@@ -1,22 +1,18 @@
-// Card.js
-import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Card = ({ post }) => {
+const Card = ({ title, category, image, bootstrapIcon }) => {
+  const navigate = useNavigate();
+
+  const onCardClick = () => {
+      navigate(`/trends/${category}`);
+  };
+
   return (
-    <div className="card mb-3" style={{borderRadius: '10px'}}>
-      <div className='card-header'>
-        <h5 className="card-title mb-2">{post.title}</h5>
-        <h6 className='card-subtitle'><small>Autore: {post.author} - Data: {post.pubdate}</small></h6>
-      </div>
-      <div className="card-body">
-        <p className="card-text">{post.text}</p>
-        <div className='information'>
-          <span>
-            <strong>Commenti:</strong> {post.num_comments}
-          </span>
-          <span>
-            <strong>Score:</strong> {post.score}
-          </span>
+    <div className='col' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '200px' }}>
+      <div className="card" style={{width: '150px'}} onClick={onCardClick}>
+        <img src={image} alt={category} style={{maxWidth: '80%', margin:'auto' }} />
+        <div className='card-body'>
+          <h6>{title}</h6>
         </div>
       </div>
     </div>
