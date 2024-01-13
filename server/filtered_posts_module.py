@@ -6,7 +6,7 @@ def get_filtered_posts(app, db):
     @app.route('/api/get_posts', methods=['GET'])
     def inner_get_filtered_posts():
         try:
-            posts = db["posts"].find({})
+            posts = db["dataAnalysis"].find({})
             result = [{
                 'category' : post['category'],
                 'id': post['id'],
@@ -16,9 +16,10 @@ def get_filtered_posts(app, db):
                 'year' : post['year'],
                 'month' : post['month'],
                 'day' : post['day'],
-                # 'postivity': post['positivity'],
-                # 'neutrality' : post['neutrality'],
-                # 'negativity' : post['negativity'],
+                'postivity': post['positivity'],
+                'neutrality' : post['neutrality'],
+                'negativity' : post['negativity'],
+                'sentiment' : post['sentiment']
             } for post in posts]
 
             return jsonify(result)

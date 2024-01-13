@@ -66,6 +66,7 @@ const FilteredPosts = () => {
                 <table className='table table-bordered'>
                     <thead className='table-dark'>
                         <tr>
+                            <th>Categoria</th>
                             <th>Titolo</th>
                             <th>Testo</th>
                             <th>Pubblicazione</th>
@@ -78,6 +79,7 @@ const FilteredPosts = () => {
                     <tbody>
                         {currentPosts.map((post, index) => (
                             <tr key={index}>
+                                <td>{post.category}</td>
                                 <td>{post.title}</td>
                                 <td className="truncate-text">{truncateText(post.text, 50)}</td>
                                 <td>{formatDate(post.date)}</td>

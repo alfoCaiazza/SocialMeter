@@ -15,8 +15,7 @@ def classify_sentiment(sentence):
     outputs = model(**inputs)
     predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
 
-    prob_list = predictions.detach().numpy()[0]
-    probability = prob_list.max()
+    probability = predictions.detach().numpy()[0]
 
     # Converte le previsioni in sentimenti
     compound = predictions.argmax().item()
@@ -27,5 +26,5 @@ def classify_sentiment(sentence):
     else:
         sentiment = "Positivo"
 
-    return compound, sentiment
+    return compound, sentiment, probability
 

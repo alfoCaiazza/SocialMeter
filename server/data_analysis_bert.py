@@ -10,7 +10,7 @@ def calculate_comments_setiment(comments):
 
     for comment in comments:
         info = {}
-        compound, sentiment = classify_sentiment(comment['text'])
+        compound, sentiment, probability = classify_sentiment(comment['text'])
 
         info['compound'] = compound
         info['sentiment'] = sentiment
@@ -44,7 +44,7 @@ def calculate_setiment():
     for post in posts:
         logging.info(f"Analizing post {index} with ID: {post['id']}")
         
-        compound, sentiment = classify_sentiment(post['text'])
+        compound, sentiment, probability = classify_sentiment(post['text'])
         
         comments = post.get('comments', [])
         avg_comments_sentiment, comments_compound, comments_sentiment = calculate_comments_setiment(comments=comments)
@@ -52,12 +52,17 @@ def calculate_setiment():
         info = {
             'category' : post['category'],
             'id' : post['id'],
+            'title' : post['title'],
+            'text' : post['text'],
             'pub_date' : post['pub_date'],
             'year' : post['year'],
             'month' : post['month'],
             'day' : post['day'],
             'sentiment' : sentiment,
             'compound' : compound,
+            'positivity' : round(probability[2].item(), 3),
+            'neutrality' : round(probability[1].item(), 3),
+            'negativity' : round(probability[0].item(), 3),
             'score': post['score'],
             'tot_comments': len(post.get('comments', [])),
             'avg_comments_sentiment': avg_comments_sentiment,
