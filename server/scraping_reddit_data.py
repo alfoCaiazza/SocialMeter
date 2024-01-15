@@ -50,7 +50,8 @@ def scrape_reddit(subreddit, limit=None, category_keywords=None, existing_df=Non
 
     for iteration, submission in enumerate(subreddit.search(query, limit=limit)):
         logging.info(f"Processing post {iteration + 1}/{limit}")
-
+        time.sleep(5)
+        
         # Check for duplicate submissions using existing_df
         if existing_df is None or submission.id not in existing_df["id"].values:
             if submission.selftext == "":
@@ -135,7 +136,7 @@ def main():
 
             time.sleep(30)
 
-            titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit( subreddit, limit = 3, category_keywords={'category': category, 'keywords': keywords}, existing_df=existing_df)
+            titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit( subreddit, limit = 999, category_keywords={'category': category, 'keywords': keywords}, existing_df=existing_df)
 
             if posts_data: 
                 existing_df = pd.concat([existing_df, new_df]).drop_duplicates()
