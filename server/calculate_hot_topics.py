@@ -71,6 +71,11 @@ def get_sentiment_frequencies(positive, negative, neutral):
 
     return positive_frequencies, negative_frequencies, neutral_frequencies
 
+def calculate_word_percentages(word_frequencies):
+    total_words = sum(word_frequencies.values())
+    percentages = [(word, (count / total_words) * 100) for word, count in word_frequencies.items() if (count / total_words) * 100 > 0.05]
+    return sorted(percentages, key=lambda x: x[1])
+
 def main():
     setup_logging()
     load_dotenv()
@@ -79,9 +84,14 @@ def main():
     nltk.download('stopwords')
 
     positive, negative, neutral = retrieve_posts_per_sentiment()
-    positive_frequencies, negative_frequencies, neutral_frequencies = get_words_frequencies(neutral)
+    positive_frequencies, negative_frequencies, neutral_frequencies = get_sentiment_frequencies(positive, negative, neutral)
 
+    #For each sentiment label calculate tot words number
+    positive_percentages = calculate_word_percentages(positive_frequencies)
+    negative_percentages = calculate_word_percentages(negative_frequencies)
+    neutral_percentages = calculate_word_percentages(neutral_frequencies)
 
+    print(positive_percentages)
 
 if __name__ == "__main__":
     main()
