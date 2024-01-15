@@ -4,7 +4,21 @@ import logging
 import re
 import emoji
 import time
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
+def remove_stopwords(text):
+    words = word_tokenize(text, language='italian')
+
+    # Filtra le parole rimuovendo le stopwords
+    it_stopwords = set(stopwords.words('italian'))
+    filtered_text = [word for word in words if word.lower() not in it_stopwords]
+
+    # Riunisci il testo filtrato
+    cleaned_text = ' '.join(filtered_text)
+
+    return cleaned_text
 
 def clean_text(text):
 
@@ -23,12 +37,17 @@ def clean_text(text):
     #Resa delle parole in minuscolo
     cleaned_text = cleaned_text.lower()
 
+    #Rimozione stopwords
+    cleaned_text = remove_stopwords(cleaned_text)
+
     return cleaned_text
 
 def main():
     #Viene effettuata la pulizia dei dati e il controllo sul contenuto del testo: se corpo del post o dei commenti è vuoto non vengono inseriti nel database
     setup_logging()
     load_dotenv()
+    nltk.download('stopwords')
+    nltk.download('punkt')
     mongo_client, db = connect_to_mongo()
 
     collection = db['posts']
