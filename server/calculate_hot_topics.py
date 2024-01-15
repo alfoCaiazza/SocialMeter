@@ -28,21 +28,21 @@ def delete_duplicate(first_list, second_list):
 
     return unique_post
 
-def retrieve_hottest_posts():
+def retrieve_posts_per_sentiment():
     setup_logging()
     load_dotenv()
 
     mongo_client, db = connect_to_mongo()
 
-    collection = db['cleanedPosts']
-    most_commented_posts = list(collection.find({"year": {"$gte": 2023}}).sort("comments", -1).limit(20))
-    most_scored_posts = list(collection.find({"year": {"$gte": 2023}}).sort("score", -1).limit(20))
-
-    posts = delete_duplicate(most_scored_posts, most_commented_posts)
+    collection = db['dataAnalysis']
+    # "year": {"$gte": 2023},
+    positive_posts = list(collection.find({"sentiment": "Positivo", "category" : "woman_condition"}))
+    negative_posts = list(collection.find({ "sentiment": "Negativo", "category" : "woman_condition"}))
+    neutral_posts = list(collection.find({ "sentiment": "Neutrale", "category" : "woman_condition"}))
 
     mongo_client.close()
 
-    return posts
+    return positive_posts, negative_posts, neutral_posts
 
 def get_words_frequencies(posts):
     text_list = [post['text'] for post in posts]
@@ -57,12 +57,19 @@ def get_words_frequencies(posts):
     tokens = word_tokenize(text, language='italian')
 
     # Rimuove le stop words italiane
-    stop_words = set(stopwords.words('italian'))
-    filtered_tokens = [word for word in tokens if word not in stop_words]
+    ita_stop_words = set(stopwords.words('italian'))
+    eng_stop_words = set(stopwords.words('english'))
+    filtered_tokens = [word for word in tokens if word not in ita_stop_words and word not in eng_stop_words]
 
     # Calcola e restituisce le frequenze delle parole: quante volte ogni parola appare in totale nei post 
     return Counter(filtered_tokens)
 
+def get_sentiment_frequencies(positive, negative, neutral):
+    positive_frequencies = get_words_frequencies(positive)
+    negative_frequencies = get_words_frequencies(negative)
+    neutral_frequencies = get_words_frequencies(neutral)
+
+    return positive_frequencies, negative_frequencies, neutral_frequencies
 
 def main():
     setup_logging()
@@ -71,16 +78,9 @@ def main():
     nltk.download('punkt')
     nltk.download('stopwords')
 
-    posts = retrieve_hottest_posts()
+    positive, negative, neutral = retrieve_posts_per_sentiment()
+    positive_frequencies, negative_frequencies, neutral_frequencies = get_words_frequencies(neutral)
 
-    print(f"Total posts retrieved: {len(posts)}: ")
-    
-    for post in posts:
-        print(f"ID: {post['id']}, Score: {post['score']}, Comments: {len(post.get('comments', []))} ---- Year: {post['year']}")
-
-    print("Calculating words frequencies: ")
-    frequencies = get_words_frequencies(posts)
-    print(frequencies)
 
 
 if __name__ == "__main__":
