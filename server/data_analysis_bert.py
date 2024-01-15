@@ -43,6 +43,14 @@ def calculate_setiment():
 
     for post in posts:
         logging.info(f"Analizing post {index} with ID: {post['id']}")
+
+        if index % 500 == 0:
+            logging.info(f"Closing MongoDB connection with post {index}.")
+            mongo_client.close()
+            logging.info("Re-opening MongoDB connection")
+            mongo_client, db = connect_to_mongo()  # Ristabilisce la connessione
+            posts = collection.find({}).skip(index)  # Continua dal prossimo post
+            data_analysis = db['dataAnalysis']
         
         compound, sentiment, probability = classify_sentiment(post['text'])
         
@@ -53,7 +61,7 @@ def calculate_setiment():
             'category' : post['category'],
             'id' : post['id'],
             'title' : post['title'],
-            'text' : post['text'],
+            'text' : post['og_text'],
             'pub_date' : post['pub_date'],
             'year' : post['year'],
             'month' : post['month'],

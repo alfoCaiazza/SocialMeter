@@ -21,7 +21,6 @@ def remove_stopwords(text):
     return cleaned_text
 
 def clean_text(text):
-
     #Eliminazione dei caratteri speciali e degli spazi in eccesso
     cleaned_text = re.sub(r'[^\w\s]', ' ', text).strip()
 
@@ -36,9 +35,6 @@ def clean_text(text):
 
     #Resa delle parole in minuscolo
     cleaned_text = cleaned_text.lower()
-
-    #Rimozione stopwords
-    cleaned_text = remove_stopwords(cleaned_text)
 
     return cleaned_text
 
@@ -66,12 +62,12 @@ def main():
             comment['text'] = clean_text(comment.get('text', ''))      
             cleaned_comments.append(comment)
 
+        post['og_text'] = post['text']
         post['text'] = cleaned_text
         post['comments'] = cleaned_comments
         clean_reddit_posts.insert_one(post)
 
         index += 1
-        time.sleep(0.5)
 
     mongo_client.close()
 
