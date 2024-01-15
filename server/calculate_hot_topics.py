@@ -1,48 +1,25 @@
 from scraping_reddit_data import setup_logging, connect_to_mongo
 from dotenv import load_dotenv
-from bson import json_util, ObjectId
 from collections import Counter
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
-import logging
-import json
-import datetime
 import nltk 
 
-def default(obj):
-    if isinstance(obj, ObjectId):
-        return str(obj)
-    elif isinstance(obj, datetime.datetime):
-        return obj.isoformat()
-    raise TypeError("Object of type %s is not JSON serializable" % type(obj).__name__)
 
-def delete_duplicate(first_list, second_list):
-    combined_posts = first_list + second_list
-
-    json_posts = [json.dumps(post, default=default, sort_keys=True) for post in combined_posts]
-
-    unique_json_posts = list(set(json_posts))
-
-    unique_post = [json.loads(post) for post in unique_json_posts]
-
-    return unique_post
-
-def retrieve_posts_per_sentiment():
+def retrieve_posts_per_sentiment(sentiment_type, category):
     setup_logging()
     load_dotenv()
 
     mongo_client, db = connect_to_mongo()
 
     collection = db['dataAnalysis']
-    # "year": {"$gte": 2023},
-    positive_posts = list(collection.find({"sentiment": "Positivo", "category" : "woman_condition"}))
-    negative_posts = list(collection.find({ "sentiment": "Negativo", "category" : "woman_condition"}))
-    neutral_posts = list(collection.find({ "sentiment": "Neutrale", "category" : "woman_condition"}))
+
+    posts = list(collection.find({"year": {"$gte": 2023}, "sentiment": "Positivo", sentiment_type : category}))
 
     mongo_client.close()
 
-    return positive_posts, negative_posts, neutral_posts
+    return posts
 
 def get_words_frequencies(posts):
     text_list = [post['text'] for post in posts]
@@ -64,34 +41,24 @@ def get_words_frequencies(posts):
     # Calcola e restituisce le frequenze delle parole: quante volte ogni parola appare in totale nei post 
     return Counter(filtered_tokens)
 
-def get_sentiment_frequencies(positive, negative, neutral):
-    positive_frequencies = get_words_frequencies(positive)
-    negative_frequencies = get_words_frequencies(negative)
-    neutral_frequencies = get_words_frequencies(neutral)
+def get_sentiment_frequencies(posts):
+    return get_words_frequencies(posts)
 
-    return positive_frequencies, negative_frequencies, neutral_frequencies
 
 def calculate_word_percentages(word_frequencies):
     total_words = sum(word_frequencies.values())
     percentages = [(word, (count / total_words) * 100) for word, count in word_frequencies.items() if (count / total_words) * 100 > 0.05]
-    return sorted(percentages, key=lambda x: x[1])
+    return percentages
 
-def main():
+def hot_topics(sentiment_type, category):
     setup_logging()
     load_dotenv()
 
     nltk.download('punkt')
     nltk.download('stopwords')
 
-    positive, negative, neutral = retrieve_posts_per_sentiment()
-    positive_frequencies, negative_frequencies, neutral_frequencies = get_sentiment_frequencies(positive, negative, neutral)
+    posts = retrieve_posts_per_sentiment(sentiment_type, category)
+    frequencies = get_sentiment_frequencies(posts)
 
-    #For each sentiment label calculate tot words number
-    positive_percentages = calculate_word_percentages(positive_frequencies)
-    negative_percentages = calculate_word_percentages(negative_frequencies)
-    neutral_percentages = calculate_word_percentages(neutral_frequencies)
+    return frequencies
 
-    print(positive_percentages)
-
-if __name__ == "__main__":
-    main()

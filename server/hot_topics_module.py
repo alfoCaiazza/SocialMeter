@@ -1,20 +1,15 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from calculate_hot_topics import hot_topics
 
 def get_hotTopics(app, db):
     @app.route('/api/get_hotTopics', methods=['GET'])
     def inner_get_hotTopics():
         try:
+            category = request.args.get('topics_category')
+            sentiment_type = request.args.get('sentiment_type')
+
             posts = db["hotPosts"].find({"year" : {"$gte: 2023"}})
-            result = [{
-                'category' : post['category'],
-                'id': post['id'],
-                'post': post['post'],
-                'compound' : post['compound'],
-                'date': post['pub_date'],
-                'year' : post['year'],
-                'month' : post['month'],
-                'day' : post['day'],
-            } for post in posts]
+            result = hot_topics(sentiment_type, category)
 
             return jsonify(result)
         except Exception as e:
