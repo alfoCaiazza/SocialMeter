@@ -15,10 +15,17 @@ def retrieve_posts_per_sentiment(sentiment_type, category):
 
     collection = db['dataAnalysis']
 
-    posts = list(collection.find({"year": {"$gte": 2023}, "sentiment": "Positivo", sentiment_type : category}))
+    query = {
+        "year" : {"$gte": 2023},
+        "category": category,
+        "sentiment" : sentiment_type
+    }
+
+    posts = list(collection.find(query))
 
     mongo_client.close()
 
+    print(len(posts))
     return posts
 
 def get_words_frequencies(posts):
@@ -47,10 +54,14 @@ def get_sentiment_frequencies(posts):
 
 def calculate_word_percentages(word_frequencies):
     total_words = sum(word_frequencies.values())
-    percentages = [(word, (count / total_words) * 100) for word, count in word_frequencies.items() if (count / total_words) * 100 > 0.05]
-    return percentages
+    percentages = [(word, round((count / total_words) * 100, 3)) for word, count in word_frequencies.items()]
+    
+    # Ordina la lista in base alle percentuali (dal più alto al più basso) e seleziona le prime 150 parole
+    top_percentages = sorted(percentages, key=lambda x: x[1], reverse=True)[:150]
+    
+    return top_percentages
 
-def hot_topics(sentiment_type, category):
+def hot_topics(category, sentiment_type):
     setup_logging()
     load_dotenv()
 
@@ -59,6 +70,7 @@ def hot_topics(sentiment_type, category):
 
     posts = retrieve_posts_per_sentiment(sentiment_type, category)
     frequencies = get_sentiment_frequencies(posts)
+    percentages = calculate_word_percentages(frequencies)
 
-    return frequencies
+    return percentages
 

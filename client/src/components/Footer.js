@@ -4,8 +4,8 @@ import React from 'react';
 const Footer = () => {
     const as = [
         { href: '/filtered_posts', label: 'Filtra Post' },
-        { href: '/hot_themes', label: 'Temi Caldi' },
-        { href: '/trends', label: 'Tendenze' },
+        { href: '/hot_topics_category', label: 'Temi Caldi' },
+        { href: '/trends_category', label: 'Tendenze' },
         { href: '/keywords', label: 'Parole Chiavi' },
         { href: '/shadow', label: 'Analisi di Reti' },
       ];

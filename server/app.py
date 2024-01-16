@@ -9,6 +9,7 @@ from datetime import datetime
 from filtered_posts_module import get_filtered_posts
 from default_routes_module import setup_routes
 from trends_module import get_sentiments
+from hot_topics_module import get_hotTopics
 import praw
 import os
 
@@ -38,7 +39,7 @@ except Exception as e:
 setup_routes(app)
 get_filtered_posts(app, db)
 get_sentiments(app, db)
-
+get_hotTopics(app)
 
 if __name__ == '__main__':
     app.run(debug=True)

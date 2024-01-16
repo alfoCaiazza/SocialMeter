@@ -6,7 +6,7 @@ import img2 from './images/no-racism.png';
 import img3 from './images/global-warming.png';
 import img4 from './images/fake-news.png';
 
-const TrendsCategory = () => {
+const HotTopicsCategory = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const navigate = useNavigate();
 
@@ -18,12 +18,10 @@ const TrendsCategory = () => {
         // Aggiungi più oggetti qui per più card
     ];
 
-
     const handleCardClick = (path, category) => {
         setSelectedCard(category);
         navigate(`/${path}/${category}`);
     };
-
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
@@ -33,12 +31,12 @@ const TrendsCategory = () => {
             <div className='position-absolute top-50 start-50 translate-middle text-center' style={{marginTop: '5%'}}>
                 <div className='row row-cols-4'>
                     {cardsData.map((card, index) => (
-                        <Card 
+                        <Card
                             key={index}
                             title={card.title} 
                             image={card.image}
                             category={card.category}
-                            onCardClick={() => handleCardClick("trends", card.category)} 
+                            onCardClick={() => handleCardClick("hot_topics_sentiment",card.category)} 
                         />
                     ))}
                 </div>
@@ -48,4 +46,4 @@ const TrendsCategory = () => {
     );
 };
 
-export default TrendsCategory;
+export default HotTopicsCategory;
