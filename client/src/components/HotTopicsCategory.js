@@ -4,7 +4,6 @@ import Card from './Card';
 import img1 from './images/woman.png';
 import img2 from './images/no-racism.png';
 import img3 from './images/global-warming.png';
-import img4 from './images/fake-news.png';
 
 const HotTopicsCategory = () => {
     const [selectedCard, setSelectedCard] = useState(null);
@@ -13,9 +12,7 @@ const HotTopicsCategory = () => {
     const cardsData = [
         { title: "Sessismo", image: img1, category: "woman_condition"},
         { title: "Razzismo", image: img2, category: "racism"},
-        { title: "Crisi Climatica", image: img3, category: "climate_change" },
-        { title: "Complottismo", image: img4, category: "conspiracy" },
-        // Aggiungi più oggetti qui per più card
+        { title: "Clima", image: img3, category: "climate_change" },
     ];
 
     const handleCardClick = (path, category) => {
@@ -29,7 +26,7 @@ const HotTopicsCategory = () => {
                 <h2>Seleziona la categoria</h2>
             </div>
             <div className='position-absolute top-50 start-50 translate-middle text-center' style={{marginTop: '5%'}}>
-                <div className='row row-cols-4'>
+                <div className='row row-cols-3'>
                     {cardsData.map((card, index) => (
                         <Card
                             key={index}

@@ -65,7 +65,7 @@ def scrape_reddit(subreddit, limit=None, category_keywords=None, existing_df=Non
 
             # Retrieve comments for the current submission
             time.sleep(2)
-            submission.comments.replace_more(limit=None)
+            submission.comments.replace_more(limit=999)
             comments_data = []
             for comment in submission.comments.list():
                 if comment.body == "":
@@ -111,7 +111,6 @@ def main():
         'woman_condition' : ["Femminicidio", "Molestie", "Stupro", "MeToo","Femminismo", "GenderEquality", "Sessismo", "Misoginia", "Maschilismo", "Giulia", "Violenza", "Donna", "Donne"],
         'racism' : ["Negro", "Razzismo", "Raziale", "Africa", "Immigrato"],
         'climate_change': ["Cambiamento", "Climatico", "Temperature", "Caldo", "Estremo"],
-        'conspiracy' : ["Negazionismo", "Negazionisti", "Vaccini", "Covid"],
     }
 
     reddit = praw.Reddit(
@@ -136,7 +135,7 @@ def main():
 
             time.sleep(30)
 
-            titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit( subreddit, limit = 999, category_keywords={'category': category, 'keywords': keywords}, existing_df=existing_df)
+            titles, texts, scores, ids, pub_dates, posts_data, new_df = scrape_reddit( subreddit, limit = 250, category_keywords={'category': category, 'keywords': keywords}, existing_df=existing_df)
 
             if posts_data: 
                 existing_df = pd.concat([existing_df, new_df]).drop_duplicates()

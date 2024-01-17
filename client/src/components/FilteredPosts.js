@@ -48,8 +48,7 @@ const FilteredPosts = () => {
         const categoryStrings = {
             'woman_condition': 'Sessismo',
             'racism': 'Razzismo',
-            'climate_change': 'Cambiamento Climatico',
-            'conspiracy': 'Complottismo',
+            'climate_change': 'Clima',
         };
     
         // Return the string for the given category, or a default string if the category is not found
