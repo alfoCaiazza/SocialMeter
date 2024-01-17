@@ -99,7 +99,7 @@ const MonthlyCompoundChart = ({ year, goBack }) => {
           <button onClick={goBack} className='icon-button'>
             <i className="bi bi-arrow-left"></i>
           </button>
-          <h3>Sentimento medio per l'anno {year}</h3>
+          <h3>{year}</h3>
         </div>
         {selectedMonth === null ? (
           monthlyData.length > 0 ? (

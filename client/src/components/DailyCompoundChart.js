@@ -87,7 +87,7 @@ const MonthlyCompoundChart = ({ year, month, goBack }) => {
         <button onClick={goBack} className='icon-button'>
           <i className="bi bi-arrow-left"></i>
         </button>
-        <h3>Sentimento medio {monthNames[month]} {year}</h3>
+        <h3>{monthNames[month]}</h3>
       </div>
       <BarChart width={600} height={300} data={dailyData}>
         <XAxis dataKey="day" tickFormatter={(day) => `${day}/${month}`}/>
