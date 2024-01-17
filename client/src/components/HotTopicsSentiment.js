@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from './Card';
 import { useParams } from 'react-router-dom';
-// import img1 from './images/oooo';
-// import img2 from './images/ooooo';
-// import img3 from './images/ooooo';
+import img1 from './images/happiness.png';
+import img2 from './images/sad-face.png';
+import img3 from './images/neutral-face.png';
 
 const HotTopicsSentiment = () => {
     const {category} = useParams();
@@ -12,9 +12,9 @@ const HotTopicsSentiment = () => {
     const navigate = useNavigate();
 
     const cardsData = [
-        { title: "Positivo"},
-        { title: "Negativo"},
-        { title: "Neutrale"},
+        { title: "Positivo", image: img1},
+        { title: "Negativo", image: img2},
+        { title: "Neutrale", image: img3},
     ];
 
     const handleCardClick = (path, category, sentiment) => {
