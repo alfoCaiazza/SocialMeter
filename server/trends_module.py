@@ -15,12 +15,15 @@ def get_sentiments(app, db):
             result = [{
                 'category' : sentiment['category'],
                 'id': sentiment['id'],
+                'text': sentiment['text'],
                 'sentiment': sentiment['sentiment'],
                 'compound' : sentiment['compound'],
                 'date': sentiment['pub_date'],
                 'year' : sentiment['year'],
                 'month' : sentiment['month'],
                 'day' : sentiment['day'],
+                'comments' : sentiment['comments'],
+                'score' : sentiment['score'],
             } for sentiment in sentiments]
 
             return jsonify(result)
