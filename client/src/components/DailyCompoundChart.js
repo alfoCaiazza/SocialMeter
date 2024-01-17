@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const DailyCompoundChart = ({ year, month, goBack }) => {
   const [dailyData, setDailyData] = useState([]);
-  const [topPost, setTopPost] = useState(null);
+  const [topPost, setTopPost] = useState({});
 
 
   useEffect(() => {
@@ -123,14 +123,17 @@ const DailyCompoundChart = ({ year, month, goBack }) => {
       </div>
       <div className='container overflow-hidden' style={{marginTop: '5%', paddingBottom: '3%'}}>
         <h5>Post con più interazzioni nel mese di {monthNames[month]} {year}</h5>
-        <Post>
-          text = {truncateText(topPost.text, 250)}
-          year={topPost.year}
-          month={topPost.month}
-          day={topPost.day}
-          score={topPost.score}
-          comments={topPost.comments.length}
-        </Post>
+        {topPost && topPost.comments &&(
+          <Post
+            text={truncateText(topPost.text, 250)}
+            year={topPost.year}
+            month={topPost.month}
+            day={topPost.day}
+            score={topPost.score}
+            comments={topPost.comments.length}
+            sentiment={topPost.sentiment}
+          />
+        )}
       </div>
     </div>
   );
