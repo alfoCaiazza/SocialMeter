@@ -41,6 +41,7 @@ const HotTopics = () =>{
         rotationAngles: [0, 90],
         rotations: 2,
         padding: 1.5,
+        enableTooltip: false,
       };
 
     return (
