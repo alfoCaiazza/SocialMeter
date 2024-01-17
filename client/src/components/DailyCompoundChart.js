@@ -5,7 +5,7 @@ import Post from './Post';
 import { Link } from 'react-router-dom';
 
 
-const MonthlyCompoundChart = ({ year, month, goBack }) => {
+const DailyCompoundChart = ({ year, month, goBack }) => {
   const [dailyData, setDailyData] = useState([]);
   const [topPost, setTopPost] = useState(null);
 
@@ -137,4 +137,4 @@ const MonthlyCompoundChart = ({ year, month, goBack }) => {
 };
 
 
-export default MonthlyCompoundChart;
+export default DailyCompoundChart;
