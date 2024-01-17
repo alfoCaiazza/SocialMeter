@@ -12,7 +12,7 @@ const Footer = () => {
   
 
   return (
-        <div className="container">
+        <div className="container" style={{marginTop: '20%'}}>
             <footer className="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top border-dark-subtle">
                 <div className="col mb-3">
                 <a href="/" className="d-flex align-items-center mb-3 a-dark text-decoration-none">

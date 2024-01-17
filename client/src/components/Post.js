@@ -2,7 +2,7 @@ import profile from './images/user.png'
 
 const Post = ({title, year, month, day, score, comments, text}) => {
     return (
-        <div class="card">
+      <div class="card">
         <div class="card-body">
           <h5 class="card-title">{title}</h5>
           <h6 class="card-subtitle mb-2 text-body-secondary">@Anonymous {day}/{month}/{year}</h6>

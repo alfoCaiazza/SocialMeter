@@ -95,12 +95,14 @@ const MonthlyCompoundChart = ({ year, goBack }) => {
   return (
     <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
       <div className='position-absolute top-50 start-50 translate-middle'>
-        <div className="header-container">
-          <button onClick={goBack} className='icon-button'>
-            <i className="bi bi-arrow-left"></i>
-          </button>
-          <h3>{year}</h3>
-        </div>
+          {selectedMonth === null && (
+            <div className="header-container">
+              <button onClick={goBack} className='icon-button'>
+                <i className="bi bi-arrow-left"></i>
+              </button>
+              <h3>{year}</h3>
+            </div>
+          )}
         {selectedMonth === null ? (
           monthlyData.length > 0 ? (
             <BarChart width={600} height={300} data={monthlyData}>

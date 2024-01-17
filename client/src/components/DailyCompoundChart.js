@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import Post from './Post';
+import { Link } from 'react-router-dom';
 
 
 const MonthlyCompoundChart = ({ year, month, goBack }) => {
   const [dailyData, setDailyData] = useState([]);
+  const [topPost, setTopPost] = useState(null);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -12,6 +16,7 @@ const MonthlyCompoundChart = ({ year, month, goBack }) => {
         const result = await axios('http://localhost:5000/api/get_trends');
         const filteredData = result.data.filter(item => item.year == year && item.month == month);
         setDailyData(processSentimentsData(filteredData));
+        fetchTopPost(filteredData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -79,24 +84,54 @@ const MonthlyCompoundChart = ({ year, month, goBack }) => {
     10: "Ottobre",
     11: "Novembre",
     12: "Dicembre"
-  };  
+  };
+
+  const fetchTopPost = (data) => {
+    const topPost = data.reduce((max, item) => {
+      const commentsCount = item.comments ? item.comments.length : 0;
+      console.log(commentsCount)
+      return commentsCount > (max.commentsCount || 0) ? { ...item, commentsCount } : max;
+    }, {});
+    console.log(topPost)
+    setTopPost(topPost);
+  };
+  
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
 
   return (
-    <div>
-      <div className="header-container">
-        <button onClick={goBack} className='icon-button'>
-          <i className="bi bi-arrow-left"></i>
-        </button>
-        <h3>{monthNames[month]}</h3>
+    <div className='container'>
+      <div className='position-relative' style={{marginTop: '50%'}}>
+        <div className="header-container">
+          <button onClick={goBack} className='icon-button'>
+            <i className="bi bi-arrow-left"></i>
+          </button>
+          <h3>{monthNames[month]}</h3>
+        </div>
+        <BarChart width={600} height={300} data={dailyData}>
+          <XAxis dataKey="day" tickFormatter={(day) => `${day}/${month}`}/>
+          <YAxis />
+          <Tooltip content={<CustomTooltip />}/>
+          <Legend />
+          <CartesianGrid stroke="#f5f5f5" />
+          <Bar dataKey="averageCompound" fill="#ac84d9"  name='Sentimento'/>
+        </BarChart>
       </div>
-      <BarChart width={600} height={300} data={dailyData}>
-        <XAxis dataKey="day" tickFormatter={(day) => `${day}/${month}`}/>
-        <YAxis />
-        <Tooltip content={<CustomTooltip />}/>
-        <Legend />
-        <CartesianGrid stroke="#f5f5f5" />
-        <Bar dataKey="averageCompound" fill="#ac84d9"  name='Sentimento'/>
-      </BarChart>
+      <div className='container overflow-hidden' style={{marginTop: '5%', paddingBottom: '3%'}}>
+        <h5>Post con più interazzioni nel mese di {monthNames[month]} {year}</h5>
+        <Post>
+          text = {truncateText(topPost.text, 250)}
+          year={topPost.year}
+          month={topPost.month}
+          day={topPost.day}
+          score={topPost.score}
+          comments={topPost.comments.length}
+        </Post>
+      </div>
     </div>
   );
 };
