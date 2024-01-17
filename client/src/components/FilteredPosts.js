@@ -44,6 +44,18 @@ const FilteredPosts = () => {
         return `${date.getDate()} / ${date.getMonth() + 1} / ${date.getFullYear()}`;
     };
 
+    const getCategoryString = (category) => {
+        const categoryStrings = {
+            'woman_condition': 'Sessismo',
+            'racism': 'Razzismo',
+            'climate_change': 'Cambiamento Climatico',
+            'conspiracy': 'Complottismo',
+        };
+    
+        // Return the string for the given category, or a default string if the category is not found
+        return categoryStrings[category];
+    };
+
     // Calcola i post da mostrare per la pagina corrente
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -79,7 +91,7 @@ const FilteredPosts = () => {
                     <tbody>
                         {currentPosts.map((post, index) => (
                             <tr key={index}>
-                                <td>{post.category}</td>
+                                <td>{getCategoryString(post.category)}</td>
                                 <td>{post.title}</td>
                                 <td className="truncate-text">{truncateText(post.text, 50)}</td>
                                 <td>{formatDate(post.date)}</td>

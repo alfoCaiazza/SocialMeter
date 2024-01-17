@@ -7,7 +7,6 @@ const HomePage = () => {
     { to: '/hot_topics_category', label: 'Temi Caldi' },
     { to: '/trends_category', label: 'Tendenze' },
     { to: '/keywords', label: 'Parole Chiavi' },
-    { to: '/shadow', label: 'Analisi di Reti' },
   ];
 
   return (

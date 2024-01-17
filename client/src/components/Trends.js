@@ -76,9 +76,24 @@ const Trends = () => {
     setSelectedYear(null);
   };
 
+  const getCategoryString = (category) => {
+    const categoryStrings = {
+        'woman_condition': 'Sessismo',
+        'racism': 'Razzismo',
+        'climate_change': 'Cambiamento Climatico',
+        'conspiracy': 'Complottismo',
+    };
+
+    // Return the string for the given category, or a default string if the category is not found
+    return categoryStrings[category];
+  };
+
   return (
     <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-      <div className='position-absolute top-50 start-50 translate-middle'>
+        <div className='text-center' style={{marginTop: "2%"}}>
+          <h2 className='display-6' style={{marginTop: '1%', color: '#171717'}}><strong>Sentimento medio per la tematica {getCategoryString(category)}</strong></h2>
+        </div>
+      <div className='position-absolute top-50 start-50 translate-middle' style={{marginTop: '3%'}}>
         {selectedYear === null ? (
           sentiments.length > 0 ? (
             <BarChart width={600} height={300} data={sentiments}>

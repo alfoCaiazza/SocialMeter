@@ -20,5 +20,3 @@ const HomePage = () => {
 }
 
 export default HomePage;
-
-/*<p className='zoom-on-hover display-1'>Espolora le tendenze!</p>*/

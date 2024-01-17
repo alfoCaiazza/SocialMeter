@@ -7,7 +7,6 @@ const Footer = () => {
         { href: '/hot_topics_category', label: 'Temi Caldi' },
         { href: '/trends_category', label: 'Tendenze' },
         { href: '/keywords', label: 'Parole Chiavi' },
-        { href: '/shadow', label: 'Analisi di Reti' },
       ];
     const logo = require('./images/Black.png');
   
