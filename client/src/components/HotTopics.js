@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import WordCloudComponent from './WordCloundComponent';
+import WordCloudComponent from './WordCloudComponent';
 
 const HotTopics = () =>{
     const [data, setData] = useState(null)
