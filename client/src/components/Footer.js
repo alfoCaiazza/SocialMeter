@@ -6,7 +6,7 @@ const Footer = () => {
         { href: '/filtered_posts', label: 'Filtra Post' },
         { href: '/hot_topics_category', label: 'Temi Caldi' },
         { href: '/trends_category', label: 'Tendenze' },
-        { href: '/keywords', label: 'Parole Chiavi' },
+        { href: '/matrix_profile', label: 'Matrix Profile' },
       ];
     const logo = require('./images/Black.png');
   
