@@ -62,9 +62,9 @@ This project uses several third-party dependencies, including:
 - [React Router DOM](https://reactrouter.com/web/guides/quick-start) for managing routes in the React client.
 - [Pandas](https://pandas.pydata.org/) for data manipulation and analysis.
 - [PyTorch](https://pytorch.org/) for machine learning and deep learning applications.
-- [BERT](https://huggingface.co/transformers/model_doc/bert.html )as a pre-trained model for natural language processing tasks.
-- [Transformers](https://huggingface.co/transformers/ )for state-of-the-art natural language processing, including utilities for working with models like BERT.
-- [Matrix Profile](https://matrixprofile.org/ )for advanced time series analysis.
+- [BERT](https://huggingface.co/transformers/model_doc/bert.html ) as a pre-trained model for natural language processing tasks.
+- [Transformers](https://huggingface.co/transformers/ ) for state-of-the-art natural language processing, including utilities for working with models like BERT.
+- [Matrix Profile](https://matrixprofile.org/ ) for advanced time series analysis.
 
 
 
