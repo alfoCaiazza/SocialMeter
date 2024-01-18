@@ -11,6 +11,7 @@ import HotTopics from './components/HotTopics';
 import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
 import HotTopicsSentiment from './components/HotTopicsSentiment';
+import PostDetail from './components/PostDetail';
 import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/features" element={<Features />} />
         <Route path="/filtered_posts" element={<FilteredPosts />} />
+        <Route path="/post/:postId" element={<PostDetail  />} />
         <Route path="/hot_topics_category" element={<HotTopicsCategory />} />
         <Route path="/hot_topics_sentiment/:category" element={<HotTopicsSentiment />} />
         <Route path="/hot_topics/:category/:sentiment" element={<HotTopics />} />

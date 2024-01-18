@@ -10,6 +10,7 @@ from filtered_posts_module import get_filtered_posts
 from default_routes_module import setup_routes
 from trends_module import get_sentiments
 from hot_topics_module import get_hotTopics
+from retrieve_post_module import get_post
 import praw
 import os
 
@@ -40,6 +41,7 @@ setup_routes(app)
 get_filtered_posts(app, db)
 get_sentiments(app, db)
 get_hotTopics(app)
+get_post(app, db)
 
 if __name__ == '__main__':
     app.run(debug=True)
