@@ -25,7 +25,7 @@ const PostDetail = () => {
 
   return (
     <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-        <div className='position-absolute top-50 start-50 translate-middle' style={{marginTop:'15%'}}>
+        <div className='position-absolute top-50 start-50 translate-middle' style={{marginTop:'10%'}}>
             <Post
                 title={post.title}
                 text={post.text}

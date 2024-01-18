@@ -124,7 +124,7 @@ const DailyCompoundChart = ({ year, month, goBack, category }) => {
       <div className='container overflow-hidden' style={{marginTop: '5%', paddingBottom: '3%'}}>
         <h5>Post con più interazzioni nel mese di {monthNames[month]} {year}</h5>
         {topPost && topPost.comments &&(
-          <Link to={`/post/${topPost.id}`}>
+          <Link to={`/post/${topPost.id}`} style={{textDecoration : 'none'}}>
             <Post
               id={topPost.id}
               text={truncateText(topPost.text, 250)}
