@@ -108,7 +108,7 @@ const Trends = () => {
             <p>Caricamento dati...</p>
           )
         ) : (
-          <MonthlyCompoundChart year={selectedYear} goBack={goBack}/>
+          <MonthlyCompoundChart year={selectedYear} goBack={goBack} category={category}/>
         )}
       </div>
     </div>

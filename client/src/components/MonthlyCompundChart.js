@@ -4,14 +4,14 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 import DailyCompoundChart from './DailyCompoundChart';
 
 
-const MonthlyCompoundChart = ({ year, goBack }) => {
+const MonthlyCompoundChart = ({ year, goBack, category}) => {
   const [monthlyData, setMonthlyData] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios('http://localhost:5000/api/get_trends');
+        const result = await axios(`http://localhost:5000/api/get_trends?category=${category}`);
         const filteredData = result.data.filter(item => item.year == year);
         setMonthlyData(processSentimentsData(filteredData));
       } catch (error) {
@@ -117,7 +117,7 @@ const MonthlyCompoundChart = ({ year, goBack }) => {
             <p>Caricamento dati...</p>
           )
         ) : (
-          <DailyCompoundChart year={year} month={selectedMonth} goBack={goBackMonth}/>
+          <DailyCompoundChart year={year} month={selectedMonth} goBack={goBackMonth} category={category}/>
         )}
       </div>
     </div>

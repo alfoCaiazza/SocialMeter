@@ -5,7 +5,7 @@ import Post from './Post';
 import { Link } from 'react-router-dom';
 
 
-const DailyCompoundChart = ({ year, month, goBack }) => {
+const DailyCompoundChart = ({ year, month, goBack, category }) => {
   const [dailyData, setDailyData] = useState([]);
   const [topPost, setTopPost] = useState({});
 
@@ -13,7 +13,7 @@ const DailyCompoundChart = ({ year, month, goBack }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await axios('http://localhost:5000/api/get_trends');
+        const result = await axios(`http://localhost:5000/api/get_trends?category=${category}`);
         const filteredData = result.data.filter(item => item.year == year && item.month == month);
         setDailyData(processSentimentsData(filteredData));
         fetchTopPost(filteredData);
@@ -124,15 +124,18 @@ const DailyCompoundChart = ({ year, month, goBack }) => {
       <div className='container overflow-hidden' style={{marginTop: '5%', paddingBottom: '3%'}}>
         <h5>Post con più interazzioni nel mese di {monthNames[month]} {year}</h5>
         {topPost && topPost.comments &&(
-          <Post
-            text={truncateText(topPost.text, 250)}
-            year={topPost.year}
-            month={topPost.month}
-            day={topPost.day}
-            score={topPost.score}
-            comments={topPost.comments.length}
-            sentiment={topPost.sentiment}
-          />
+          <Link to={`/post/${topPost.id}`}>
+            <Post
+              id={topPost.id}
+              text={truncateText(topPost.text, 250)}
+              year={topPost.year}
+              month={topPost.month}
+              day={topPost.day}
+              score={topPost.score}
+              num_comments={topPost.comments.length}
+              sentiment={topPost.sentiment}
+            />
+          </Link>
         )}
       </div>
     </div>
