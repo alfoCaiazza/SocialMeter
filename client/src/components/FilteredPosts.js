@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pagination from './Pagination';
+import {Link} from 'react-router-dom';
 
 const FilteredPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -91,7 +92,7 @@ const FilteredPosts = () => {
                         {currentPosts.map((post, index) => (
                             <tr key={index}>
                                 <td>{getCategoryString(post.category)}</td>
-                                <td>{post.title}</td>
+                                <td><Link to={`/post/${post.id}`} style={{textDecoration: 'none', color: '#171717'}}>{post.title}</Link></td>
                                 <td className="truncate-text">{truncateText(post.text, 50)}</td>
                                 <td>{formatDate(post.date)}</td>
                                 <td>{post.postivity}</td>
