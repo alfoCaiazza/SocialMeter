@@ -2,7 +2,7 @@
 
 This project, developed as a bachelor's thesis in Computer Science, is a web application that utilizes scraping techniques combined with a sentiment classifier for the Italian language based on BERT (neuraly/bert-base-italian-cased-sentiment). It allows users to explore Reddit posts on controversial topics such as sexism, racism, and climate change. Additionally, it provides details on sentiment analysis of the posts, visualization of sentiment trends over time, and hot topics for each category and sentiment.
 
-## Funzionalità Principali
+## Main Functionalities
 
 1. **Post Exploration:** Navigate through posts related to various controversial topics, utilizing detailed sentiment analysis insights.
 
