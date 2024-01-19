@@ -12,8 +12,8 @@ def startup(category):
     load_dotenv()
     mongo_client, db = connect_to_mongo()
     collection = db['dataAnalysis']
-    query = {"category" : category}
-    cursor = collection.find(query, {'score': 1, 'tot_comments': 1, 'pub_date': 1, 'compound' : 1})
+    query = {"category" : category, "year": {"$gte": 2020}}
+    cursor = collection.find(query, {'score': 1, 'tot_comments': 1, 'pub_date': 1, 'compound' : 1, 'year': 1})
 
     #Create a DataFrame
     df = pd.DataFrame(list(cursor))
@@ -41,25 +41,25 @@ def startup(category):
     mp_sentiment = mp.compute(serie_sentiment, windows=14)  
     _, mp_sentiment_truncated = truncate_series(df, mp_sentiment)
 
-    # # Visulization of score Matrix Profile
-    # plt.figure(figsize=(10, 4))
-    # plt.plot(df_truncated['pub_date'], mp_score_truncated, label='Matrix Profile dello Score')
-    # plt.legend()
-    # plt.title("Matrix Profile dello Score nei Post")
-    # plt.xlabel("Data")
-    # plt.ylabel("Matrix Profile Value")
-    # plt.show()
+    # Visulization of score Matrix Profile
+    plt.figure(figsize=(10, 4))
+    plt.plot(df_truncated['pub_date'], mp_score_truncated, label='Matrix Profile dello Score')
+    plt.legend()
+    plt.title("Matrix Profile dello Score nei Post")
+    plt.xlabel("Data")
+    plt.ylabel("Matrix Profile Value")
+    plt.show()
 
-    # # Visulization of comments Matrix Profile
-    # plt.figure(figsize=(10, 4))
-    # plt.plot(df_truncated['pub_date'], mp_comments_truncated, label='Matrix Profile del Numero di Commenti')
-    # plt.legend()
-    # plt.title("Matrix Profile del Numero di Commenti nei Post")
-    # plt.xlabel("Data")
-    # plt.ylabel("Matrix Profile Value")
-    # plt.show()
+    # Visulization of comments Matrix Profile
+    plt.figure(figsize=(10, 4))
+    plt.plot(df_truncated['pub_date'], mp_comments_truncated, label='Matrix Profile del Numero di Commenti')
+    plt.legend()
+    plt.title("Matrix Profile del Numero di Commenti nei Post")
+    plt.xlabel("Data")
+    plt.ylabel("Matrix Profile Value")
+    plt.show()
 
-    # # Visulization of sentiment Matrix Profile
+    # Visulization of sentiment Matrix Profile
     plt.figure(figsize=(10, 4))
     plt.plot(df_truncated['pub_date'], mp_sentiment_truncated, label='Matrix Profile del Sentiment')
     plt.legend()
