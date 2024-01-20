@@ -1,75 +1,80 @@
 from scraping_reddit_data import connect_to_mongo
 from dotenv import load_dotenv
+from io import BytesIO
 import pandas as pd
 import matrixprofile as mp
 import matplotlib.pyplot as plt 
+import base64
+
+def plot_to_base64(plt_figure):
+    buf = BytesIO()
+    plt_figure.savefig(buf, format='png')
+    buf.seek(0)
+    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+    buf.close()
+    return image_base64
 
 def truncate_series(df, profile):
     min_length = min(len(df), len(profile['mp']))
     return df.iloc[:min_length], profile['mp'][:min_length]
 
-def startup(category):
+def startup(category, index):
     load_dotenv()
-    mongo_client, db = connect_to_mongo()
+    _, db = connect_to_mongo()  # Assumendo che connect_to_mongo restituisca client e db
     collection = db['dataAnalysis']
-    query = {"category" : category, "year": {"$gte": 2020}}
+    query = {"category" : category, "year": {"$gte": 2022}}
     cursor = collection.find(query, {'score': 1, 'tot_comments': 1, 'pub_date': 1, 'compound' : 1, 'year': 1})
 
-    #Create a DataFrame
+    # Create a DataFrame
     df = pd.DataFrame(list(cursor))
 
-    #Type checking on date format
+    # Type checking on date format
     df['pub_date'] = pd.to_datetime(df['pub_date'])
 
-    #Ordering datas cronologically
+    # Ordering datas chronologically
     df.sort_values('pub_date', inplace=True)
 
-    #Time series creation
+    # Time series creation
     serie_score = df['score'].values
     serie_comments = df['tot_comments'].values
     serie_sentiment = df['compound'].values
 
-    # Calculate Matrix Profile for score
-    mp_score = mp.compute(serie_score, windows=14) 
-    df_truncated, mp_score_truncated = truncate_series(df, mp_score)
+    try:
+        if index == "score":
+            # Calculate and Visualize Matrix Profile for score
+            mp_score = mp.compute(serie_score, windows=4) 
+            df_truncated, mp_score_truncated = truncate_series(df, mp_score)
 
-    #  Calculate Matrix Profile for comments
-    mp_comments = mp.compute(serie_comments, windows=14)  
-    _, mp_comments_truncated = truncate_series(df, mp_comments)
+            # Prepara i dati per il frontend
+            data_to_send = {
+                'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
+                'values': mp_score_truncated.tolist()
+            }
+            return data_to_send
 
-    # Calculate Matrix Profile for sentiment
-    mp_sentiment = mp.compute(serie_sentiment, windows=14)  
-    _, mp_sentiment_truncated = truncate_series(df, mp_sentiment)
+        elif index == "tot_comments":
+            # Calculate and Visualize Matrix Profile for comments
+            mp_comments = mp.compute(serie_comments, windows=4)  
+            df_truncated, mp_comments_truncated = truncate_series(df, mp_comments)
 
-    # Visulization of score Matrix Profile
-    plt.figure(figsize=(10, 4))
-    plt.plot(df_truncated['pub_date'], mp_score_truncated, label='Matrix Profile dello Score')
-    plt.legend()
-    plt.title("Matrix Profile dello Score nei Post")
-    plt.xlabel("Data")
-    plt.ylabel("Matrix Profile Value")
-    plt.show()
+            # Prepara i dati per il frontend
+            data_to_send = {
+                'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
+                'values': mp_score_truncated.tolist()
+            }
+            return data_to_send
 
-    # Visulization of comments Matrix Profile
-    plt.figure(figsize=(10, 4))
-    plt.plot(df_truncated['pub_date'], mp_comments_truncated, label='Matrix Profile del Numero di Commenti')
-    plt.legend()
-    plt.title("Matrix Profile del Numero di Commenti nei Post")
-    plt.xlabel("Data")
-    plt.ylabel("Matrix Profile Value")
-    plt.show()
+        elif index == "sentiment":
+            # Calculate and Visualize Matrix Profile for sentiment
+            mp_sentiment = mp.compute(serie_sentiment, windows=4)  
+            df_truncated, mp_sentiment_truncated = truncate_series(df, mp_sentiment)
 
-    # Visulization of sentiment Matrix Profile
-    plt.figure(figsize=(10, 4))
-    plt.plot(df_truncated['pub_date'], mp_sentiment_truncated, label='Matrix Profile del Sentiment')
-    plt.legend()
-    plt.title("Matrix Profile del Sentiment nei Post")
-    plt.xlabel("Data")
-    plt.ylabel("Matrix Profile Value")
-    plt.show()
+            # Prepara i dati per il frontend
+            data_to_send = {
+                'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
+                'values': mp_score_truncated.tolist()
+            }
+            return data_to_send
 
-def main():
-    startup('racism')
-
-if __name__ == "__main__":
-    main()
+    except Exception as e:
+        print(f"Si è verificato un errore: {e}")
