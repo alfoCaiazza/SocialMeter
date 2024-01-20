@@ -10,18 +10,20 @@ const HomePage = () => {
   ];
 
   return (
-    <div className='container-fluid d-flex flex-column min-vh-100 p-0 features-background'>
-      <div className="text-center position-absolute top-50 start-50 translate-middle mt-5">
+    <div className='container-fluid d-flex flex-column min-vh-100 p-0 '>
+      <div className="text-center position-absolute top-50 start-50 translate-middle mt-5 features-background">
         <h2 className='display-4' style={{marginTop: '7%', color: '#171717'}}><strong>Features</strong></h2>
-        <ul className="list-unstyled" style={{marginTop: '5%'}}>
-          {links.map((link, index) => (
-            <li key={index} style={{marginBottom: '5%'}}>
-              <Link to={link.to} className="my-link">
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul className="list-unstyled" style={{marginTop: '5%'}}>
+            {links.map((link, index) => (
+              <li key={index} style={{marginBottom: '5%'}}>
+                <Link to={link.to} className="my-link">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
