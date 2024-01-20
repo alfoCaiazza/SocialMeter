@@ -12,6 +12,7 @@ import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
 import HotTopicsSentiment from './components/HotTopicsSentiment';
 import PostDetail from './components/PostDetail';
+import MatrixProfileForms from './components/MatrixProfileForms';
 import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
@@ -35,7 +36,7 @@ function App() {
         <Route path="/hot_topics/:category/:sentiment" element={<HotTopics />} />
         <Route path="/trends_category" element={<TrendsCategory />} />
         <Route path="/trends/:category" element={<Trends />} />
-        <Route path="/keywords" element={<Features />} />
+        <Route path="/matrix_profile" element={<MatrixProfileForms />} />
         <Route path="/shadow" element={<Features />} />
         <Route path='/results' element={<Results />} />
       </Routes>

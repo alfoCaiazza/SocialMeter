@@ -11,6 +11,7 @@ from default_routes_module import setup_routes
 from trends_module import get_sentiments
 from hot_topics_module import get_hotTopics
 from retrieve_post_module import get_post
+from matrix_profile_module import get_matrix_profile
 import praw
 import os
 
@@ -42,6 +43,7 @@ get_filtered_posts(app, db)
 get_sentiments(app, db)
 get_hotTopics(app)
 get_post(app, db)
+get_matrix_profile(app)
 
 if __name__ == '__main__':
     app.run(debug=True)
