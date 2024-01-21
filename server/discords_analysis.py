@@ -18,11 +18,16 @@ def truncate_series(df, profile):
     min_length = min(len(df), len(profile['mp']))
     return df.iloc[:min_length], profile['mp'][:min_length]
 
-def startup(category, index):
+def startup(category, index, startDate, endDate):
     load_dotenv()
     _, db = connect_to_mongo()  # Assumendo che connect_to_mongo restituisca client e db
+
+    # Convert startDate and endDate to a date format
+    start_date = pd.to_datetime(startDate)
+    end_date = pd.to_datetime(endDate)
+
     collection = db['dataAnalysis']
-    query = {"category" : category, "year": {"$gte": 2022}}
+    query = {"category": category, "pub_date": {"$gte": start_date, "$lte": end_date}}
     cursor = collection.find(query, {'score': 1, 'tot_comments': 1, 'pub_date': 1, 'compound' : 1, 'year': 1})
 
     # Create a DataFrame
@@ -60,7 +65,7 @@ def startup(category, index):
             # Prepara i dati per il frontend
             data_to_send = {
                 'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
-                'values': mp_score_truncated.tolist()
+                'values': mp_comments_truncated.tolist()
             }
             return data_to_send
 
@@ -72,7 +77,7 @@ def startup(category, index):
             # Prepara i dati per il frontend
             data_to_send = {
                 'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
-                'values': mp_score_truncated.tolist()
+                'values': mp_sentiment_truncated.tolist()
             }
             return data_to_send
 

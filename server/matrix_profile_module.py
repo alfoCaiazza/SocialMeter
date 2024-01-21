@@ -17,7 +17,8 @@ def get_matrix_profile(app):
             if not all([startDate, endDate, category, index]):
                 return jsonify({'error': 'Mancano alcuni dati necessari'}), 400
 
-            result = startup(category, index)
+            result = startup(category, index, startDate, endDate)
+            print(result)
             return jsonify(result)
         except Exception as e:
             current_app.logger.error(f"Errore: {e}")

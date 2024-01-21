@@ -18,7 +18,7 @@ const MatrixProfileForms = () => {
     const options2 = [
         { value: 'sentiment', label: 'Sentimento' },
         { value: 'score', label: 'Score' },
-        { value: 'comments', label: 'Numero di Commenti' },
+        { value: 'tot_comments', label: 'Numero di Commenti' },
     ];
 
     const renderOptions = (options) => {
@@ -32,6 +32,7 @@ const MatrixProfileForms = () => {
     const handleSubmit = async () => {
         setIsLoading(true);
     
+        // Prepara i dati da inviare all'API
         const dataToSend = {
             startDate,
             endDate,
@@ -40,6 +41,7 @@ const MatrixProfileForms = () => {
         };
     
         try {
+            // Esegui la richiesta POST all'API
             const response = await fetch(`http://localhost:5000/api/create_matrix_profile`, {
                 method: 'POST',
                 headers: {
@@ -47,19 +49,40 @@ const MatrixProfileForms = () => {
                 },
                 body: JSON.stringify(dataToSend),
             });
-
+    
+            // Gestisci la risposta
             if (!response.ok) {
+                // Gestisci il caso in cui la risposta non è ok (es. errori del server)
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
+    
+            // Estrai i dati JSON dalla risposta
             const responseData = await response.json();
-            setChartData(responseData);
+    
+            // Trasforma i dati per il grafico a linee
+            const formattedData = responseData.dates.map((date, index) => {
+                let value = responseData.values[index];
+            
+                // Verifica se il valore è in notazione scientifica
+                if (value.toString().includes('e')) {
+                    // Converti da notazione scientifica a numero decimale e moltiplica se necessario
+                    value = parseFloat(value) * 1000000; // Regola il fattore di moltiplicazione se necessario
+                }
+            
+                return { date: date, value: value };
+            });
+    
+            // Imposta i dati trasformati per il grafico
+            setChartData(formattedData);
         } catch (error) {
+            // Gestisci eventuali errori nella richiesta o nella risposta
             console.error('Si è verificato un errore durante l\'invio dei dati:', error);
         } finally {
+            // Imposta il loading su false una volta completata la richiesta
             setIsLoading(false);
         }
     };
+    
 
 
     return (
@@ -72,7 +95,6 @@ const MatrixProfileForms = () => {
                     <div className="col">
                         <span className="form-label">Categoria</span>
                         <select className="form-select" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                            <option value="">Seleziona una categoria</option>
                             {renderOptions(options1)}
                         </select>
                     </div>
@@ -80,7 +102,6 @@ const MatrixProfileForms = () => {
                     <div className="col">
                         <span className="form-label">Indice</span>
                         <select className="form-select" value={selectedIndex} onChange={(e) => setSelectedIndex(e.target.value)}>
-                            <option value="">Seleziona un indice</option>
                             {renderOptions(options2)}
                         </select>
                     </div>
@@ -101,14 +122,14 @@ const MatrixProfileForms = () => {
                 </div>
             </div>
             <div className="d-flex justify-content-center">
-                <LineChart width={600} height={300} data={chartData}>
-                <XAxis dataKey="dates"/>
-                <YAxis/>
+            <LineChart width={1400} height={380} data={chartData}>
+                <XAxis dataKey="date"/>
+                <YAxis tickFormatter={(value) => Number(value).toFixed(2)}/>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip/>
+                <Tooltip formatter={(value) => Number(value).toFixed(2)}/>
                 <Legend />
-                <Line type="monotone" dataKey="values" stroke="#8884d8" activeDot={{ r: 8 }}/>
-                </LineChart>
+                <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8 }}/>
+            </LineChart>
             </div>
         </div>
     );
