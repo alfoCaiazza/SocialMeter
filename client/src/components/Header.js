@@ -24,7 +24,7 @@ const Header = () => {
       <nav className="navbar navbar-expand" style={{backgroundColor: '#171717'}} >
         <div className="container">
           {showLink && (
-            <Link to='/' className="navbar-brand" style={{marginLeft: '2%', color: 'white'}}>Unamed WebApp</Link>
+            <Link to='/' className="navbar-brand" style={{marginLeft: '2%', color: 'white'}}>SocialMeter</Link>
           )}
           <div className="navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
