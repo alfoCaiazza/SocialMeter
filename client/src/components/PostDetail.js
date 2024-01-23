@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Post from './Post'
+import Post from './Post';
+import SentimentCard from './SentimentCard';
+import ScoreCard from './ScoreCard';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -23,9 +25,22 @@ const PostDetail = () => {
 
   if (!post) return <div>Caricamento...</div>;
 
+  const calculateSentimentCounts = (comments) => {
+    const counts = { Negativo: 0, Neutrale: 0, Positivo: 0 };
+    comments.forEach(comment => {
+      if (comment.sentiment) {
+        counts[comment.sentiment] += 1;
+      }
+    });
+  
+    return counts;
+  };
+
+  const sentimentCounts = calculateSentimentCounts(post.comments);
+
   return (
-    <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-        <div className='position-absolute top-50 start-50 translate-middle' style={{marginTop:'10%'}}>
+    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
+        <div className='my-auto mt-5 mb-2' style={{ width: '80%'}}>
             <Post
                 title={post.title}
                 text={post.text}
@@ -34,8 +49,17 @@ const PostDetail = () => {
                 day={post.day}
                 score={post.score}
                 num_comments={post.tot_comments}
-                comments={post.comments}
+                author={post.author}
             />
+        </div>
+        <div className='w-100 d-flex justify-content-center'>
+          <SentimentCard
+            sentiment={{ ...sentimentCounts, dominant: post.avg_comments_sentiment }}
+          />
+          <ScoreCard
+            upvotes={post.estimated_upvotes}
+            downvotes={post.estimated_downvotes}
+          />
         </div>
     </div>
   );
