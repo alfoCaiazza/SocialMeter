@@ -72,25 +72,57 @@ def scrape_reddit(subreddit, limit=None, category_keywords=None, existing_df=Non
                     continue
 
                 comment_data = {
+                    "id": comment.id,
                     "score": comment.score,
-                    "text": comment.body
+                    "estimated_upvotes": int(comment.score * (comment.upvote_ratio if hasattr(comment, 'upvote_ratio') else 1)),
+                    "estimated_downvotes": int(comment.score * (1 - (comment.upvote_ratio if hasattr(comment, 'upvote_ratio') else 1))),
+                    "text": comment.body,
+                    "author": str(comment.author),
+                    "created_utc": comment.created_utc,
+                    "is_gilded": comment.gilded > 0,
+                    "parent_id": comment.parent_id,
+                    "is_submitter": comment.is_submitter,
+                    "distinguished": comment.distinguished,
+                    "depth": comment.depth,  # Indica il livello di annidamento del commento
+                    "num_replies": len(comment.replies),  # Numero di risposte dirette al commento
+                    "controversiality": comment.controversiality,
+                    "location": comment.location if hasattr(comment, 'location') else None,
                 }
+
                 comments_data.append(comment_data)
 
             pub_date = datetime.fromtimestamp(submission.created_utc, timezone.utc)
 
             post_data = {
-                "category" : category,
+                "category": category,
                 "title": submission.title,
                 "text": submission.selftext,
                 "score": submission.score,
+                "upvote_ratio": submission.upvote_ratio,
                 "id": submission.id,
-                "pub_date": pub_date,
-                "year" : pub_date.year,
-                "month" : pub_date.month,
-                "day" : pub_date.day,
-                "comments": comments_data
+                "url": submission.url,
+                "author": str(submission.author),
+                "num_comments": submission.num_comments,
+                "subreddit": str(submission.subreddit),
+                "created_utc": submission.created_utc,  # Data e ora UTC della creazione
+                "flair": submission.link_flair_text,
+                "is_nsfw": submission.over_18,
+                "is_sticky": submission.stickied,
+                "gilded": submission.gilded,
+                "edited": submission.edited,
+                "is_deleted": submission.author is None,  # Assumendo che post cancellati non abbiano autore
+                "is_archived": submission.archived,
+                "distinguished": submission.distinguished,
+                "media_content": submission.url if submission.is_reddit_media_domain else None,
+                "crosspost_status": [cp.title for cp in submission.crosspost_parent_list] if hasattr(submission, 'crosspost_parent_list') else None,
+                "awards": {award.name: award.count for award in submission.all_awardings},
+                "comments": comments_data,  # Assumendo che comments_data sia già stato raccolto
+                "year": pub_date.year,
+                "month": pub_date.month,
+                "day": pub_date.day,
+                "location": submission.location if hasattr(submission, 'location') else None,
             }
+
             posts_data.append(post_data) 
 
             time.sleep(5)
