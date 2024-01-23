@@ -1,18 +1,7 @@
 from scraping_reddit_data import connect_to_mongo
 from dotenv import load_dotenv
-from io import BytesIO
 import pandas as pd
 import matrixprofile as mp
-import matplotlib.pyplot as plt 
-import base64
-
-def plot_to_base64(plt_figure):
-    buf = BytesIO()
-    plt_figure.savefig(buf, format='png')
-    buf.seek(0)
-    image_base64 = base64.b64encode(buf.read()).decode('utf-8')
-    buf.close()
-    return image_base64
 
 def truncate_series(df, profile):
     min_length = min(len(df), len(profile['mp']))
@@ -28,7 +17,7 @@ def startup(category, index, startDate, endDate):
 
     collection = db['dataAnalysis']
     query = {"category": category, "pub_date": {"$gte": start_date, "$lte": end_date}}
-    cursor = collection.find(query, {'score': 1, 'tot_comments': 1, 'pub_date': 1, 'compound' : 1, 'year': 1})
+    cursor = collection.find(query, {'id': 1, 'score': 1, 'tot_comments': 1, 'pub_date': 1, 'compound' : 1, 'year': 1})
 
     # Create a DataFrame
     df = pd.DataFrame(list(cursor))
@@ -79,6 +68,9 @@ def startup(category, index, startDate, endDate):
                 'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
                 'values': mp_sentiment_truncated.tolist()
             }
+            return data_to_send
+        elif index == "tot_posts":
+
             return data_to_send
 
     except Exception as e:
