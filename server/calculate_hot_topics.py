@@ -7,7 +7,7 @@ import string
 import nltk 
 
 
-def retrieve_posts_per_sentiment(sentiment_type, category):
+def retrieve_posts_per_category(category):
     setup_logging()
     load_dotenv()
 
@@ -17,8 +17,7 @@ def retrieve_posts_per_sentiment(sentiment_type, category):
 
     query = {
         "year" : {"$gte": 2023},
-        "category": category,
-        "sentiment" : sentiment_type
+        "category": category
     }
 
     posts = list(collection.find(query))
@@ -61,14 +60,14 @@ def calculate_word_percentages(word_frequencies):
     
     return top_percentages
 
-def hot_topics(category, sentiment_type):
+def hot_topics(category):
     setup_logging()
     load_dotenv()
 
     nltk.download('punkt')
     nltk.download('stopwords')
 
-    posts = retrieve_posts_per_sentiment(sentiment_type, category)
+    posts = retrieve_posts_per_category(category)
     frequencies = get_sentiment_frequencies(posts)
     percentages = calculate_word_percentages(frequencies)
 

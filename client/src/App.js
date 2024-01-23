@@ -10,7 +10,6 @@ import Trends from './components/Trends';
 import HotTopics from './components/HotTopics';
 import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
-import HotTopicsSentiment from './components/HotTopicsSentiment';
 import PostDetail from './components/PostDetail';
 import MatrixProfileForms from './components/MatrixProfileForms';
 import './components/homepage.css';
@@ -32,12 +31,10 @@ function App() {
         <Route path="/filtered_posts" element={<FilteredPosts />} />
         <Route path="/post/:postId" element={<PostDetail  />} />
         <Route path="/hot_topics_category" element={<HotTopicsCategory />} />
-        <Route path="/hot_topics_sentiment/:category" element={<HotTopicsSentiment />} />
-        <Route path="/hot_topics/:category/:sentiment" element={<HotTopics />} />
+        <Route path="/hot_topics/:category" element={<HotTopics />} />
         <Route path="/trends_category" element={<TrendsCategory />} />
         <Route path="/trends/:category" element={<Trends />} />
         <Route path="/matrix_profile" element={<MatrixProfileForms />} />
-        <Route path="/shadow" element={<Features />} />
         <Route path='/results' element={<Results />} />
       </Routes>
       <Footer />

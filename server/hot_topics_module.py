@@ -6,9 +6,8 @@ def get_hotTopics(app):
     def inner_get_hotTopics():
         try:
             category = request.args.get('topics_category')
-            sentiment_type = request.args.get('sentiment_type')
 
-            result = hot_topics(category, sentiment_type)
+            result = hot_topics(category)
 
             return jsonify(result)
         except Exception as e:
