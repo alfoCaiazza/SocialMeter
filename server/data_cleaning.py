@@ -10,10 +10,13 @@ from nltk.tokenize import word_tokenize
 
 def remove_stopwords(text):
     words = word_tokenize(text, language='italian')
+    words_en = word_tokenize(text, language='english')
 
     # Filtra le parole rimuovendo le stopwords
     it_stopwords = set(stopwords.words('italian'))
+    en_stopwords = set(stopwords.words('english'))
     filtered_text = [word for word in words if word.lower() not in it_stopwords]
+    filtered_text = [word for word in words_en if word.lower() not in en_stopwords]
 
     # Riunisci il testo filtrato
     cleaned_text = ' '.join(filtered_text)

@@ -102,9 +102,9 @@ def scrape_reddit(subreddit, limit=None, category_keywords=None, existing_df=Non
                 "id": submission.id,
                 "url": submission.url,
                 "author": str(submission.author),
-                "num_comments": submission.num_comments,
+                "tot_comments": submission.num_comments,
                 "subreddit": str(submission.subreddit),
-                "created_utc": submission.created_utc,  # Data e ora UTC della creazione
+                "pub_date": pub_date,  # Data e ora UTC della creazione
                 "flair": submission.link_flair_text,
                 "is_nsfw": submission.over_18,
                 "is_sticky": submission.stickied,
