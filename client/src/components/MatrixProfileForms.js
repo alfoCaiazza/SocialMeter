@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { useNavigate } from 'react-router-dom';
 
 const MatrixProfileForms = () => {
     const [startDate, setStartDate] = useState('');
@@ -9,6 +10,7 @@ const MatrixProfileForms = () => {
     const [chartData, setChartData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
+    const navigate = useNavigate();
 
     const options1 = [
         { value: 'woman_condition', label: 'Sessismo' },
@@ -94,8 +96,7 @@ const MatrixProfileForms = () => {
     };
 
     const onDotClick = (data) => {
-        // Assumendo che data contenga l'ID del post o dettagli del post
-        setSelectedPost(data);
+        navigate(`/post/${data.id}`);
       };      
 
     return (
@@ -137,24 +138,15 @@ const MatrixProfileForms = () => {
                 </div>
             </div>
             <div className="d-flex justify-content-center">
-            <LineChart width={1400} height={380} data={chartData}>
-                <XAxis dataKey="date"/>
-                <YAxis tickFormatter={(value) => Number(value).toFixed(2)}/>
-                <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip content={<CustomTooltip />}/>
-                <Legend />
-                <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }}/>
-            </LineChart>
+                <LineChart width={1400} height={380} data={chartData}>
+                    <XAxis dataKey="date"/>
+                    <YAxis tickFormatter={(value) => Number(value).toFixed(2)}/>
+                    <CartesianGrid strokeDasharray="3 3"/>
+                    <Tooltip content={<CustomTooltip />}/>
+                    <Legend />
+                    <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }}/>
+                </LineChart>
             </div>
-            {selectedPost && (
-                <div className="post-details-section">
-                    {/* Visualizza qui i dettagli del post selezionato */}
-                    <h3>Dettagli del Post Selezionato:</h3>
-                    {/* Puoi personalizzare questo in base alle tue esigenze */}
-                    <p>ID del post: {selectedPost.id}</p>
-                    {/* ...altri dettagli... */}
-                </div>
-            )}
         </div>
     );
 }
