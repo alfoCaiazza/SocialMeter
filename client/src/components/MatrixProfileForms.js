@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ const MatrixProfileForms = () => {
     const [selectedIndex, setSelectedIndex] = useState('');
     const [chartData, setChartData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedPost, setSelectedPost] = useState(null);
     const navigate = useNavigate();
 
     const options1 = [
@@ -19,7 +18,7 @@ const MatrixProfileForms = () => {
     ];
     
     const options2 = [
-        { value: 'sentiment', label: 'Sentimento' },
+        { value: 'compound', label: 'Sentimento' },
         { value: 'score', label: 'Score' },
         { value: 'tot_comments', label: 'Numero di Commenti' },
         { value: 'tot_posts', label: 'Numero di Post' },
@@ -35,20 +34,15 @@ const MatrixProfileForms = () => {
 
     const handleSubmit = async () => {
         setIsLoading(true);
-        const dataToSend = {
-            startDate,
-            endDate,
-            category: selectedCategory,
-            index: selectedIndex
-        };
-    
+        setChartData([]); // Resetta i dati del grafico per evitare di mostrare vecchi dati
+
         try {
             const response = await fetch(`http://localhost:5000/api/create_matrix_profile`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(dataToSend),
+                body: JSON.stringify({ startDate, endDate, category: selectedCategory, index: selectedIndex }),
             });
     
             if (!response.ok) {
@@ -56,20 +50,28 @@ const MatrixProfileForms = () => {
             }
     
             const responseData = await response.json();
-            const formattedData = responseData.dates.map((date, index) => {
-                let value = responseData.values[index];
-                let postDetails = responseData.posts[index]; // Assumendo che ogni elemento in 'posts' corrisponda alla stessa data e indice in 'dates' e 'values'
     
-                return {
-                    date: date,
-                    value: value,
-                    id: postDetails.id,
-                    score: postDetails.score,
-                    tot_comments: postDetails.tot_comments,
-                    compound: postDetails.compound
-                    // Aggiungi qui altre informazioni rilevanti del post
-                };
-            });
+            let formattedData;
+            if (selectedIndex === 'tot_posts') {
+                formattedData = responseData.dates.map((date, index) => {
+                    return {
+                        date: date,
+                        value: responseData.values[index]
+                    };
+                });
+            } else {
+                formattedData = responseData.dates.map((date, index) => {
+                    let postDetails = responseData.posts[index];
+                    return {
+                        date: date,
+                        value: responseData.values[index],
+                        id: postDetails.id,
+                        score: postDetails.score,
+                        tot_comments: postDetails.tot_comments,
+                        compound: postDetails.compound
+                    };
+                });
+            }
     
             setChartData(formattedData);
         } catch (error) {
@@ -79,28 +81,38 @@ const MatrixProfileForms = () => {
         }
     };
     
+    
     const CustomTooltip = ({ active, payload }) => {
-        if (active && payload && payload.length) {
-            const data = payload[0].payload;
-            return (
-                <div className="custom-tooltip" style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
-                    <p>ID del post: {data.id}</p>
-                    <p>Data: {data.date}</p>
-                    <p>{selectedIndex}: {data.value}</p>
-                </div>
-            );
-        }
+        // if (active && payload && payload.length) {
+        //     const data = payload[0].payload;
+        //     return (
+        //         <div className="custom-tooltip" style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
+        //             <p>Data: {data.date}</p>
+        //             <p>{selectedIndex}: {data.value}</p>
+        //             {selectedIndex !== 'tot_posts' && (
+        //                 <>
+        //                     <p>ID del post: {data.id}</p>
+        //                     <p>Score: {data.score}</p>
+        //                     <p>Totale Commenti: {data.tot_comments}</p>
+        //                     <p>Compound: {data.compound}</p>
+        //                 </>
+        //             )}
+        //         </div>
+        //     );
+        // }
         return null;
     };
 
     const onDotClick = (data) => {
-        navigate(`/post/${data.id}`);
-      };      
+        if (selectedIndex !== 'tot_posts' && data.id) {
+            navigate(`/post/${data.id}`);
+        }
+    };      
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
             <div className='d-flex justify-content-center' style={{ marginTop: '7%' }}>
-                <h2>Crea la Matrix Profile in base ai tuoi interessi</h2>
+                <h2>Personalizza e Osserva l'Evoluzione delle Interazioni</h2>
             </div>
             <div className="d-flex justify-content-center align-items-center" style={{padding: '4% 0'}}>
                 <div className="row">
@@ -136,18 +148,21 @@ const MatrixProfileForms = () => {
                 </div>
             </div>
             <div className="d-flex justify-content-center">
-                <LineChart width={1400} height={380} data={chartData}>
-                    <XAxis dataKey="date"/>
-                    <YAxis values='value'/>
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <Tooltip content={<CustomTooltip />}/>
-                    <Legend />
-                    <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }}/>
-                </LineChart>
+                {isLoading ? (
+                    <p>Caricamento in corso...</p>
+                ) : chartData.length > 0 ? ( // Mostra il grafico solo se chartData non è vuoto
+                    <LineChart width={1400} height={380} data={chartData}>
+                        <XAxis dataKey="date"/>
+                        <YAxis values='value'/>
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <Tooltip content={<CustomTooltip />}/>
+                        <Legend />
+                        <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }}/>
+                    </LineChart>
+                ) : null}
             </div>
         </div>
     );
 }
-
 
 export default MatrixProfileForms;
