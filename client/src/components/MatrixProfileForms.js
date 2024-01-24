@@ -138,7 +138,7 @@ const MatrixProfileForms = () => {
             <div className="d-flex justify-content-center">
                 <LineChart width={1400} height={380} data={chartData}>
                     <XAxis dataKey="date"/>
-                    <YAxis tickFormatter={(value) => Number(value).toFixed(2)}/>
+                    <YAxis values='value'/>
                     <CartesianGrid strokeDasharray="3 3"/>
                     <Tooltip content={<CustomTooltip />}/>
                     <Legend />
