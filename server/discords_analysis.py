@@ -11,14 +11,6 @@ def truncate_series(df, profile):
     min_length = min(len(df), len(profile['mp']))
     return df.iloc[:min_length], profile['mp'][:min_length]
 
-def find_anomalies(df, matrix_profile, threshold):
-    """
-    Identifica le anomalie nel Matrix Profile e restituisce gli ID dei post corrispondenti.
-    """
-    anomalies_indices = np.where(matrix_profile > threshold)[0]
-    anomaly_posts = df.iloc[anomalies_indices]
-    return anomaly_posts
-
 def startup(category, index, startDate, endDate):
     """
     Avvia il processo di analisi dei dati di Reddit.
@@ -57,59 +49,33 @@ def startup(category, index, startDate, endDate):
             mp_score = mp.compute(serie_score, windows=4) 
             df_truncated, mp_score_truncated = truncate_series(df, mp_score)
 
-            # Threshold for anomaly detection
-            threshold = np.mean(mp_score_truncated) + 2 * np.std(mp_score_truncated)
-
-            # Detect anomalies
-            anomaly_posts = find_anomalies(df_truncated, mp_score_truncated, threshold)
-
-            # Prepare data for the frontend
-            data_to_send = {
-                'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
-                'values': mp_score_truncated.tolist(),
-                'anomalies': anomaly_posts[['id', 'pub_date', 'score', 'tot_comments', 'compound']].to_dict(orient='records')
-            }
-            return data_to_send
+            df_truncated['value'] = mp_score_truncated
 
         elif index == "tot_comments":
-            # Calculate Matrix Profile for score
+            # Calculate Matrix Profile for total comments
             mp_tot_comments = mp.compute(serie_comments, windows=4) 
             df_truncated, mp_tot_comments_truncated = truncate_series(df, mp_tot_comments)
 
-            # Threshold for anomaly detection
-            threshold = np.mean(mp_tot_comments_truncated) + 2 * np.std(mp_tot_comments_truncated)
-
-            # Detect anomalies
-            anomaly_posts = find_anomalies(df_truncated, mp_tot_comments_truncated, threshold)
-
-            # Prepare data for the frontend
-            data_to_send = {
-                'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
-                'values': mp_tot_comments_truncated.tolist(),
-                'anomalies': anomaly_posts[['id', 'pub_date', 'score', 'tot_comments', 'compound']].to_dict(orient='records')
-            }
-            return data_to_send
+            df_truncated['value'] = mp_tot_comments_truncated
 
         elif index == "sentiment":
-            # Calculate Matrix Profile for score
+            # Calculate Matrix Profile for sentiment
             mp_sentiment = mp.compute(serie_sentiment, windows=4) 
             df_truncated, mp_sentiment_truncated = truncate_series(df, mp_sentiment)
 
-            # Threshold for anomaly detection
-            threshold = np.mean(mp_sentiment_truncated) + 2 * np.std(mp_sentiment_truncated)
+            df_truncated['value'] = mp_sentiment_truncated
 
-            # Detect anomalies
-            anomaly_posts = find_anomalies(df_truncated, mp_sentiment_truncated, threshold)
-
-            # Prepare data for the frontend
-            data_to_send = {
-                'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
-                'values': mp_sentiment_truncated.tolist(),
-                'anomalies': anomaly_posts[['id', 'pub_date', 'score', 'tot_comments', 'compound']].to_dict(orient='records')
-            }
-            return data_to_send
-
-        # Aggiungere eventuali altri casi di analisi qui
+        # Prepare data for the frontend
+        data_to_send = {
+            'dates': df_truncated['pub_date'].dt.strftime('%Y-%m-%d').tolist(),
+            'values': df_truncated['value'].tolist(),
+            'posts': df_truncated[['id', 'pub_date', 'score', 'tot_comments', 'compound', 'value']].to_dict(orient='records')
+        }
+        return data_to_send
 
     except Exception as e:
         print(f"Si è verificato un errore: {e}")
+        return None
+
+# Esempio di chiamata alla funzione
+# print(startup('woman_condition', 'tot_comments', '2020-01-01', '2024-01-01'))

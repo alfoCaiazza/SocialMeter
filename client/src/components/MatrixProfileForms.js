@@ -8,6 +8,7 @@ const MatrixProfileForms = () => {
     const [selectedIndex, setSelectedIndex] = useState('');
     const [chartData, setChartData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     const options1 = [
         { value: 'woman_condition', label: 'Sessismo' },
@@ -31,8 +32,6 @@ const MatrixProfileForms = () => {
 
     const handleSubmit = async () => {
         setIsLoading(true);
-    
-        // Prepara i dati da inviare all'API
         const dataToSend = {
             startDate,
             endDate,
@@ -41,7 +40,6 @@ const MatrixProfileForms = () => {
         };
     
         try {
-            // Esegui la richiesta POST all'API
             const response = await fetch(`http://localhost:5000/api/create_matrix_profile`, {
                 method: 'POST',
                 headers: {
@@ -50,40 +48,55 @@ const MatrixProfileForms = () => {
                 body: JSON.stringify(dataToSend),
             });
     
-            // Gestisci la risposta
             if (!response.ok) {
-                // Gestisci il caso in cui la risposta non è ok (es. errori del server)
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
     
-            // Estrai i dati JSON dalla risposta
             const responseData = await response.json();
-    
-            // Trasforma i dati per il grafico a linee
             const formattedData = responseData.dates.map((date, index) => {
                 let value = responseData.values[index];
-            
-                // Verifica se il valore è in notazione scientifica
-                if (value.toString().includes('e')) {
-                    // Converti da notazione scientifica a numero decimale e moltiplica se necessario
-                    value = parseFloat(value) * 1000000; // Regola il fattore di moltiplicazione se necessario
-                }
-            
-                return { date: date, value: value };
+                let postDetails = responseData.posts[index]; // Assumendo che ogni elemento in 'posts' corrisponda alla stessa data e indice in 'dates' e 'values'
+    
+                return {
+                    date: date,
+                    value: value,
+                    id: postDetails.id,
+                    score: postDetails.score,
+                    tot_comments: postDetails.tot_comments,
+                    compound: postDetails.compound
+                    // Aggiungi qui altre informazioni rilevanti del post
+                };
             });
     
-            // Imposta i dati trasformati per il grafico
             setChartData(formattedData);
         } catch (error) {
-            // Gestisci eventuali errori nella richiesta o nella risposta
             console.error('Si è verificato un errore durante l\'invio dei dati:', error);
         } finally {
-            // Imposta il loading su false una volta completata la richiesta
             setIsLoading(false);
         }
     };
     
+    const CustomTooltip = ({ active, payload }) => {
+        if (active && payload && payload.length) {
+            const data = payload[0].payload;
+            return (
+                <div className="custom-tooltip" style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
+                    <p>ID del post: {data.id}</p>
+                    <p>Data: {data.date}</p>
+                    <p>Valore: {data.value.toFixed(2)}</p>
+                    <p>Score: {data.score}</p>
+                    <p>Totale Commenti: {data.tot_comments}</p>
+                    <p>Sentimento: {data.compound}</p>
+                </div>
+            );
+        }
+        return null;
+    };
 
+    const onDotClick = (data) => {
+        // Assumendo che data contenga l'ID del post o dettagli del post
+        setSelectedPost(data);
+      };      
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
@@ -128,11 +141,20 @@ const MatrixProfileForms = () => {
                 <XAxis dataKey="date"/>
                 <YAxis tickFormatter={(value) => Number(value).toFixed(2)}/>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <Tooltip formatter={(value) => Number(value).toFixed(2)}/>
+                <Tooltip content={<CustomTooltip />}/>
                 <Legend />
-                <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8 }}/>
+                <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }}/>
             </LineChart>
             </div>
+            {selectedPost && (
+                <div className="post-details-section">
+                    {/* Visualizza qui i dettagli del post selezionato */}
+                    <h3>Dettagli del Post Selezionato:</h3>
+                    {/* Puoi personalizzare questo in base alle tue esigenze */}
+                    <p>ID del post: {selectedPost.id}</p>
+                    {/* ...altri dettagli... */}
+                </div>
+            )}
         </div>
     );
 }
