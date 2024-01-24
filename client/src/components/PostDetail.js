@@ -4,6 +4,7 @@ import axios from 'axios';
 import Post from './Post';
 import SentimentCard from './SentimentCard';
 import ScoreCard from './ScoreCard';
+import SentimentSummaryCard from './SentimentSummaryCard';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -53,6 +54,12 @@ const PostDetail = () => {
             />
         </div>
         <div className='w-100 d-flex justify-content-center'>
+          <SentimentSummaryCard
+            positivity={post.positivity}
+            negativity={post.negativity}
+            neutrality={post.neutrality}
+            dominantSentiment={post.sentiment}
+          />
           <SentimentCard
             sentiment={{ ...sentimentCounts, dominant: post.avg_comments_sentiment }}
           />

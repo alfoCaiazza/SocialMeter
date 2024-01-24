@@ -3,7 +3,8 @@ const sentimentBarStyle = {
     height: '20px',
     borderRadius: '5px',
     overflow: 'hidden',
-    marginBottom: '10px'
+    marginBottom: '10px',
+    marginTop: '45px'
 };
 
 const sentimentValueStyle = {

@@ -31,7 +31,7 @@ const ScoreCard = ({ upvotes, downvotes }) => {
     return (
         <div style={cardStyle}>
             <div style={headerStyle}>DISTRIBUZIONE SCORE</div>
-            <ScoreBar upvotes={upvotes} downvotes={downvotes} />
+            <ScoreBar upvotes={upvotes} downvotes={downvotes}/>
             <div style={sentimentNumbersStyle}>
                 <div>
                     <div>Upvote</div>
