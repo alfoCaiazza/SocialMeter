@@ -22,6 +22,7 @@ const MatrixProfileForms = () => {
         { value: 'sentiment', label: 'Sentimento' },
         { value: 'score', label: 'Score' },
         { value: 'tot_comments', label: 'Numero di Commenti' },
+        { value: 'tot_posts', label: 'Numero di Post' },
     ];
 
     const renderOptions = (options) => {
@@ -85,10 +86,7 @@ const MatrixProfileForms = () => {
                 <div className="custom-tooltip" style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
                     <p>ID del post: {data.id}</p>
                     <p>Data: {data.date}</p>
-                    <p>Valore: {data.value.toFixed(2)}</p>
-                    <p>Score: {data.score}</p>
-                    <p>Totale Commenti: {data.tot_comments}</p>
-                    <p>Sentimento: {data.compound}</p>
+                    <p>{selectedIndex}: {data.value}</p>
                 </div>
             );
         }

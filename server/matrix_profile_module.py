@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, current_app
-from discords_analysis import startup
+from calculate_discords import startup
 
 def get_matrix_profile(app):
     @app.route('/api/create_matrix_profile', methods=['POST'])
