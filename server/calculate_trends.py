@@ -15,22 +15,43 @@ def get_posts(category):
         'Neutrale': 0,
         'Totale': 0
     }
+    
+    # Inizializzazione della struttura dati per i conteggi annuali
+    yearly_sentiment = {}
 
     for post in cursor:
         compound = post.get('compound')
+        year = post.get('year')
+        
+        # Inizializza il conteggio per l'anno se non esiste
+        if year and year not in yearly_sentiment:
+            yearly_sentiment[year] = {'Negativo': 0, 'Positivo': 0, 'Neutrale': 0}
+        
         # Classifica il post in base al suo sentiment
         if compound == 0:  # assumendo che sentiment negativo sia < 0
             sentiment_counts['Negativo'] += 1
+            if year:
+                yearly_sentiment[year]['Negativo'] += 1
         elif compound == 2:  # assumendo che sentiment positivo sia > 0
             sentiment_counts['Positivo'] += 1
+            if year:
+                yearly_sentiment[year]['Positivo'] += 1
         elif compound == 1:  # sentiment neutrale
             sentiment_counts['Neutrale'] += 1
+            if year:
+                yearly_sentiment[year]['Neutrale'] += 1
         
         sentiment_counts['Totale'] += 1
 
-    return sentiment_counts
+    sorted_yearly_sentiment = dict(sorted(yearly_sentiment.items()))
+    # Chiudi la connessione al database
+    client.close()
+
+    # Restituisci sia i conteggi totali che quelli annuali
+    return sentiment_counts, sorted_yearly_sentiment
 
 # Esempio di chiamata alla funzione
 category = 'woman_condition'
-sentiment_counts = get_posts(category)
+sentiment_counts, yearly_sentiment = get_posts(category)
 print(sentiment_counts)
+print(yearly_sentiment)

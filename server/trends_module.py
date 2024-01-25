@@ -9,9 +9,15 @@ def get_sentiments(app, db):
             category = request.args.get('category')
 
             if not category:
-                return jsonify({'error' : 'Category is required'}), 400
+                return jsonify({'error': 'Category is required'}), 400
 
-            results = get_posts(category)
+            sentiment_counts, yearly_sentiment = get_posts(category)
+
+            # Impacchetta i risultati in un singolo oggetto JSON per la risposta
+            results = {
+                'sentiment_counts': sentiment_counts,
+                'yearly_sentiment': yearly_sentiment
+            }
             return jsonify(results)
 
         except Exception as e:
