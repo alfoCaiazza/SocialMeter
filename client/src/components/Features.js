@@ -6,7 +6,7 @@ const HomePage = () => {
     { to: '/filtered_posts', label: 'Filtra Post' },
     { to: '/hot_topics_category', label: 'Parole Chiavi' },
     { to: '/trends_category', label: 'Tendenze' },
-    { to: '/matrix_profile', label: 'Evoluzione delle Iterazioni' },
+    { to: '/matrix_profile', label: 'Evoluzione Interazioni' },
   ];
 
   return (
