@@ -11,7 +11,7 @@ def get_post(app, db):
             if not id:
                 return jsonify({'error': 'postId is required'}), 400
 
-            result = db["dataAnalysis"].find_one({"id": id})
+            result = db["analisedPosts"].find_one({"id": id})
 
             # Gestisci il caso in cui il documento non sia trovato
             if result is None:

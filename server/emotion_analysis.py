@@ -1,21 +1,17 @@
 from scraping_reddit_data import setup_logging, connect_to_mongo
 from dotenv import load_dotenv
-from ita_BERT import classify_sentiment
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from feel_it_analizer import get_emotion
+from feel_it import EmotionClassifier
 import logging
 
-# Carica il tokenizer e il modello
-tokenizer = AutoTokenizer.from_pretrained("neuraly/bert-base-italian-cased-sentiment")
-model = AutoModelForSequenceClassification.from_pretrained("neuraly/bert-base-italian-cased-sentiment")
+emotion_classifier = EmotionClassifier()
 
-def calculate_comments_setiment(comments):
+def calculate_comments_emotion(comments):
     comments_sentiment = []
 
     for comment in comments:
-        compound, sentiment, probability = classify_sentiment(comment['text'], tokenizer, model)
-
-        comment['compound'] = compound
-        comment['sentiment'] = sentiment
+        emotion = get_emotion(comment['text'], emotion_classifier)
+        comment['emotion'] = emotion
 
         comments_sentiment.append(comment)
     
@@ -27,9 +23,9 @@ def calculate_setiment():
 
     mongo_client, db = connect_to_mongo()
 
-    collection = db['cleanedPosts']
+    collection = db['dataAnalysis']
     posts = collection.find({'category':'woman_condition'})
-    data_analysis = db['dataAnalysis']
+    data_analysis = db['analisedPosts']
 
     index = 1
 
@@ -44,16 +40,11 @@ def calculate_setiment():
             posts = collection.find({}).skip(index)  # Continua dal prossimo post
             data_analysis = db['dataAnalysis']
         
-        compound, sentiment, probability = classify_sentiment(post['text'], tokenizer, model)
+        post['emotion'] = get_emotion(post['text'], emotion_classifier)
         
         comments = post.get('comments', [])
-        comments_sentiment = calculate_comments_setiment(comments=comments)
+        comments_sentiment = calculate_comments_emotion(comments=comments)
 
-        post['sentiment'] = sentiment
-        post['compound'] = compound
-        post['positivity'] = round(probability[2].item(), 3)
-        post['neutrality'] =round(probability[1].item(), 3)
-        post['negativity'] = round(probability[0].item(), 3)
         post['comments'] = comments_sentiment
         
         data_analysis.insert_one(post)

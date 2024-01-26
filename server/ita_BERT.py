@@ -1,13 +1,7 @@
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
-import numpy
-
-# Carica il tokenizer e il modello
-tokenizer = AutoTokenizer.from_pretrained("neuraly/bert-base-italian-cased-sentiment")
-model = AutoModelForSequenceClassification.from_pretrained("neuraly/bert-base-italian-cased-sentiment")
 
 # Funzione per classificare il sentiment
-def classify_sentiment(sentence):
+def classify_sentiment(sentence, tokenizer, model):
     # Prepara i dati di input
     inputs = tokenizer(sentence, return_tensors="pt", truncation=True, max_length=512)
 

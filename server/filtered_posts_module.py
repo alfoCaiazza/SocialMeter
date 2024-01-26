@@ -6,7 +6,8 @@ def get_filtered_posts(app, db):
     @app.route('/api/get_posts', methods=['GET'])
     def inner_get_filtered_posts():
         try:
-            posts = db["dataAnalysis"].find({})
+            category = request.args.get('post_category')
+            posts = db["dataAnalysis"].find({'category' : category})
             result = [{
                 'category' : post['category'],
                 'id': post['id'],
