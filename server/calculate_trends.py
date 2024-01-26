@@ -5,7 +5,7 @@ def get_posts(category):
     load_dotenv()
     client, db = connect_to_mongo()
 
-    collection = db['dataAnalysis']
+    collection = db['analisedPosts']
     cursor = collection.find({'category': category})
 
     # Inizializzazione dei contatori per ciascun tipo di sentiment
@@ -18,10 +18,20 @@ def get_posts(category):
     
     # Inizializzazione della struttura dati per i conteggi annuali
     yearly_sentiment = {}
+    emotion_counts = {}
+    subreddit_counts = {}
 
     for post in cursor:
         compound = post.get('compound')
         year = post.get('year')
+        emotion = post.get('emotion')
+        subreddit = post.get('subreddit')
+
+        if emotion:
+            emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
+
+        if subreddit:
+            subreddit_counts[subreddit] = subreddit_counts.get(subreddit, 0) + 1
         
         # Inizializza il conteggio per l'anno se non esiste
         if year and year not in yearly_sentiment:
@@ -48,4 +58,5 @@ def get_posts(category):
     client.close()
 
     # Restituisci sia i conteggi totali che quelli annuali
-    return sentiment_counts, sorted_yearly_sentiment
+    return sentiment_counts, sorted_yearly_sentiment, emotion_counts, subreddit_counts
+
