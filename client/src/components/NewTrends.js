@@ -10,6 +10,8 @@ const NewTrends = () => {
   const [trendsOverTime, setTrendsOverTime] = useState([]);
   const { category } = useParams();
   const [totalPosts, setTotalPosts] = useState(0);
+  const [emotionData, setEmotionData] = useState([]);
+  const [subredditData, setSubredditData] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,6 +24,16 @@ const NewTrends = () => {
         }
         if (result.data.yearly_sentiment) {
           setTrendsOverTime(processYearlyData(result.data.yearly_sentiment));
+        }
+        if (result.data.emotion_counts) {
+          // Processa e imposta i dati di 'emotion'
+          const processedEmotionData = processEmotionData(result.data.emotion_counts);
+          setEmotionData(processedEmotionData);
+        }
+        if (result.data.subreddit_counts) {
+          // Processa e imposta i dati di 'subreddit'
+          const processedSubredditData = processSubredditData(result.data.subreddit_counts);
+          setSubredditData(processedSubredditData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -71,6 +83,22 @@ const NewTrends = () => {
 
     // Return the string for the given category, or a default string if the category is not found
     return categoryStrings[category];
+  };
+
+  // Esempio di funzione per processare i dati di 'emotion'
+  const processEmotionData = (emotionCounts) => {
+    return Object.entries(emotionCounts).map(([emotion, count]) => ({
+      name: emotion,
+      value: count
+    }));
+  };
+
+  // Esempio di funzione per processare i dati di 'subreddit'
+  const processSubredditData = (subredditCounts) => {
+    return Object.entries(subredditCounts).map(([subreddit, count]) => ({
+      name: subreddit,
+      value: count
+    }));
   };
 
   const renderCustomTooltip = ({ active, payload }) => {
@@ -138,33 +166,68 @@ const NewTrends = () => {
   const trendDescription = calculateTrendDescription();
   const mostProminentSentiment = findMostProminentSentiment();
 
-  const COLORS = ['#f44336', '#ffc658', '#82ca9d',]; // Colori per ogni slice
+  const COLORS = ['#66f4f0', '#b298dc','#6f2dbd', '#e39774',' #8b95c9',' #e4be9e', '#a663cc',' #b8d0eb']; // Colori per ogni slice
 
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
         <div className='text-center mt-4'>
           <h2 className='display-6' style={{ color: '#171717' }}>
-            <strong>Distribuzione del sentimento per la tematica {getCategoryString(category)}</strong>
+            <strong>Distribuzione risulati per la tematica {getCategoryString(category)}</strong>
           </h2>
         </div>
-        <PieChart width={400} height={400} style={{ marginTop: '2rem' }}>
-          <Pie 
-              data={data} 
-              dataKey="value" 
-              nameKey="name" 
-              cx="50%" 
-              cy="50%" 
-              outerRadius={150} 
-              fill="#8884d8"
-              label
-          >
-              {data.map((entry, index) => (
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
+          <div>
+            <div className='text-center mt-4'>
+              <p>SENTIMENTO</p>
+            </div>
+            <PieChart width={400} height={400} style={{ marginTop: '2rem' }}>
+              <Pie 
+                  data={data} 
+                  dataKey="value" 
+                  nameKey="name" 
+                  cx="50%" 
+                  cy="50%" 
+                  outerRadius={150} 
+                  fill="#8884d8"
+                  label
+              >
+                  {data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+              </Pie>
+              <Tooltip content={renderCustomTooltip} />
+              <Legend />
+            </PieChart>
+          </div>
+          <div>
+            <div className='text-center mt-4'>
+                <p>EMOZIONE</p>
+            </div>      
+            <PieChart width={400} height={400}>
+              <Pie data={emotionData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150}>
+                {emotionData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-          </Pie>
-          <Tooltip content={renderCustomTooltip} />
-          <Legend />
-        </PieChart>
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
+          <div>
+            <div className='text-center mt-4'>
+              <p>SUBREDDIT</p>
+            </div>
+            <PieChart width={400} height={400}>
+              <Pie data={subredditData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150}>
+                {subredditData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </div>
+        </div>
         <div className='text-center mt-4' style={{ width: '90%' }}>
           <p style={{ fontSize: '1.2rem' }}>
             Dall'analisi di {totalPosts} post pubblicati sulla tematica {getCategoryString(category)}, si distilla una mappa dei sentimenti prevalenti: il {findPercentage('Negativo')}% manifesta una connotazione negativa, il {findPercentage('Positivo')}% trasmette un'impressione positiva, e il {findPercentage('Neutrale')}% si presenta con una tonalità neutra. Questi dati offrono una visione quantitativa del sentiment generale espresso attraverso i post.
