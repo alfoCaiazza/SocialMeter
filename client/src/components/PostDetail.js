@@ -112,6 +112,9 @@ const PostDetail = () => {
 
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
+        <div className='text-center' style={{marginTop: "3%"}}>
+          <h2 className='display-6' style={{marginTop: '1%', color: '#171717'}}><strong>Approfondisci l'analisi del post</strong></h2>
+        </div>
         <div className='my-auto mt-5 mb-2' style={{ width: '80%' }}>
             <Post
                 title={post.title}
@@ -123,6 +126,11 @@ const PostDetail = () => {
                 num_comments={post.tot_comments}
                 author={post.author}
             />
+        </div>
+        <div className='text-center mt-4' style={{ width: '90%' }}>
+          <p style={{ fontSize: '1.5rem' }}>
+            Dall'analisi congiunta del sentimento e dell'emozione di post e community sono emersi i seguenti risultati:
+          </p>
         </div>
         <div className='row w-100 justify-content-center' style={{ maxWidth: '1200px' }}> {/* Aggiunta della classe row e impostazione della larghezza massima */}
           <div className='col-md-4 mb-4'> {/* Ogni card in una colonna di 4 unità */}
@@ -148,6 +156,11 @@ const PostDetail = () => {
           <div className='col-md-4 mb-4'>
             <EmotionCommunityCard emotion={{ ...emotionCounts, dominant: dominantEmotion }} />
           </div>
+        </div>
+        <div className='text-center mt-4' style={{ width: '90%' }}>
+          <p style={{ fontSize: '1.5rem' }}>
+            Il grafico mostra la tendenza dell'attivita dei redditors nel post 
+          </p>
         </div>
         <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', marginTop: '5%' }}>
           <div style={{ width: '1000px' }}> {/* Imposta la larghezza desiderata per il LineChart qui */}
