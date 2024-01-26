@@ -1,6 +1,38 @@
-table {
+.table {
+    border-collapse: separate;
     max-width: 90%; /* Percentuale della larghezza del contenitore */
-    margin: 0 auto; /* Centra la tabella orizzontalmente */
+    margin: 0 auto; 
+    border-spacing: 0;
+    border-radius: 8px; /* Aggiusta questo valore per modificare il raggio dell'arrotondamento */
+    overflow: hidden; /* Assicurati che il background e i bordi delle celle interne non fuoriescano */
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
+}
+
+.table tbody tr:first-child td:first-child {
+    border-top-left-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
+}
+
+.table tbody tr:first-child td:last-child {
+    border-top-right-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
+}
+
+.table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
+}
+
+.table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .pagination-container {

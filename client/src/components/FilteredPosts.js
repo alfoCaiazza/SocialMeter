@@ -68,6 +68,9 @@ const FilteredPosts = () => {
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
+            <div className='text-center' style={{marginTop: "3%"}}>
+                <h2 className='display-6' style={{marginTop: '1%', color: '#171717'}}><strong>Consulta i post sulla tematica del {getCategoryString(category)}</strong></h2>
+            </div>
             <div style={{marginTop: '3%', marginLeft: '5%', marginBottom: '3%'}}>
                 <span>Cerca : </span>
                 <input
@@ -77,30 +80,25 @@ const FilteredPosts = () => {
                 />
             </div>
             <div className='table-responsive'>
-                <table className='table table-bordered'>
+                <table className='table table-striped align-middle'>
                     <thead className='table-dark'>
                         <tr>
-                            <th>Categoria</th>
-                            <th>Titolo</th>
+                            <th style={{width:'30%'}}>Titolo</th>
                             <th>Testo</th>
                             <th>Pubblicazione</th>
-                            <th>Positività</th>
-                            <th>Neutralità</th>
-                            <th>Negatività</th>
                             <th>Sentimento</th>
+                            <th>Emozione</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {currentPosts.map((post, index) => (
                             <tr key={index}>
-                                <td>{getCategoryString(post.category)}</td>
                                 <td><Link to={`/post/${post.id}`} style={{textDecoration: 'none', color: '#171717'}}>{post.title}</Link></td>
-                                <td className="truncate-text">{truncateText(post.text, 50)}</td>
-                                <td>{formatDate(post.date)}</td>
-                                <td>{post.postivity}</td>
-                                <td>{post.neutrality}</td>
-                                <td>{post.negativity}</td>
+                                <td className="truncate-text">{truncateText(post.og_text, 50)}</td>
+                                <td>{post.day}/{post.month}/{post.year}</td>
                                 <td>{post.sentiment}</td>
+                                <td>{post.emotion}</td>
                             </tr>
                         ))}
                     </tbody>
