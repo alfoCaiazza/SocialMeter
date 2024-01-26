@@ -13,6 +13,7 @@ import HotTopicsCategory from './components/HotTopicsCategory';
 import PostDetail from './components/PostDetail';
 import MatrixProfileForms from './components/MatrixProfileForms';
 import NewTrends from './components/NewTrends';
+import FilteredPostsCategory from './components/FilteredPostsCategory';
 import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
@@ -29,7 +30,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/features" element={<Features />} />
-        <Route path="/filtered_posts" element={<FilteredPosts />} />
+        <Route path="/filtered_posts_category" element={<FilteredPostsCategory />} />
+        <Route path="/filtered_posts/:category" element={<FilteredPosts />} />
         <Route path="/post/:postId" element={<PostDetail  />} />
         <Route path="/hot_topics_category" element={<HotTopicsCategory />} />
         <Route path="/hot_topics/:category" element={<HotTopics />} />

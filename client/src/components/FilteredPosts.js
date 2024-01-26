@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pagination from './Pagination';
 import {Link} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const FilteredPosts = () => {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(15);
     const [searchTerm, setSearchTerm] = useState('');
+    const {category} = useParams();
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const result = await axios('http://localhost:5000/api/get_posts');
+                const result = await axios(`http://localhost:5000/api/get_posts?post_category=${category}`);
                 setPosts(result.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

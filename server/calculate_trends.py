@@ -49,9 +49,3 @@ def get_posts(category):
 
     # Restituisci sia i conteggi totali che quelli annuali
     return sentiment_counts, sorted_yearly_sentiment
-
-# Esempio di chiamata alla funzione
-category = 'woman_condition'
-sentiment_counts, yearly_sentiment = get_posts(category)
-print(sentiment_counts)
-print(yearly_sentiment)
