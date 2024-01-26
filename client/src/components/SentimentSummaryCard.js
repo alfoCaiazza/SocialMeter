@@ -40,7 +40,7 @@ const SentimentSummaryCard = ({ positivity, negativity, neutrality, dominantSent
       />
       <div style={sentimentNumbersStyle}>
             <div>
-                <div>Negatività</div>
+                <div>Negativo</div>
                 <i className="bi bi-emoji-frown" style={{color: 'red'}}></i>
                 <span>{negativity}%</span>
             </div>

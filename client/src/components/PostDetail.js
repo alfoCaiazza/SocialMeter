@@ -8,11 +8,14 @@ import ScoreCard from './ScoreCard';
 import SentimentSummaryCard from './SentimentSummaryCard';
 import EmotionCommunityCard from './EmotionCommunityCard';
 import PostEmotionCard from './PostEmotionCard';
+import TotalRedditorsCard from './TotalRedditorsCard';
 
 const PostDetail = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [dataForChart, setDataForChart] = useState([]);
+  const [uniqueUsers, setUniqueUsers] = useState(0); // Stato per tenere traccia del numero di utenti unici
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -21,6 +24,7 @@ const PostDetail = () => {
         const response = await axios(`http://localhost:5000/get_post_by_id?postId=${postId}`);
         setPost(response.data);
         if (response.data && response.data.comments) {
+          calculateUniqueUsers(response.data.comments);
           const processedData = processData(response.data.comments);
           setDataForChart(processedData);
         }
@@ -80,29 +84,35 @@ const PostDetail = () => {
   const { counts: sentimentCounts, dominantSentiment } = calculateSentimentCounts(post.comments);
   const { counts: emotionCounts, dominantEmotion } = calculateEmotionCounts(post.comments);
 
-  const processData = (comments) => {
+  function processData(comments) {
     const countsByHour = {};
   
     comments.forEach(comment => {
       const date = new Date(comment.created_utc * 1000);
-      // Formatta la data per includere anno, mese, giorno e ora
       const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:00`;
   
       if (!countsByHour[formattedDate]) {
           countsByHour[formattedDate] = { date: formattedDate, totalComments: 0 };
       }
   
-      // Incrementa il conteggio totale dei commenti per quell'ora
       countsByHour[formattedDate].totalComments++;
     });
   
-    // Converti l'oggetto in un array di oggetti e ordinalo per data e ora
     return Object.values(countsByHour).sort((a, b) => new Date(a.date) - new Date(b.date));
-  };  
+  }
   
+  
+  function calculateUniqueUsers(comments) {
+    const userSet = new Set(); // Utilizza un Set per garantire l'unicità
+    comments.forEach(comment => {
+      userSet.add(comment.author);
+    });
+    setUniqueUsers(userSet.size); // Aggiorna lo stato con il numero di utenti unici
+  }
+
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
-        <div className='my-auto mt-5 mb-2' style={{ width: '80%'}}>
+        <div className='my-auto mt-5 mb-2' style={{ width: '80%' }}>
             <Post
                 title={post.title}
                 text={post.text}
@@ -114,26 +124,30 @@ const PostDetail = () => {
                 author={post.author}
             />
         </div>
-        <div className='w-100 d-flex justify-content-center'>
-          <SentimentSummaryCard
-            positivity={post.positivity}
-            negativity={post.negativity}
-            neutrality={post.neutrality}
-            dominantSentiment={post.sentiment}
-          />
-          <SentimentCard
-            sentiment={{ ...sentimentCounts, dominant: dominantSentiment }}
-          />
-          <ScoreCard
-            upvotes={post.estimated_upvotes}
-            downvotes={post.estimated_downvotes}
-          />
-          <PostEmotionCard
-            emotion={post.emotion}
-          />
-          <EmotionCommunityCard
-            emotion={{...emotionCounts, dominant: dominantEmotion}}
-          />
+        <div className='row w-100 justify-content-center' style={{ maxWidth: '1200px' }}> {/* Aggiunta della classe row e impostazione della larghezza massima */}
+          <div className='col-md-4 mb-4'> {/* Ogni card in una colonna di 4 unità */}
+            <TotalRedditorsCard number={uniqueUsers} />
+          </div>
+          <div className='col-md-4 mb-4'>
+            <SentimentSummaryCard
+              positivity={post.positivity}
+              negativity={post.negativity}
+              neutrality={post.neutrality}
+              dominantSentiment={post.sentiment}
+            />
+          </div>
+          <div className='col-md-4 mb-4'>
+            <PostEmotionCard emotion={post.emotion} />
+          </div>
+          <div className='col-md-4 mb-4'>
+            <ScoreCard upvotes={post.estimated_upvotes} downvotes={post.estimated_downvotes} />
+          </div>
+          <div className='col-md-4 mb-4'>
+            <SentimentCard sentiment={{ ...sentimentCounts, dominant: dominantSentiment }} />
+          </div>
+          <div className='col-md-4 mb-4'>
+            <EmotionCommunityCard emotion={{ ...emotionCounts, dominant: dominantEmotion }} />
+          </div>
         </div>
         <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', marginTop: '5%' }}>
           <div style={{ width: '1000px' }}> {/* Imposta la larghezza desiderata per il LineChart qui */}
@@ -142,7 +156,7 @@ const PostDetail = () => {
               <XAxis dataKey="date" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="totalComments" stroke="red" />
+              <Line type="monotone" dataKey="totalComments" stroke="#8884d8" />
             </LineChart>
           </div>
         </div>

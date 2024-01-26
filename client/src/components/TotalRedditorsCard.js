@@ -20,27 +20,19 @@ const emotionStyle = {
     margin: '10px 0'
 };
 
-const emotionIcons = {
-    Rabbia: "bi bi-emoji-angry",
-    Gioia: "bi bi-emoji-laughing",
-    Tristezza: "bi bi-emoji-frown",
-    Paura: "bi bi-emoji-dizzy",
-};
-
 const iconStyle = {
     fontSize: '3em',  // Puoi aumentare questo valore per rendere l'icona più grande
     display: 'block', // Assicura che l'icona sia su una nuova riga
-    textAlign: 'center' // Centra l'icona
+    textAlign: 'center', // Centra l'icona
+    color: 'red'
 };
 
-const PostEmotionCard = ({ emotion }) => (
+const PostEmotionCard = ({ number }) => (
     <div style={cardStyle}>
-        <div style={headerStyle}>EMOZIONE DEL POST</div>
-        <div style={emotionStyle}>{emotion}</div>
+        <div style={headerStyle}>REDDITORS TOTALI</div>
+        <div style={emotionStyle}>{number}</div>
         <div style={emotionStyle}>
-            {emotion && 
-                <i className={emotionIcons[emotion]} style={iconStyle}></i>
-            }
+            <i className="bi bi-reddit" style={iconStyle}></i>
         </div>
     </div>
 );
