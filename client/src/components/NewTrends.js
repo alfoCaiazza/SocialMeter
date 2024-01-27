@@ -188,8 +188,6 @@ const NewTrends = () => {
                   cx="50%" 
                   cy="50%" 
                   outerRadius={150} 
-                  fill="#8884d8"
-                  label
               >
                   {data.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -204,7 +202,14 @@ const NewTrends = () => {
                 <p>EMOZIONE</p>
             </div>      
             <PieChart width={400} height={400}>
-              <Pie data={emotionData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150}>
+              <Pie
+                data={emotionData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={150}
+              >
                 {emotionData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
@@ -218,7 +223,14 @@ const NewTrends = () => {
               <p>SUBREDDIT</p>
             </div>
             <PieChart width={400} height={400}>
-              <Pie data={subredditData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150}>
+              <Pie
+                data={subredditData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={150}
+              >
                 {subredditData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
