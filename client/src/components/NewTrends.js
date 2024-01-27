@@ -166,8 +166,8 @@ const NewTrends = () => {
   const trendDescription = calculateTrendDescription();
   const mostProminentSentiment = findMostProminentSentiment();
 
-  const COLORS = ['#66f4f0', '#b298dc','#6f2dbd', '#e39774',' #8b95c9',' #e4be9e', '#a663cc',' #b8d0eb']; // Colori per ogni slice
-
+  const COLORS = ['#FF2400', '#FFA500','#00FF7F', '#FFD700',' #87CEEB',' #7851A9', '#FF7F50',' #800020']; 
+  
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
         <div className='text-center mt-4'>
