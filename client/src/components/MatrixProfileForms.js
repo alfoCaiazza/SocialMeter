@@ -83,23 +83,6 @@ const MatrixProfileForms = () => {
     
     
     const CustomTooltip = ({ active, payload }) => {
-        // if (active && payload && payload.length) {
-        //     const data = payload[0].payload;
-        //     return (
-        //         <div className="custom-tooltip" style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
-        //             <p>Data: {data.date}</p>
-        //             <p>{selectedIndex}: {data.value}</p>
-        //             {selectedIndex !== 'tot_posts' && (
-        //                 <>
-        //                     <p>ID del post: {data.id}</p>
-        //                     <p>Score: {data.score}</p>
-        //                     <p>Totale Commenti: {data.tot_comments}</p>
-        //                     <p>Compound: {data.compound}</p>
-        //                 </>
-        //             )}
-        //         </div>
-        //     );
-        // }
         return null;
     };
 
