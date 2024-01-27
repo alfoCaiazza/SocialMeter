@@ -13,9 +13,9 @@ const sentimentValueStyle = {
 
 const SentimentBar = ({ sentiment }) => (
     <div style={sentimentBarStyle}>
-        <div style={{ ...sentimentValueStyle, width: `${sentiment.Negativo}%`, backgroundColor: 'red', borderRadius: '10px' }}></div>
-        <div style={{ ...sentimentValueStyle, width: `${sentiment.Neutrale}%`, backgroundColor: 'orange' , borderRadius: '10px' }}></div>
-        <div style={{ ...sentimentValueStyle, width: `${sentiment.Positivo}%`, backgroundColor: 'green' , borderRadius: '10px' }}></div>
+        <div style={{ ...sentimentValueStyle, width: `${sentiment.Negativo * 100}%`, backgroundColor: 'red', borderRadius: '10px' }}></div>
+        <div style={{ ...sentimentValueStyle, width: `${sentiment.Neutrale * 100}%`, backgroundColor: 'orange' , borderRadius: '10px' }}></div>
+        <div style={{ ...sentimentValueStyle, width: `${sentiment.Positivo * 100}%`, backgroundColor: 'green' , borderRadius: '10px' }}></div>
     </div>
 );
 

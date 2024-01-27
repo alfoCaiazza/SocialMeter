@@ -29,6 +29,10 @@ const sentimentNumbersStyle = {
 };
 
 const SentimentSummaryCard = ({ positivity, negativity, neutrality, dominantSentiment }) => {
+  const roundedPositivity = parseFloat(positivity.toFixed(2));
+  const roundedNegativity = parseFloat(negativity.toFixed(2));
+  const roundedNeutrality = parseFloat(neutrality.toFixed(2));
+  
   return (
     <div style={cardStyle}>
       <div style={headerStyle}>SENTIMENTO POST</div>
@@ -42,17 +46,17 @@ const SentimentSummaryCard = ({ positivity, negativity, neutrality, dominantSent
             <div>
                 <div>Negativo</div>
                 <i className="bi bi-emoji-frown" style={{color: 'red'}}></i>
-                <span>{negativity}%</span>
+                <span>{roundedNegativity}%</span>
             </div>
             <div>
                 <div>Neutrale</div>
                 <i className="bi bi-emoji-neutral" style={{color: 'orange'}}></i>
-                <span>{neutrality}%</span>
+                <span>{roundedNeutrality}%</span>
             </div>
             <div>
                 <div>Positivo</div>
                 <i className="bi bi-emoji-smile" style={{color: 'green'}}></i>
-                <span>{positivity}%</span>
+                <span>{roundedPositivity}%</span>
             </div>
         </div>
     </div>

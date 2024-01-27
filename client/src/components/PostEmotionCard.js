@@ -21,10 +21,10 @@ const emotionStyle = {
 };
 
 const emotionIcons = {
-    Rabbia: "bi bi-emoji-angry",
-    Gioia: "bi bi-emoji-laughing",
-    Tristezza: "bi bi-emoji-frown",
-    Paura: "bi bi-emoji-dizzy",
+    Rabbia: { className: "bi bi-emoji-angry", color: "red" }, 
+    Gioia: { className: "bi bi-emoji-laughing", color: "yellow" }, 
+    Tristezza: { className: "bi bi-emoji-frown", color: "blue" },
+    Paura: { className: "bi bi-emoji-dizzy", color: "purple" },
 };
 
 const iconStyle = {
@@ -33,16 +33,27 @@ const iconStyle = {
     textAlign: 'center' // Centra l'icona
 };
 
-const PostEmotionCard = ({ emotion }) => (
-    <div style={cardStyle}>
-        <div style={headerStyle}>EMOZIONE DEL POST</div>
-        <div style={emotionStyle}>{emotion}</div>
-        <div style={emotionStyle}>
-            {emotion && 
-                <i className={emotionIcons[emotion]} style={iconStyle}></i>
-            }
+const PostEmotionCard = ({ emotion }) => {
+    // Calcola lo stile aggiornato dell'icona all'interno del componente per accedere a `emotion`
+    const updatedIconStyle = {
+        ...iconStyle,
+        // Se `emotion` esiste in `emotionIcons`, usa il suo colore, altrimenti usa 'black'
+        color: emotionIcons[emotion] ? emotionIcons[emotion].color : 'black',
+    };
+
+    return (
+        <div style={cardStyle}>
+            <div style={headerStyle}>EMOZIONE DEL POST</div>
+            <div style={emotionStyle}>{emotion}</div>
+            <div style={emotionStyle}>
+                {emotion && 
+                    // Usa `updatedIconStyle` qui per assicurarti che lo stile venga calcolato con il valore corrente di `emotion`
+                    <i className={emotionIcons[emotion] ? emotionIcons[emotion].className : ''} style={updatedIconStyle}></i>
+                }
+            </div>
         </div>
-    </div>
-);
+    );
+};
+
 
 export default PostEmotionCard;
