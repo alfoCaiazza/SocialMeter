@@ -22,7 +22,7 @@ const emotionStyle = {
 
 const emotionIcons = {
     Rabbia: { className: "bi bi-emoji-angry", color: "red" }, 
-    Gioia: { className: "bi bi-emoji-laughing", color: "yellow" }, 
+    Gioia: { className: "bi bi-emoji-laughing", color: "#cdd125" }, 
     Tristezza: { className: "bi bi-emoji-frown", color: "blue" },
     Paura: { className: "bi bi-emoji-dizzy", color: "purple" },
 };
