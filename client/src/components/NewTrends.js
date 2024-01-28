@@ -118,61 +118,13 @@ const NewTrends = () => {
     return sentiment ? sentiment.value.toFixed(2) : '0.00'; // Formattato con due cifre decimali
   };
 
-  const calculateTrendDescription = () => {
-    // Controlla se ci sono abbastanza dati per calcolare una tendenza.
-    // Se ci sono meno di due anni di dati, non è possibile determinare una tendenza.
-    if (trendsOverTime.length < 2) {
-      return 'stabili'; // Ritorna una descrizione di default
-    }
-  
-    // Prende i dati degli ultimi due anni per confrontarli.
-    const latestYear = trendsOverTime[trendsOverTime.length - 1];
-    const previousYear = trendsOverTime[trendsOverTime.length - 2];
-  
-    // Calcola la differenza nel numero di sentimenti positivi tra gli ultimi due anni.
-    const trend = latestYear.positive - previousYear.positive;
-  
-    // Determina se c'è stato un aumento o una diminuzione dei sentimenti positivi.
-    // Se il numero è positivo, significa che ci sono stati più sentimenti positivi
-    // nell'ultimo anno rispetto all'anno precedente.
-    // Se il numero è negativo, significa che ci sono stati meno sentimenti positivi.
-    return trend > 0 ? 'un aumento' : 'una diminuzione';
-  };
-  
-  const findMostProminentSentiment = () => {
-    // Verifica se ci sono dati disponibili.
-    // Se non ci sono, restituisce 'neutrale' come default.
-    if (!trendsOverTime.length) return 'neutrale'; 
-  
-    // Prende i dati dell'ultimo anno disponibile.
-    const latestYear = trendsOverTime[trendsOverTime.length - 1];
-  
-    // Confronta i conteggi dei vari sentimenti (positivo, negativo, neutrale)
-    // per determinare quale è stato il più prominente nell'ultimo anno.
-    const maxSentiment = Math.max(latestYear.positive, latestYear.negative, latestYear.neutral);
-  
-    // A seconda di quale sentimento ha il conteggio più alto, 
-    // ritorna il sentimento corrispondente.
-    if (maxSentiment === latestYear.positive) {
-      return 'positivo';
-    } else if (maxSentiment === latestYear.negative) {
-      return 'negativo';
-    } else {
-      return 'neutrale';
-    }
-  };
-  
-
-  const trendDescription = calculateTrendDescription();
-  const mostProminentSentiment = findMostProminentSentiment();
-
   const COLORS = ['#FF2400', '#FFA500','#00FF7F', '#FFD700',' #87CEEB',' #7851A9', '#FF7F50',' #800020']; 
   
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
         <div className='text-center mt-4'>
           <h2 className='display-6' style={{ color: '#171717' }}>
-            <strong>Distribuzione risulati per la tematica {getCategoryString(category)}</strong>
+            <strong>Distribuzione indici per la tematica {getCategoryString(category)}</strong>
           </h2>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
@@ -242,7 +194,7 @@ const NewTrends = () => {
         </div>
         <div className='text-center mt-4' style={{ width: '90%' }}>
           <p style={{ fontSize: '1.2rem' }}>
-            Dall'analisi di {totalPosts} post pubblicati sulla tematica {getCategoryString(category)}, si distilla una mappa dei sentimenti prevalenti: il {findPercentage('Negativo')}% manifesta una connotazione negativa, il {findPercentage('Positivo')}% trasmette un'impressione positiva, e il {findPercentage('Neutrale')}% si presenta con una tonalità neutra. Questi dati offrono una visione quantitativa del sentiment generale espresso attraverso i post.
+                  CAPTION 
           </p>
         </div>
         <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', height: '50%', marginTop: '2%'}}>
@@ -258,7 +210,7 @@ const NewTrends = () => {
         </div>
         <div className='text-center mt-4' style={{ width: '90%' }}>
           <p style={{ fontSize: '1.2rem' }}>
-            L'analisi temporale rivela {trendDescription} nel sentiment {mostProminentSentiment} legato alla tematica {getCategoryString(category)} negli ultimi anni. Questa evoluzione potrebbe riflettere cambiamenti significativi nell'opinione pubblica o nelle dinamiche sociali riguardanti {getCategoryString(category)}. Analizzare queste variazioni nel tempo aiuta a comprendere meglio come le conversazioni e le percezioni si evolvono in relazione a temi così importanti.
+            CAPTION
           </p>
         </div>
     </div>
