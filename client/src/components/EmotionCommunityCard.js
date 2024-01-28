@@ -40,7 +40,7 @@ const EmotionCard = ({ emotion }) => (
             </div>
             <div>
                 <div>Gioia</div>
-                <i className="bi bi-emoji-laughing" style={{color: 'yellow'}}></i>
+                <i className="bi bi-emoji-laughing" style={{color: 'green'}}></i>
                 <span>{emotion.Gioia}</span>
             </div>
             <div>
