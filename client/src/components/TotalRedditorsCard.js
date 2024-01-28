@@ -21,7 +21,7 @@ const emotionStyle = {
 };
 
 const iconStyle = {
-    fontSize: '3em',  // Puoi aumentare questo valore per rendere l'icona più grande
+    fontSize: '2.4em',  // Puoi aumentare questo valore per rendere l'icona più grande
     display: 'block', // Assicura che l'icona sia su una nuova riga
     textAlign: 'center', // Centra l'icona
     color: 'red'
