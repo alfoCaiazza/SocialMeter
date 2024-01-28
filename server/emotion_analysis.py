@@ -20,11 +20,12 @@ def calculate_comments_emotion(comments):
 def calculate_setiment():
     setup_logging()
     load_dotenv()
-
+    
+    ids = ['se6xev', '15b6xgq', 'uzlr9m', 'ys6f72', '12jjfar', 'ish0l4', '15mbkgk', 'o38ukp', 'wk32gf', '1136xpy', 'gdamfe', 'jfwnzi', 'cy8kk1', 'kv6wps', '186tr8v', '17p5bm6', '175dbvu', '17wjq5e', '13pwj3z', '14ecqss', '1721pnk', 'y82hu5', '1598mwj', 'w13t6y', '18i6hpj', 'o4ndgp', '16lpjoh', 'pfu2vz', 'wsd088', 'usykdu', 'c72o9e', 'sl8723', '17p087x', 'ov2nn6', '13feyvr', 'hzch89', '11fcswe', '14ypza6', '16lr67j', 'vdq4r7', 'wg2dwq', 'or6k76', '17yunvd', '178lafn', '15owq9o', '14jeqjj', '16buiu3', '103ulpc', '14ucn82', '17jkecb', '15z46c4', '18creez', '180s23q', 'uln8d9', '17hl0i5', 'vmwmt9', 'yxx02l', 'o6uhfo', '113xcyc', '17fzifq', 'c48rr9', 'iggkvm', 'q3tyt6', '15097id', '1ht6ph', '16hq4u4', 'hjpfbc', 'cpzw45', '1125id7', 'c0p9xa', 'thts6x', '11h5d8t', 'gs4owo', '119z1pi', '17ysqsh', '16g211y', '11kc8oe']
     mongo_client, db = connect_to_mongo()
 
     collection = db['dataAnalysis']
-    posts = collection.find({'category':'woman_condition'})
+    posts = collection.find()
     data_analysis = db['analisedPosts']
 
     index = 1
