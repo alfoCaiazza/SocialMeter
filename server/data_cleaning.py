@@ -3,25 +3,7 @@ from dotenv import load_dotenv
 import logging
 import re
 import emoji
-import time
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 
-def remove_stopwords(text):
-    words = word_tokenize(text, language='italian')
-    words_en = word_tokenize(text, language='english')
-
-    # Filtra le parole rimuovendo le stopwords
-    it_stopwords = set(stopwords.words('italian'))
-    en_stopwords = set(stopwords.words('english'))
-    filtered_text = [word for word in words if word.lower() not in it_stopwords]
-    filtered_text = [word for word in words_en if word.lower() not in en_stopwords]
-
-    # Riunisci il testo filtrato
-    cleaned_text = ' '.join(filtered_text)
-
-    return cleaned_text
 
 def clean_text(text):
     #Eliminazione dei link
@@ -32,6 +14,9 @@ def clean_text(text):
 
     #Eliminazione degli spazi multipli
     cleaned_text = re.sub(r'\s+', ' ', cleaned_text)
+
+    # Eliminazione di parole specifiche come 'x200b'
+    cleaned_text = re.sub(r'\bx200b\b', ' ', cleaned_text)
 
     #Eliminazione dei caratteri speciali e degli spazi in eccesso
     cleaned_text = re.sub(r'[^\w\s]', ' ', cleaned_text).strip()
@@ -45,8 +30,6 @@ def main():
     #Viene effettuata la pulizia dei dati e il controllo sul contenuto del testo: se corpo del post o dei commenti è vuoto non vengono inseriti nel database
     setup_logging()
     load_dotenv()
-    nltk.download('stopwords')
-    nltk.download('punkt')
     mongo_client, db = connect_to_mongo()
 
     collection = db['posts']
