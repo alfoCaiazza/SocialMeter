@@ -90,7 +90,17 @@ const MatrixProfileForms = () => {
         if (selectedIndex !== 'tot_posts' && data.id) {
             navigate(`/post/${data.id}`);
         }
-    };      
+    };
+    
+    const getIndexString = (index) => {
+        const indexStrings = {
+            'tot_comments': 'Commenti Totali per Post',
+            'score': 'Score per Post',
+            'compound': 'Sentimento per Post',
+            'tot_posts': 'Post Totali per Anno'
+        };
+        return indexStrings[index];
+    };
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
@@ -140,7 +150,7 @@ const MatrixProfileForms = () => {
                         <CartesianGrid strokeDasharray="3 3"/>
                         <Tooltip content={<CustomTooltip />}/>
                         <Legend />
-                        <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }}/>
+                        <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }} name={getIndexString(selectedIndex)}/>
                     </LineChart>
                 ) : null}
             </div>
