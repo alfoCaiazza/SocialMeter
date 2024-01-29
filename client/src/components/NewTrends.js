@@ -203,9 +203,10 @@ const NewTrends = () => {
             <XAxis dataKey="year" />
             <YAxis />
             <RechartsTooltip />
-            <Line type="monotone" dataKey="Positivo" stroke="#82ca9d" />
-            <Line type="monotone" dataKey="Negativo" stroke="#f44336" />
-            <Line type="monotone" dataKey="Neutrale" stroke="#ffc658" />
+            <Legend />
+            <Line type="monotone" dataKey="Positivo" stroke="#82ca9d" name="Post Positivi"/>
+            <Line type="monotone" dataKey="Negativo" stroke="#f44336" name="Post Negativi"/>
+            <Line type="monotone" dataKey="Neutrale" stroke="#ffc658" name="Post Neutrali"/>
           </LineChart>
         </div>
         <div className='text-center mt-4' style={{ width: '90%' }}>

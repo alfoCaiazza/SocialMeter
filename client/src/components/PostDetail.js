@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip} from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 import Post from './Post';
 import SentimentCard from './SentimentCard';
 import ScoreCard from './ScoreCard';
@@ -169,7 +169,8 @@ const PostDetail = () => {
               <XAxis dataKey="date" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="totalComments" stroke="#8884d8" />
+              <Legend />
+              <Line type="monotone" dataKey="totalComments" stroke="#8884d8" name="Commenti Totali per Ora" />
             </LineChart>
           </div>
         </div>
