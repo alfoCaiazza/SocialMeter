@@ -37,7 +37,7 @@ const FilteredPosts = () => {
     const filteredPosts = posts.filter(post =>
         searchTerms.every(term =>
             Object.values(post).some(value =>
-                value.toString().toLowerCase().includes(term)
+                (value !== null && value !== undefined) ? value.toString().toLowerCase().includes(term) : false
             )
         )
     );
