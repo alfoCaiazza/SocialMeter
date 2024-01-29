@@ -12,6 +12,7 @@ const NewTrends = () => {
   const [totalPosts, setTotalPosts] = useState(0);
   const [emotionData, setEmotionData] = useState([]);
   const [subredditData, setSubredditData] = useState([]);
+  const [emotionsOverTime, setEmotionsOverTime] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,6 +35,9 @@ const NewTrends = () => {
           // Processa e imposta i dati di 'subreddit'
           const processedSubredditData = processSubredditData(result.data.subreddit_counts);
           setSubredditData(processedSubredditData);
+        }
+        if (result.data.yearly_emotions) {
+          setEmotionsOverTime(processYearlyEmotionData(result.data.yearly_emotions))
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -72,6 +76,20 @@ const NewTrends = () => {
       };
     });
   };
+
+  const processYearlyEmotionData = (yearlyData) => {
+    // Trasforma i dati in un formato adatto per il grafico a linee
+    return Object.entries(yearlyData).map(([year, emotions]) => {
+      return { 
+        year, 
+        Rabbia: emotions.Rabbia, 
+        Gioia: emotions.Gioia, 
+        Tristezza: emotions.Tristezza,
+        Paura : emotions.Paura,
+      };
+    });
+  };
+  
 
   const getCategoryString = (category) => {
     const categoryStrings = {
@@ -194,7 +212,7 @@ const NewTrends = () => {
         </div>
         <div className='text-center mt-4' style={{ width: '90%' }}>
           <p style={{ fontSize: '1.2rem' }}>
-                  CAPTION 
+            Numero di post per sentimento 
           </p>
         </div>
         <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', height: '50%', marginTop: '2%'}}>
@@ -211,8 +229,21 @@ const NewTrends = () => {
         </div>
         <div className='text-center mt-4' style={{ width: '90%' }}>
           <p style={{ fontSize: '1.2rem' }}>
-            CAPTION
+            Numero di post per emozione 
           </p>
+        </div>
+        <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', height: '50%', marginTop: '2%'}}>
+          <LineChart width={1000} height={300} data={emotionsOverTime} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="year" />
+            <YAxis />
+            <RechartsTooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Rabbia" stroke="red" name="Rabbia"/>
+            <Line type="monotone" dataKey="Gioia" stroke="green" name="Gioia"/>
+            <Line type="monotone" dataKey="Tristezza" stroke="blue" name="Tristezza"/>
+            <Line type="monotone" dataKey="Paura" stroke="purple" name="Paura"/>
+          </LineChart>
         </div>
     </div>
   );

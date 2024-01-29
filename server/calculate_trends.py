@@ -18,6 +18,7 @@ def get_posts(category):
     
     # Inizializzazione della struttura dati per i conteggi annuali
     yearly_sentiment = {}
+    yearly_emotions = {}
     emotion_counts = {}
     subreddit_counts = {}
 
@@ -29,6 +30,14 @@ def get_posts(category):
 
         if emotion:
             emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
+
+             # Inizializza l'anno se non esiste nella struttura delle emozioni annuali
+            if year not in yearly_emotions:
+                yearly_emotions[year] = {'Rabbia': 0, 'Gioia': 0, 'Tristezza': 0, 'Paura': 0}
+
+            # Aggiorna il conteggio delle emozioni per l'anno specifico
+            if emotion in ['Rabbia', 'Gioia', 'Tristezza', 'Paura']:
+                yearly_emotions[year][emotion] += 1
 
         if subreddit:
             subreddit_counts[subreddit] = subreddit_counts.get(subreddit, 0) + 1
@@ -54,9 +63,11 @@ def get_posts(category):
         sentiment_counts['Totale'] += 1
 
     sorted_yearly_sentiment = dict(sorted(yearly_sentiment.items()))
+    sorted_yearly_emotions = dict(sorted(yearly_emotions.items()))
+
     # Chiudi la connessione al database
     client.close()
 
     # Restituisci sia i conteggi totali che quelli annuali
-    return sentiment_counts, sorted_yearly_sentiment, emotion_counts, subreddit_counts
+    return sentiment_counts, sorted_yearly_sentiment, emotion_counts, sorted_yearly_emotions, subreddit_counts
 

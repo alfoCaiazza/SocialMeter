@@ -11,13 +11,14 @@ def get_sentiments(app, db):
             if not category:
                 return jsonify({'error': 'Category is required'}), 400
 
-            sentiment_counts, yearly_sentiment, emotion_counts, subreddit_counts = get_posts(category)
+            sentiment_counts, yearly_sentiment, emotion_counts, sorted_yearly_emotions, subreddit_counts = get_posts(category)
 
             # Impacchetta i risultati in un singolo oggetto JSON per la risposta
             results = {
                 'sentiment_counts': sentiment_counts,
                 'yearly_sentiment': yearly_sentiment,
-                'emotion_counts': emotion_counts,  # Aggiungi i dati delle 'emotion'
+                'emotion_counts': emotion_counts,
+                'yearly_emotions': sorted_yearly_emotions,
                 'subreddit_counts': subreddit_counts,
             }
             return jsonify(results)
