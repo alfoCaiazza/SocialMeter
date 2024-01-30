@@ -35,12 +35,12 @@ const ScoreCard = ({ upvotes, downvotes }) => {
             <div style={sentimentNumbersStyle}>
                 <div>
                     <div>Upvote</div>
-                    <i class="bi bi-arrow-up" style={{color:'blue'}}></i>
+                    <i className="bi bi-arrow-up" style={{color:'blue'}}></i>
                     <span>{upvotes}</span>
                 </div>
                 <div>
                     <div>Downvote</div>
-                    <i class="bi bi-arrow-down" style={{color:'red'}}></i>
+                    <i className="bi bi-arrow-down" style={{color:'red'}}></i>
                     <span>{downvotes}</span>
                 </div>
                 
