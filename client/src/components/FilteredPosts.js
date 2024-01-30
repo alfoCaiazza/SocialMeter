@@ -9,7 +9,11 @@ const FilteredPosts = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(15);
     const [searchTerm, setSearchTerm] = useState('');
-    const {category} = useParams();
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [selectedSentiment, setSelectedSentiment] = useState('');
+    const [selectedEmotion, setSelectedEmotion] = useState('');
+    const { category } = useParams();
 
     useEffect(() => {
         async function fetchData() {
@@ -21,7 +25,7 @@ const FilteredPosts = () => {
             }
         }
         fetchData();
-    }, []);
+    }, [category]);
 
     // Funzione per troncare il testo
     const truncateText = (text, maxLength) => {
@@ -34,13 +38,26 @@ const FilteredPosts = () => {
     // Filtra i post in base al termine di ricerca
     const searchTerms = searchTerm.toLowerCase().split(' ');
 
-    const filteredPosts = posts.filter(post =>
-        searchTerms.every(term =>
-            Object.values(post).some(value =>
-                (value !== null && value !== undefined) ? value.toString().toLowerCase().includes(term) : false
-            )
-        )
-    );
+    const handleFilter = (post) => {
+        // Filtro per il contenuto del testo
+        const textMatch = searchTerm.length === 0 || post.og_text.toLowerCase().includes(searchTerm.toLowerCase());
+
+        // Filtro per la data
+        const postDate = new Date(post.year, post.month - 1, post.day);
+        const start = startDate ? new Date(startDate) : null;
+        const end = endDate ? new Date(endDate) : null;
+        const dateMatch = (!start || postDate >= start) && (!end || postDate <= end);
+
+        // Filtro per sentimento
+        const sentimentMatch = !selectedSentiment || post.sentiment === selectedSentiment;
+
+        // Filtro per emozione
+        const emotionMatch = !selectedEmotion || post.emotion === selectedEmotion;
+
+        return textMatch && dateMatch && sentimentMatch && emotionMatch;
+    };
+
+    const filteredPosts = posts.filter(handleFilter);
 
     const formatDate = (isoString) => {
         const date = new Date(isoString);
@@ -66,18 +83,61 @@ const FilteredPosts = () => {
     // Cambia la pagina corrente
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    const options1 = [
+        { value: 'Negativo', label: 'Negativo' },
+        { value: 'Positivo', label: 'Positivo' },
+        { value: 'Neutrale', label: 'Neutrale' },
+    ];
+    
+    const options2 = [
+        { value: 'Rabbia', label: 'Rabbia' },
+        { value: 'Gioia', label: 'Gioia' },
+        { value: 'Tristezza', label: 'Tristezza' },
+        { value: 'Paura', label: 'Paura' },
+    ];
+
+    const renderOptions = (options) => {
+        return options.map(option => (
+            <option key={option.value} value={option.value}>
+                {option.label}
+            </option>
+        ));
+    };
+
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-            <div className='text-center' style={{marginTop: "3%"}}>
-                <h2 className='display-6' style={{marginTop: '1%', color: '#171717'}}><strong>Consulta i post sulla tematica del {getCategoryString(category)}</strong></h2>
+            <div className='d-flex justify-content-center' style={{ marginTop: '4%' }}>
+                <h2>Consulta i post dulla tematica del {getCategoryString(category)}</h2>
             </div>
-            <div style={{marginTop: '3%', marginLeft: '5%', marginBottom: '3%'}}>
-                <span>Cerca : </span>
-                <input
-                    type="text"
-                    placeholder="Filtra post"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
+            <div className="d-flex justify-content-center align-items-center" style={{padding: '4% 0'}}>
+                <div className='row'>
+                    <div className='col'>
+                        <span className="form-label">Cerca</span>
+                        <input className="form-control" type="text" placeholder="Filtra post" onChange={(e) => setSearchTerm(e.target.value)}/>
+                    </div>
+                    <div className="col">
+                        <span className="form-label">Data di Inizio</span>
+                        <input type="date" className="form-control" value={startDate} onChange={(e) => setStartDate(e.target.value)} min="2020-1-1"/>
+                    </div>
+                    <div className="col">
+                        <span className="form-label">Data di Fine</span>
+                        <input type="date" className="form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} min="2020-1-1" max="2024-1-1"/>
+                    </div>
+                    <div className="col">
+                        <span className="form-label">Sentimento</span>
+                        <select className="form-select" value={selectedSentiment} onChange={(e) => setSelectedSentiment(e.target.value)}>
+                            <option value="" disabled> </option>
+                            {renderOptions(options1)}
+                        </select>
+                    </div>
+                    <div className="col">
+                        <span className="form-label">Emozione</span>
+                        <select className="form-select" value={selectedEmotion} onChange={(e) => setSelectedEmotion(e.target.value)}>
+                            <option value="" disabled> </option>
+                            {renderOptions(options2)}
+                        </select>
+                    </div>
+                </div>
             </div>
             <div className='table-responsive'>
                 <table className='table table-striped align-middle'>
