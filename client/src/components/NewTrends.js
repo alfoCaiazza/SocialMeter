@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip } from 'recharts';
+import { LineChart, BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip } from 'recharts';
 
 
 const NewTrends = () => {
@@ -113,12 +113,18 @@ const NewTrends = () => {
 
   // Esempio di funzione per processare i dati di 'subreddit'
   const processSubredditData = (subredditCounts) => {
-    return Object.entries(subredditCounts).map(([subreddit, count]) => ({
+    return Object.entries(subredditCounts).map(([subreddit, sentiments]) => ({
       name: subreddit,
-      value: count
+      Positivo: sentiments.Positivo || 0, // Assicurati di fornire un valore predefinito nel caso in cui non ci siano dati
+      Neutrale: sentiments.Neutrale || 0,
+      Negativo: sentiments.Negativo || 0,
+      Rabbia: sentiments.Rabbia || 0,
+      Gioia:  sentiments.Gioia || 0,
+      Tristezza:  sentiments.Tristezza || 0,
+      Paura: sentiments.Paura || 0
     }));
   };
-
+  
   const renderCustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
         return (
@@ -136,7 +142,9 @@ const NewTrends = () => {
     return sentiment ? sentiment.value.toFixed(2) : '0.00'; // Formattato con due cifre decimali
   };
 
-  const COLORS = ['#FF2400', '#FFA500','#00FF7F', '#FFD700',' #87CEEB',' #7851A9', '#FF7F50',' #800020']; 
+  const SENTIMENT_COLORS = ['#f44336','#ffc658','#82ca9d']
+  const EMOTION_COLOR = ['#4bc450', '#6e30e0', '#f02e12', '#0481ae']
+  const COLORS = ['#ffb266', '#ff0000','#cc0000', '#66cc66',' #ff6666',' #ffa500', '#008000',' #cc8400']; 
   
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
@@ -160,13 +168,37 @@ const NewTrends = () => {
                   outerRadius={150} 
               >
                   {data.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell key={`cell-${index}`} fill={SENTIMENT_COLORS[index % COLORS.length]} />
                   ))}
               </Pie>
               <Tooltip content={renderCustomTooltip} />
               <Legend />
             </PieChart>
           </div>
+          <div>
+            <div className='text-center mt-4'>
+              <p>Distribuzione Sentimento nelle subreddit</p>
+            </div>
+            <BarChart
+              width={700}
+              height={410}
+              data={subredditData}
+              margin={{
+                top: 20, right: 30, left: 20, bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Positivo" stackId="a" fill="#82ca9d" name="Post Positivi" />
+              <Bar dataKey="Neutrale" stackId="a" fill="#ffc658" name="Post Neutrali" />
+              <Bar dataKey="Negativo" stackId="a" fill="#f44336" name="Post Negativi" />
+            </BarChart>
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
           <div>
             <div className='text-center mt-4'>
                 <p>EMOZIONE</p>
@@ -181,28 +213,7 @@ const NewTrends = () => {
                 outerRadius={150}
               >
                 {emotionData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
-          <div>
-            <div className='text-center mt-4'>
-              <p>SUBREDDIT</p>
-            </div>
-            <PieChart width={400} height={400}>
-              <Pie
-                data={subredditData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-              >
-                {subredditData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell key={`cell-${index}`} fill={EMOTION_COLOR[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip />
@@ -250,7 +261,4 @@ const NewTrends = () => {
 
 }
 
-<PieChart width={400} height={400}>
-
-</PieChart>
 export default NewTrends;

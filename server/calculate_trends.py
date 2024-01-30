@@ -8,7 +8,6 @@ def get_posts(category):
     collection = db['analisedPosts']
     cursor = collection.find({'category': category})
 
-    # Inizializzazione dei contatori per ciascun tipo di sentiment
     sentiment_counts = {
         'Negativo': 0,
         'Positivo': 0,
@@ -16,11 +15,12 @@ def get_posts(category):
         'Totale': 0
     }
     
-    # Inizializzazione della struttura dati per i conteggi annuali
     yearly_sentiment = {}
     yearly_emotions = {}
     emotion_counts = {}
-    subreddit_counts = {}
+
+    # Modifica la struttura di subreddit_counts per tenere traccia dei sentimenti per subreddit
+    subreddit_counts = {}  # Ora sarà una mappa di mappe
 
     for post in cursor:
         compound = post.get('compound')
@@ -31,31 +31,36 @@ def get_posts(category):
         if emotion:
             emotion_counts[emotion] = emotion_counts.get(emotion, 0) + 1
 
-             # Inizializza l'anno se non esiste nella struttura delle emozioni annuali
             if year not in yearly_emotions:
                 yearly_emotions[year] = {'Rabbia': 0, 'Gioia': 0, 'Tristezza': 0, 'Paura': 0}
 
-            # Aggiorna il conteggio delle emozioni per l'anno specifico
             if emotion in ['Rabbia', 'Gioia', 'Tristezza', 'Paura']:
                 yearly_emotions[year][emotion] += 1
 
         if subreddit:
-            subreddit_counts[subreddit] = subreddit_counts.get(subreddit, 0) + 1
-        
-        # Inizializza il conteggio per l'anno se non esiste
+            if subreddit not in subreddit_counts:
+                subreddit_counts[subreddit] = {'Negativo': 0, 'Positivo': 0, 'Neutrale': 0, 'Rabbia': 0, 'Gioia': 0, 'Tristezza': 0, 'Paura': 0}
+
+            # Classifica il post in base al suo sentiment e aggiorna il conteggio per il subreddit specifico
+            if compound == 0:  # assumendo che sentiment negativo sia < 0
+                subreddit_counts[subreddit]['Negativo'] += 1
+            elif compound == 2:  # assumendo che sentiment positivo sia > 0
+                subreddit_counts[subreddit]['Positivo'] += 1
+            elif compound == 1:  # sentiment neutrale
+                subreddit_counts[subreddit]['Neutrale'] += 1
+
         if year and year not in yearly_sentiment:
             yearly_sentiment[year] = {'Negativo': 0, 'Positivo': 0, 'Neutrale': 0}
         
-        # Classifica il post in base al suo sentiment
-        if compound == 0:  # assumendo che sentiment negativo sia < 0
+        if compound == 0:
             sentiment_counts['Negativo'] += 1
             if year:
                 yearly_sentiment[year]['Negativo'] += 1
-        elif compound == 2:  # assumendo che sentiment positivo sia > 0
+        elif compound == 2:
             sentiment_counts['Positivo'] += 1
             if year:
                 yearly_sentiment[year]['Positivo'] += 1
-        elif compound == 1:  # sentiment neutrale
+        elif compound == 1:
             sentiment_counts['Neutrale'] += 1
             if year:
                 yearly_sentiment[year]['Neutrale'] += 1
@@ -65,9 +70,6 @@ def get_posts(category):
     sorted_yearly_sentiment = dict(sorted(yearly_sentiment.items()))
     sorted_yearly_emotions = dict(sorted(yearly_emotions.items()))
 
-    # Chiudi la connessione al database
     client.close()
 
-    # Restituisci sia i conteggi totali che quelli annuali
     return sentiment_counts, sorted_yearly_sentiment, emotion_counts, sorted_yearly_emotions, subreddit_counts
-
