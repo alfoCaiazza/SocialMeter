@@ -21,7 +21,8 @@ import './components/card.css';
 import './components/filteredposts.css';
 import './components/monthlyTrends.css';
 import './components/hottopics.css';
-
+import './components/comment.css';
+import './components/postLayout.css';
 
 function App() {
   return (

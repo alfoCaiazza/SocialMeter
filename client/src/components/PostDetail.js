@@ -9,18 +9,19 @@ import SentimentSummaryCard from './SentimentSummaryCard';
 import EmotionCommunityCard from './EmotionCommunityCard';
 import PostEmotionCard from './PostEmotionCard';
 import TotalRedditorsCard from './TotalRedditorsCard';
+import Comment from './Comment';
 
 const PostDetail = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [dataForChart, setDataForChart] = useState([]);
   const [uniqueUsers, setUniqueUsers] = useState(0); // Stato per tenere traccia del numero di utenti unici
+  const [selectedComments, setSelectedComments] = useState([]);
 
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        console.log(postId);
         const response = await axios(`http://localhost:5000/get_post_by_id?postId=${postId}`);
         setPost(response.data);
         if (response.data && response.data.comments) {
@@ -110,6 +111,23 @@ const PostDetail = () => {
     setUniqueUsers(userSet.size); // Aggiorna lo stato con il numero di utenti unici
   }
 
+
+  const handlePointClick = (data) => {
+    if (!data.activePayload) return;
+
+    const clickedDate = data.activePayload[0].payload.date;
+    const filteredComments = post.comments
+      .filter(comment => {
+        const commentDate = new Date(comment.created_utc * 1000);
+        const formattedCommentDate = `${commentDate.getFullYear()}-${commentDate.getMonth() + 1}-${commentDate.getDate()} ${commentDate.getHours()}:00`;
+        return formattedCommentDate === clickedDate;
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+
+    setSelectedComments(filteredComments);
+  };
+
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
         <div className='text-center' style={{marginTop: "3%"}}>
@@ -118,7 +136,7 @@ const PostDetail = () => {
         <div className='my-auto mt-5 mb-2' style={{ width: '80%' }}>
             <Post
                 title={post.title}
-                text={post.text}
+                text={post.og_text}
                 year={post.year}
                 month={post.month}
                 day={post.day}
@@ -164,7 +182,7 @@ const PostDetail = () => {
         </div>
         <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', marginTop: '5%' }}>
           <div style={{ width: '1000px' }}> {/* Imposta la larghezza desiderata per il LineChart qui */}
-            <LineChart width={1000} height={300} data={dataForChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+            <LineChart width={1000} height={300} data={dataForChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} onClick={handlePointClick}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis />
@@ -173,6 +191,15 @@ const PostDetail = () => {
               <Line type="monotone" dataKey="totalComments" stroke="#8884d8" name="Commenti Totali per Ora" />
             </LineChart>
           </div>
+        </div>
+        <div className='my-auto mt-5 mb-2' style={{ maxWidth: '80%' }}>
+          {selectedComments.map(comment => (
+            <div className='mt-5' key={comment.id}>
+              <Comment
+                comment={comment}
+              />
+            </div>
+          ))}
         </div>
     </div>
   );
