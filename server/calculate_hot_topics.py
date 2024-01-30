@@ -37,7 +37,7 @@ def get_words_frequencies(posts):
     # print(nlp.Defaults.stop_words)
     doc = nlp(text)
 
-    filtered_tokens = [token.text for token in doc if not token.is_stop and token.text.strip() and len(token.text) > 1]
+    filtered_tokens = [token.text for token in doc if not token.is_stop and token.text.strip() and len(token.text) > 1 and token.text != 'x200b']
 
     # Calcola e restituisce le frequenze delle parole: quante volte ogni parola appare in totale nei post
     return Counter(filtered_tokens)
