@@ -28,8 +28,7 @@ const Header = () => {
         <nav id="navbar" className="navbar">
           <ul>
             <li><Link className="nav-link scrollto" to="/">Home</Link></li>
-            <li><Link className="nav-link scrollto" to="/">About</Link></li>
-            <li><Link className="nav-link scrollto" to="#team">Team</Link></li>
+            <li><Link className="nav-link scrollto" to="/about_us">About</Link></li>
             <li className="dropdown"><Link to="/features"><span>Feaures</span><i className="bi bi-chevron-down"></i></Link>
               <ul>
                 <li><Link to="/filtered_posts_category">Filtra Post</Link></li>

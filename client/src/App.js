@@ -14,7 +14,9 @@ import PostDetail from './components/PostDetail';
 import MatrixProfileForms from './components/MatrixProfileForms';
 import NewTrends from './components/NewTrends';
 import FilteredPostsCategory from './components/FilteredPostsCategory';
+import AboutUs from './components/AboutUs';
 import './components/homepage.css';
+import './components/aboutus.css';
 import './components/features.css';
 import './components/header.css';
 import './components/footer.css';
@@ -31,6 +33,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/about_us" element={<AboutUs />} />
         <Route path="/features" element={<Features />} />
         <Route path="/filtered_posts_category" element={<FilteredPostsCategory />} />
         <Route path="/filtered_posts/:category" element={<FilteredPosts />} />
