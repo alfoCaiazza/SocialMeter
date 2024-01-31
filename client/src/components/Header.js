@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import logo from './images/logo_chatGPT.png';
 
 const Header = () => {
   const [showLink, setShowLink] = useState(true);
-  
-  // Imposta uno stato per nascondere il link quando la larghezza è inferiore a 768 pixel
+
+  // Imposta uno stato per nascondere il link quando la larghezza è inferiore Link 768 pixel
   useEffect(() => {
     const handleResize = () => {
       setShowLink(window.innerWidth > 768);
@@ -20,27 +21,28 @@ const Header = () => {
   }, []);
 
   return (
-    <header >
-      <nav className="navbar navbar-expand" style={{backgroundColor: '#171717'}} >
-        <div className="container">
-          {showLink && (
-            <Link to='/' className="navbar-brand" style={{marginLeft: '2%', color: 'white'}}>SocialMeter</Link>
-          )}
-          <div className="navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                <Link to='/' className="header-link">Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link to='/features' className="header-link">Features</Link>
-              </li>
-              <li className="nav-item">
-                <Link to='/results' className="header-link">Risultati</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <header id="header" className="fixed-top">
+      <div className="container d-flex align-items-center justify-content-between">
+        {/* <Link to="/" className="logo"><img src={logo} alt="" className="img-fluid"/></Link>  */}
+        <h1 className="logo"><Link to="/">SocialMeter</Link></h1>
+        <nav id="navbar" className="navbar">
+          <ul>
+            <li><Link className="nav-link scrollto" to="/">Home</Link></li>
+            <li><Link className="nav-link scrollto" to="/">About</Link></li>
+            <li><Link className="nav-link scrollto" to="#team">Team</Link></li>
+            <li className="dropdown"><Link to="/features"><span>Feaures</span><i className="bi bi-chevron-down"></i></Link>
+              <ul>
+                <li><Link to="/filtered_posts_category">Filtra Post</Link></li>
+                <li><Link to="/hot_topics_category">Parole Chiavi</Link></li>
+                <li><Link to="/trends_category">Tendenze</Link></li>
+                <li><Link to="/matrix_profile">Evoluzione Interazioni</Link></li>
+              </ul>
+            </li>
+            <li><Link className="nav-link scrollto" to="/results">Ristultati</Link></li>
+          </ul>
+          <i className="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+      </div>
     </header>
   );
 }

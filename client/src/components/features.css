@@ -1,26 +1,50 @@
-.my-link{
-    text-decoration: none;
-    color: #2b2b2b;
-    font-size: 1.5em;
-    transition: 0.4s;
-}
-
-.my-link:hover{
-    color: #171717;
-    font-size: 1.8em;
-}
-
-.my-link:hover ~ .my-link {
-    margin-top: 10px; /* Sposta gli altri link in basso */
-}
-
-.my-link:hover ~ .my-link:last-child {
-    margin-bottom: 10px; /* Sposta gli altri link in alto */
-}
-
-/* .features-background{
-    background-image: url('./images/lateral-dynamic.png');  
+/* Stile per i link all'interno della sezione Features */
+.my-link {
+    text-decoration: none; /* Rimuove il sottolineamento dal link */
+    color: #0f394c; /* Imposta il colore del testo */
+    font-size: 1.5em; /* Dimensione del testo */
+    transition: color 0.4s, font-size 0.4s; /* Transizione fluida per colore e dimensione del testo */
+  }
+  
+  .my-link:hover {
+    color: #171717; /* Colore del testo al passaggio del mouse */
+    font-size: 1.8em; /* Dimensione del testo al passaggio del mouse */
+  }
+  
+  /* Aumenta il margine dei link successivi al passaggio del mouse sul link corrente */
+  .my-link:hover ~ li .my-link {
+    margin-top: 10px;
+  }
+  
+  /* Sezione Features background e layout */
+  .features-background {
     background-size: 55%;
     background-position: center;
     background-repeat: no-repeat;
-} */
+    text-align: center; /* Centra il testo */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 5%;
+    padding: 20px; /* Spaziatura interna */
+  }
+  
+  /* Stile per l'intestazione della sezione Features */
+  .features-background h2 {
+    margin-top: 7%;
+    color: #171717;
+    font-weight: bold; /* Testo in grassetto */
+  }
+  
+  /* Stile per l'elenco dei link */
+  .features-background ul {
+    list-style: none; /* Rimuove i punti dell'elenco */
+    padding: 0; /* Rimuove il padding predefinito */
+    margin-top: 5%;
+  }
+  
+  .features-background ul li {
+    margin-bottom: 5%; /* Spazio tra gli elementi dell'elenco */
+  }
+  

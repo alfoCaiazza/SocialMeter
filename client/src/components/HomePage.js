@@ -1,21 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import hero from './images/hero-img.png'
 const HomePage = () => {
   return (
-    <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-      <div className='flex-grow-1 d-flex align-items-center justify-content-center homepage-background'>
-          <Link to='/features' className="zoom-on-hover display-1" style={{color: '#171717'}}><strong>Inizia l'analisi!</strong></Link>
-      </div>
-      <div className='container' >
-        <h1>Perché nasce SocialMeter</h1>
-        <p style={{fontSize:'20px'}}>
-          Questo progetto è nato con l'obiettivo di esplorare e comprendere le dinamiche delle interazioni online attraverso l'analisi dei dati provenienti da una delle più grandi comunità virtuali al mondo: Reddit.<br/>
-          Attraverso l'uso di tecniche avanzate di web scraping, questa piattaforma estrae e analizza in modo efficiente i dati da Reddit, consentendo agli utenti di accedere a informazioni preziose e insight significativi.<br/>
-          <br/>Che tu sia uno studente interessato alla ricerca accademica, un professionista del settore o semplicemente un appassionato di Reddit, la nostra web app è progettata per offrirti un accesso intuitivo e utile al vasto mondo delle interazioni online.
-        </p>
-      </div>
-    </div>
+      <section id="hero" class="d-flex align-items-center" style={{marginBottom: '10%'}}>
+        <div class="container" style={{marginTop: '10%'}}>
+          <div class="row">
+            <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+              <h1>Recupera gli insight dai post di Reddit</h1>
+              <h2>
+                Attraverso algoritmi avanzati di analisi del linguaggio naturale, la nostra applicazione scava nel cuore delle conversazioni, identificando e analizzando le emozioni espresse dagli utenti in vari post e commenti.
+                <br/><br/>
+                Con la nostra web app, avrai a disposizione uno strumento potente per navigare attraverso l'oceano di dati di Reddit, trasformando complesse dinamiche sociali in comprensibili metriche visive e analitiche.
+              </h2>
+              <div><Link to="/features" class="btn-get-started scrollto">Inizia l'Analisi</Link></div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img">
+              <img src={hero} class="img-fluid" alt=""/>
+            </div>
+          </div>
+        </div>
+      </section>
   );
 }
 

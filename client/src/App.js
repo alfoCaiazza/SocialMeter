@@ -17,6 +17,7 @@ import FilteredPostsCategory from './components/FilteredPostsCategory';
 import './components/homepage.css';
 import './components/features.css';
 import './components/header.css';
+import './components/footer.css';
 import './components/card.css';
 import './components/filteredposts.css';
 import './components/monthlyTrends.css';
