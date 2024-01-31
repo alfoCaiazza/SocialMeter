@@ -43,7 +43,7 @@ const HotTopics = () =>{
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-            <div className='text-center' style={{marginTop: "3%"}}>
+            <div className='text-center' style={{marginTop: "3%", marginTop: '7%'}}>
                 <h2 className='display-6' style={{marginTop: '1%', color: '#171717'}}><strong>{getCategoryString(category)}</strong></h2>
                 <p style={{ fontSize: '1.5rem' }}>
                     I concetti e i termini più rilevanti all'interno dei post che trattano di {getCategoryString(category)} sono i seguenti

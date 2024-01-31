@@ -106,7 +106,7 @@ const FilteredPosts = () => {
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-            <div className='d-flex justify-content-center' style={{ marginTop: '4%' }}>
+            <div className='d-flex justify-content-center' style={{ marginTop: '10%' }}>
                 <h2>Consulta i post dulla tematica del {getCategoryString(category)}</h2>
             </div>
             <div className="d-flex justify-content-center align-items-center" style={{padding: '4% 0'}}>

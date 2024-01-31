@@ -1,42 +1,57 @@
-.table {
-    border-collapse: separate;
-    max-width: 90%; /* Percentuale della larghezza del contenitore */
-    margin: 0 auto; 
-    border-spacing: 0;
-    border-radius: 8px; /* Aggiusta questo valore per modificare il raggio dell'arrotondamento */
-    overflow: hidden; /* Assicurati che il background e i bordi delle celle interne non fuoriescano */
-}
+/* Stile generale, font e colori */
+body, .table, .pagination-container {
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
+  }
+  
+  .table {
+      border-collapse: separate;
+      max-width: 90%;
+      margin: 0 auto;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiungi ombreggiatura per elevare la tabella */
+  }
+  
+  .table thead th {
+      background-color: #49b5e7; /* Colore di sfondo per l'intestazione della tabella */
+      color: #fff; /* Colore del testo per l'intestazione */
+      font-family: "Dosis", sans-serif; /* Font per le intestazioni */
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, .05);
+  }
+  
+  /* Stile per i link nella tabella, coerente con il CSS iniziale */
+  .table tbody tr td a {
+      color: #49b5e7; /* Colore base dei link */
+      transition: color 0.3s; /* Transizione morbida per il cambio di colore */
+  }
+  
+  .table tbody tr td a:hover {
+      color: #76c7ed; /* Colore al passaggio del mouse */
+      text-decoration: none; /* Rimuovi il sottolineato al passaggio del mouse */
+  }
 
-.table thead th:first-child {
-    border-top-left-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
-}
-
-.table thead th:last-child {
-    border-top-right-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
-}
-
-.table tbody tr:first-child td:first-child {
-    border-top-left-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
-}
-
-.table tbody tr:first-child td:last-child {
-    border-top-right-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
-}
-
-.table tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
-}
-
-.table tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 8px; /* Corrisponde al raggio dell'arrotondamento della tabella */
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, .05);
-}
-
-.pagination-container {
+  .pagination-container {
     display: flex;
     justify-content: center; /* Allinea gli elementi figli (la paginazione) al centro */
-}
+    }
+  /* Stile della paginazione */
+  .pagination-container .pagination a {
+      background: #49b5e7; /* Colore di sfondo dei bottoni di paginazione */
+      color: #fff; /* Colore del testo */
+      border-radius: 4px; /* Arrotondamento degli angoli */
+      transition: background 0.3s; /* Transizione morbida per il cambio di sfondo */
+  }
+  
+  .pagination-container .pagination a:hover {
+      background: #76c7ed; /* Colore di sfondo al passaggio del mouse */
+  }
+  
+  /* Assicurati che il CSS sia applicato correttamente aggiungendo classi specifiche se necessario e testando la tua pagina per garantire che tutto funzioni come previsto. */
+  
+
 

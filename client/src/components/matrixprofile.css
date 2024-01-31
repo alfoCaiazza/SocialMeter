@@ -1,0 +1,37 @@
+.container-fluid {
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
+}
+
+h2 {
+    font-family: "Dosis", sans-serif;
+    color: #0f394c;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-select, .form-control {
+    border-radius: 4px;
+    border: 1px solid #ced4da; /* Grigio chiaro per i bordi */
+    padding: .375rem .75rem; /* Padding interno */
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; /* Transizione morbida */
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #49b5e7; /* Colore di focus coerente con il tema */
+    box-shadow: 0 0 0 .2rem rgba(73, 181, 231, .25); /* Ombra leggera per l'elemento in focus */
+}
+
+.btn-dark {
+    background-color: #49b5e7 !important;/* Colore di sfondo del bottone */
+    border-color: #49b5e7 !important; /* Colore del bordo del bottone */
+}
+
+.btn-dark:hover {
+    background-color: #76c7ed !important; /* Colore di sfondo al passaggio del mouse */
+    border-color: #76c7ed !important; /* Colore del bordo al passaggio del mouse */
+}
+
+/* Stili specifici per Recharts potrebbero dover essere definiti inline o tramite props specifiche della libreria */

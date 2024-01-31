@@ -26,6 +26,7 @@ import './components/monthlyTrends.css';
 import './components/hottopics.css';
 import './components/comment.css';
 import './components/postLayout.css';
+import './components/matrixprofile.css';
 
 function App() {
   return (

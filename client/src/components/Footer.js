@@ -24,7 +24,7 @@ const Footer = () => {
                         <h4>Link</h4>
                         <ul>
                         <li><i class="bx bx-chevron-right"></i> <Link to="/">Home</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/">About us</Link></li>
+                        <li><i class="bx bx-chevron-right"></i> <Link to="/about_us">About us</Link></li>
                         <li><i class="bx bx-chevron-right"></i> <Link to="/features">Features</Link></li>
                         <li><i class="bx bx-chevron-right"></i> <Link to="/results">Risultati</Link></li>
                         </ul>

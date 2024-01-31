@@ -112,7 +112,7 @@ const MatrixProfileForms = () => {
                     <div className="col">
                         <span className="form-label">Categoria</span>
                         <select className="form-select" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                            <option value="" disabled>Seleziona una categoria</option>
+                            <option value="" disabled>Seleziona</option>
                             {renderOptions(options1)}
                         </select>
                     </div>
@@ -120,7 +120,7 @@ const MatrixProfileForms = () => {
                     <div className="col">
                         <span className="form-label">Indice</span>
                         <select className="form-select" value={selectedIndex} onChange={(e) => setSelectedIndex(e.target.value)}>
-                            <option value="" disabled>Seleziona un indice</option>
+                            <option value="" disabled>Seleziona</option>
                             {renderOptions(options2)}
                         </select>
                     </div>
