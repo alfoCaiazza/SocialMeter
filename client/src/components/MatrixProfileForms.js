@@ -149,7 +149,7 @@ const MatrixProfileForms = () => {
                         <CartesianGrid strokeDasharray="3 3"/>
                         <Tooltip content={<CustomTooltip />}/>
                         <Legend />
-                        <Line type="monotone" dataKey="value" stroke="#e800f6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }} name={getIndexString(selectedIndex)}/>
+                        <Line type="monotone" dataKey="value" stroke="#2fa2d6" activeDot={{ r: 8, onClick: (e, payload) => onDotClick(payload.payload) }} name={getIndexString(selectedIndex)}/>
                     </LineChart>
                 ) : null}
             </div>

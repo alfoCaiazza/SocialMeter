@@ -13,41 +13,41 @@ const Footer = () => {
 
   return (
     <footer id="footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 footer-contact">
+        <div className="footer-top">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-3 col-md-6 footer-contact">
                         <h3>SocialMeter</h3>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 footer-links">
+                    <div className="col-lg-3 col-md-6 footer-links">
                         <h4>Link</h4>
                         <ul>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/">Home</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/about_us">About us</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/features">Features</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/results">Risultati</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/">Home</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/about_us">About us</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/features">Features</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/results">Risultati</Link></li>
                         </ul>
                     </div>
 
-                    <div class="col-lg-3 col-md-6 footer-links">
+                    <div className="col-lg-3 col-md-6 footer-links">
                         <h4>Features</h4>
                         <ul>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/filtered_posts_category">Filtra Post</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/hot_topics_category">Parole Chiavi</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/trends_category">Tendenze</Link></li>
-                        <li><i class="bx bx-chevron-right"></i> <Link to="/matrix_profile">Marketing</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/filtered_posts_category">Filtra Post</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/hot_topics_category">Parole Chiavi</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/trends_category">Tendenze</Link></li>
+                        <li><i className="bx bx-chevron-right"></i> <Link to="/matrix_profile">Marketing</Link></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="container py-4">
-            <div class="copyright">
+        <div className="container py-4">
+            <div className="copyright">
                 &copy; Copyright <strong><span>SocialMeter</span></strong>. All Rights Reserved
             </div>
-            <div class="credits">
+            <div className="credits">
                 Designed by <Link to="https://bootstrapmade.com/">BootstrapMade</Link>
             </div>
         </div>

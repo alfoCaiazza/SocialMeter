@@ -17,7 +17,7 @@ const PostDetail = () => {
   const [dataForChart, setDataForChart] = useState([]);
   const [uniqueUsers, setUniqueUsers] = useState(0); // Stato per tenere traccia del numero di utenti unici
   const [selectedComments, setSelectedComments] = useState([]);
-
+  const [loadingComments, setLoadingComments] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -114,7 +114,9 @@ const PostDetail = () => {
 
   const handlePointClick = (data) => {
     if (!data.activePayload) return;
-
+  
+    setLoadingComments(true); // Inizia il caricamento
+  
     const clickedDate = data.activePayload[0].payload.date;
     const filteredComments = post.comments
       .filter(comment => {
@@ -124,14 +126,15 @@ const PostDetail = () => {
       })
       .sort((a, b) => b.score - a.score)
       .slice(0, 5);
-
+  
     setSelectedComments(filteredComments);
-  };
+    setLoadingComments(false); // Termina il caricamento
+  };  
 
   return (
-    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
+    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginBottom: '5%'}}>
         <div className='text-center' style={{marginTop: "3%"}}>
-          <h2 className='display-6' style={{marginTop: '10%', color: '#171717'}}><strong>Approfondisci l'analisi del post</strong></h2>
+          <h2 className='display-6' style={{marginTop: '20%', color: '#171717'}}><strong>Approfondisci l'analisi del post</strong></h2>
         </div>
         <div className='my-auto mt-5 mb-2' style={{ width: '80%' }}>
             <Post
@@ -150,7 +153,7 @@ const PostDetail = () => {
             Dall'analisi congiunta del sentimento e dell'emozione di post e community sono emersi i seguenti risultati:
           </p>
         </div>
-        <div className='row w-100 justify-content-center' style={{ maxWidth: '1200px' }}> {/* Aggiunta della classe row e impostazione della larghezza massima */}
+        <div className='row w-100 justify-content-center custom-container' style={{ maxWidth: '1200px' }}> {/* Aggiunta della classe row e impostazione della larghezza massima */}
           <div className='col-md-4 mb-4'> {/* Ogni card in una colonna di 4 unità */}
             <TotalRedditorsCard number={uniqueUsers} />
           </div>
@@ -188,19 +191,28 @@ const PostDetail = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="totalComments" stroke="#8884d8" name="Commenti Totali per Ora" />
+              <Line type="monotone" dataKey="totalComments" stroke="#2fa2d6" name="Commenti Totali per Ora" />
             </LineChart>
           </div>
         </div>
-        <div className='my-auto mt-5 mb-2' style={{ maxWidth: '80%' }}>
-          {selectedComments.map(comment => (
-            <div className='mt-5' key={comment.id}>
-              <Comment
-                comment={comment}
-              />
+        { (loadingComments || selectedComments.length > 0) && (
+            <div className='comments-container my-auto mt-5 mb-2' style={{ maxWidth: '80%' }}>
+                {loadingComments ? (
+                    <p>Caricamento commenti...</p>
+                ) : (
+                    <>
+                        <div>
+                            <p className='display-6 text-center'>Commenti con più Engagement</p>
+                        </div>
+                        {selectedComments.map(comment => (
+                            <div className='mt-5' key={comment.id}>
+                                <Comment comment={comment} />
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
-          ))}
-        </div>
+        )}
     </div>
   );
 };

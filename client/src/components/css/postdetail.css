@@ -1,3 +1,13 @@
+.custom-container {
+    background-color: #fff; /* Colore di sfondo */
+    border-radius: 8px; /* Bordo arrotondato */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombreggiatura */
+    padding: 20px; /* Spaziatura interna */
+    margin-top: 20px; /* Spaziatura esterna superiore */
+    margin-bottom: 20px; /* Spaziatura esterna inferiore */
+    max-width: 80%;
+}
+
 /* Stili per il container principale */
 .container-fluid {
     background: #f8f9fa; /* Colore di sfondo leggero per il container principale */

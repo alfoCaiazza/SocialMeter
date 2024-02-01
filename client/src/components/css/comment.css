@@ -1,3 +1,12 @@
+.comments-container {
+  background-color: #fff; /* Colore di sfondo */
+  border-radius: 8px; /* Bordo arrotondato */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombreggiatura */
+  padding: 20px; /* Spaziatura interna per i commenti */
+  margin-top: 20px; /* Spaziatura esterna superiore */
+  margin-bottom: 20px; /* Spaziatura esterna inferiore */
+}
+
 .comment {
   background: #f9f9f9; /* Sfondo leggermente grigio per distinguere i commenti */
   border-radius: 8px; /* Bordi arrotondati */

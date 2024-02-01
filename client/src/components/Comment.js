@@ -7,7 +7,7 @@ const Comment = ({ comment }) => {
       <div className="comment">
         <div className="comment-header">
           <div className="author-details">
-            <strong>{author}  </strong>
+            <strong>@{author}</strong>
             <span className="comment-date">{formattedDate}</span>
           </div>
           <div className="card-subtitle mb-2 text-body-secondary">
