@@ -18,6 +18,7 @@ body, .table, .pagination-container {
       background-color: #49b5e7; /* Colore di sfondo per l'intestazione della tabella */
       color: #fff; /* Colore del testo per l'intestazione */
       font-family: "Dosis", sans-serif; /* Font per le intestazioni */
+      border: none;;
   }
   
   .table-striped tbody tr:nth-of-type(odd) {

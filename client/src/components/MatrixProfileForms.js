@@ -103,7 +103,7 @@ const MatrixProfileForms = () => {
 
     return (
         <div className='container-fluid d-flex flex-column min-vh-100 p-0'>
-            <div className='d-flex justify-content-center' style={{ marginTop: '7%' }}>
+            <div className='d-flex justify-content-center' style={{ marginTop: '9%' }}>
                 <h2>Personalizza e Osserva l'Evoluzione delle Interazioni</h2>
             </div>
             <div className="d-flex justify-content-center align-items-center" style={{padding: '4% 0'}}>
