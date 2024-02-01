@@ -1,0 +1,53 @@
+.comment {
+  background: #f9f9f9; /* Sfondo leggermente grigio per distinguere i commenti */
+  border-radius: 8px; /* Bordi arrotondati */
+  margin-bottom: 15px; /* Spazio tra i commenti */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Leggero ombreggiamento per profondità */
+  padding: 15px; /* Padding interno per contenuto */
+  overflow: hidden; /* Assicura che il contenuto non fuoriesca */
+}
+
+.comment-header {
+  display: flex; /* Layout flessibile per intestazione */
+  justify-content: space-between; /* Spazio tra autore e dettagli */
+  margin-bottom: 10px; /* Spazio tra intestazione e testo del commento */
+}
+
+.author-details {
+  font-weight: bold; /* Nome autore in grassetto */
+}
+
+.comment-date {
+  margin-left: 10px; /* Spazio tra nome autore e data */
+  color: #6c757d; /* Colore grigio per la data */
+  font-size: 0.9rem; /* Dimensione ridotta per la data */
+}
+
+.comment-detail {
+  color: #495057; /* Colore per dettagli emozione e sentimento */
+  font-size: 0.9rem; /* Dimensione ridotta per dettagli */
+}
+
+.comment-text {
+  margin-bottom: 10px; /* Spazio sotto il testo del commento */
+  line-height: 1.4; /* Interlinea per leggibilità */
+}
+
+.comment-footer {
+  font-size: 0.9rem; /* Dimensione per icone e numeri */
+  color: #6c757d; /* Colore per icone e numeri */
+  display: flex; /* Layout flessibile per footer */
+  align-items: center; /* Allineamento verticale degli elementi */
+}
+
+.comment-footer i {
+  margin-right: 5px; /* Spazio tra icona e numero */
+}
+
+.bi-arrow-down-up, .bi-chat-left-dots {
+  margin-right: 4px; /* Spazio a destra dell'icona */
+}
+
+.bi-chat-left-dots {
+  margin-left: 10px; /* Spazio aggiuntivo prima dell'icona dei commenti */
+}

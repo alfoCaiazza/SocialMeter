@@ -1,0 +1,26 @@
+.sentiment-summary-bar {
+    display: flex;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .sentiment-value-bar {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+    border-radius: 10px; /* Se vuoi che solo l'elemento all'inizio o alla fine abbia i bordi arrotondati, dovrai aggiungere logica specifica nel JSX */
+  }
+  
+  .sentiment-value-bar.negative {
+    background-color: red;
+  }
+  
+  .sentiment-value-bar.neutral {
+    background-color: orange;
+  }
+  
+  .sentiment-value-bar.positive {
+    background-color: green;
+  }
+  

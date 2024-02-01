@@ -1,0 +1,48 @@
+.custom-post-card {
+  background: #fff; /* Sfondo bianco per la card */
+  margin-bottom: 20px;
+  border-radius: 8px; /* Bordi arrotondati */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombreggiamento per dare profondità */
+  overflow: hidden; /* Assicura che tutto il contenuto rimanga all'interno dei bordi arrotondati */
+}
+
+.custom-post-body {
+  padding: 20px; /* Spazio interno per il contenuto della card */
+}
+
+.custom-post-title {
+  margin-bottom: 5px; /* Riduce lo spazio sotto il titolo per una maggiore compattezza */
+  color: #333; /* Colore del titolo più scuro per un miglior contrasto */
+  font-weight: bold; /* Rende il titolo più spiccato */
+}
+
+.custom-post-subtitle {
+  margin-bottom: 10px; /* Spazio sotto il sottotitolo */
+  font-size: 0.9rem; /* Dimensione più piccola per il sottotitolo */
+  color: #6c757d; /* Colore grigio per il testo del sottotitolo */
+}
+
+.custom-post-text {
+  margin-bottom: 15px; /* Spazio sotto il paragrafo del testo */
+  line-height: 1.5; /* Aumenta l'interlinea per una migliore leggibilità */
+}
+
+.custom-post-icons {
+  font-size: 1rem; /* Dimensione icone e testo */
+  color: #6c757d; /* Colore icone e testo */
+  display: flex; /* Disposizione orizzontale delle icone */
+  align-items: center; /* Allinea verticalmente icone e testo */
+}
+
+.custom-post-icons i {
+  margin-right: 5px; /* Spazio tra l'icona e il numero */
+}
+
+.bi-arrow-down-up, .bi-chat-left-dots {
+  margin-right: 4px; /* Spazio a destra delle icone per separarle dal testo */
+}
+
+/* Aggiunge un leggero spazio tra l'icona dei commenti e il numero di commenti */
+.bi-chat-left-dots {
+  margin-left: 10px; /* Aumenta lo spazio tra le icone */
+}

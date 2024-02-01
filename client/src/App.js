@@ -15,18 +15,22 @@ import MatrixProfileForms from './components/MatrixProfileForms';
 import NewTrends from './components/NewTrends';
 import FilteredPostsCategory from './components/FilteredPostsCategory';
 import AboutUs from './components/AboutUs';
-import './components/homepage.css';
-import './components/aboutus.css';
-import './components/features.css';
-import './components/header.css';
-import './components/footer.css';
-import './components/card.css';
-import './components/filteredposts.css';
-import './components/monthlyTrends.css';
-import './components/hottopics.css';
-import './components/comment.css';
-import './components/postLayout.css';
-import './components/matrixprofile.css';
+import './components/css/homepage.css';
+import './components/css/aboutus.css';
+import './components/css/features.css';
+import './components/css/header.css';
+import './components/css/footer.css';
+import './components/css/card.css';
+import './components/css/filteredposts.css';
+import './components/css/monthlyTrends.css';
+import './components/css/hottopics.css';
+import './components/css/comment.css';
+import './components/css/post.css';
+import './components/css/matrixprofile.css';
+import './components/css/postdetail.css';
+import './components/css/totalredditorscard.css';
+import './components/css/sentimentsummarybar.css';
+import './components/css/sentimentsummarycard.css';
 
 function App() {
   return (

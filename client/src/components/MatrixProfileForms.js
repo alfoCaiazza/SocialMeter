@@ -18,7 +18,6 @@ const MatrixProfileForms = () => {
     ];
     
     const options2 = [
-        { value: 'compound', label: 'Sentimento' },
         { value: 'score', label: 'Score' },
         { value: 'tot_comments', label: 'Numero di Commenti' },
         { value: 'tot_posts', label: 'Numero di Post' },

@@ -1,0 +1,54 @@
+/* Stili per il container principale */
+.container-fluid {
+    background: #f8f9fa; /* Colore di sfondo leggero per il container principale */
+    padding: 20px;
+}
+
+/* Stili per i titoli */
+.display-6 {
+    color: #343a40; /* Colore del testo scuro per un migliore contrasto */
+}
+
+/* Stili per le cards */
+.row .col-md-4 {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Aggiunge un leggero ombreggiamento alle card */
+    transition: 0.3s;
+    width: 100%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); /* Effetto hover per le card con un ombreggiamento più marcato */
+}
+
+/* Stili per il grafico */
+.LineChart {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1); /* Ombreggiamento leggero per il grafico */
+    padding: 20px;
+    background: #fff; /* Sfondo bianco per il grafico */
+}
+
+/* Stili per i commenti */
+.comment {
+    background: #fff; /* Sfondo bianco per i singoli commenti */
+    margin-top: 10px;
+    padding: 15px;
+    border-radius: 5px; /* Bordi arrotondati per i commenti */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Leggero ombreggiamento per i commenti */
+}
+
+/* Responsive design per schermi più piccoli */
+@media (max-width: 768px) {
+    .row .col-md-4 {
+        flex-direction: column;
+    }
+
+    .LineChart {
+        width: 100%; /* Rende il grafico responsive */
+    }
+}
