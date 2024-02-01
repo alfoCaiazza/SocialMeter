@@ -131,7 +131,7 @@ const PostDetail = () => {
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
         <div className='text-center' style={{marginTop: "3%"}}>
-          <h2 className='display-6' style={{marginTop: '1%', color: '#171717'}}><strong>Approfondisci l'analisi del post</strong></h2>
+          <h2 className='display-6' style={{marginTop: '10%', color: '#171717'}}><strong>Approfondisci l'analisi del post</strong></h2>
         </div>
         <div className='my-auto mt-5 mb-2' style={{ width: '80%' }}>
             <Post
