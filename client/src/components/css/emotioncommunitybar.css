@@ -1,0 +1,30 @@
+.emotion-bar {
+    display: flex;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .emotion-value {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+    border-radius: 10px; /* Se vuoi bordi arrotondati solo agli estremi, dovrai gestirlo nel JSX */
+  }
+  
+  .emotion-value.anger {
+    background-color: red;
+  }
+  
+  .emotion-value.joy {
+    background-color: green;
+  }
+  
+  .emotion-value.sadness {
+    background-color: blue;
+  }
+  
+  .emotion-value.fear {
+    background-color: purple;
+  }
+  

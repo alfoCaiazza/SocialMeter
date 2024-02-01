@@ -1,0 +1,42 @@
+.emotion-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .emotion-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .dominant-emotion {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .emotion-numbers {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .emotion-icon {
+    color: red; /* Default, poi sovrascrivi per le altre icone */
+  }
+  
+  .emotion-icon.joy {
+    color: green;
+  }
+  
+  .emotion-icon.sadness {
+    color: blue;
+  }
+  
+  .emotion-icon.fear {
+    color: purple;
+  }
+  

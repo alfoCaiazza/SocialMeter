@@ -1,0 +1,28 @@
+.score-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .score-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .score-numbers {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .score-icon.up {
+    color: blue;
+  }
+  
+  .score-icon.down {
+    color: red;
+  }
+  

@@ -1,0 +1,33 @@
+.post-emotion-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .post-emotion-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .post-emotion {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .emotion-icon {
+    font-size: 2.4em; /* Potresti voler definire dimensioni specifiche per ogni icona se necessario */
+    display: block;
+    margin: auto; /* Centra l'icona orizzontalmente */
+  }
+  
+  /* Colori specifici per le icone basati sul tipo di emozione */
+  .icon-rabbia { color: red; }
+  .icon-gioia { color: green; }
+  .icon-tristezza { color: blue; }
+  .icon-paura { color: purple; }
+  

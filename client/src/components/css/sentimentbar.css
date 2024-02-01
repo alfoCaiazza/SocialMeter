@@ -1,0 +1,25 @@
+.sentiment-bar {
+    display: flex;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .sentiment-value-bar {
+    /* L'altezza è già impostata al 100% della barra padre, quindi verrà mantenuta */
+    transition: width 0.5s ease-in-out;
+  }
+  
+  .sentiment-value-bar.negative {
+    background-color: red;
+  }
+  
+  .sentiment-value-bar.neutral {
+    background-color: orange;
+  }
+  
+  .sentiment-value-bar.positive {
+    background-color: green;
+  }
+  

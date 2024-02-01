@@ -1,0 +1,47 @@
+.sentiment-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .sentiment-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .dominant-sentiment {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .sentiment-numbers-card {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .sentiment-icon-card{
+    font-size: 2.5em;
+    color: red; /* Imposta il colore di default per le icone */
+  }
+  
+  .sentiment-icon-card.neutral {
+    color: orange;
+  }
+  
+  .sentiment-icon-card.positive {
+    color: green;
+  }
+  
+  .sentiment-value {
+    display: block;
+    color: inherit;
+    margin-top: -1px;
+    font-weight: normal;
+    font-size: 15px;
+  }
+  

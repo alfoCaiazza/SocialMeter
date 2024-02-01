@@ -31,6 +31,13 @@ import './components/css/postdetail.css';
 import './components/css/totalredditorscard.css';
 import './components/css/sentimentsummarybar.css';
 import './components/css/sentimentsummarycard.css';
+import './components/css/emotioncommunitybar.css';
+import './components/css/emotioncommunitycard.css';
+import './components/css/scorebar.css';
+import './components/css/scorecard.css';
+import './components/css/postemotioncard.css';
+import './components/css/sentimentbar.css';
+import './components/css/sentimentcard.css';
 
 function App() {
   return (
