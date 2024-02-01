@@ -142,123 +142,196 @@ const NewTrends = () => {
     return sentiment ? sentiment.value.toFixed(2) : '0.00'; // Formattato con due cifre decimali
   };
 
-  const SENTIMENT_COLORS = ['#f44336','#ffc658','#82ca9d']
-  const EMOTION_COLOR = ['#4bc450', '#6e30e0', '#f02e12', '#0481ae']
-  const COLORS = ['#ffb266', '#ff0000','#cc0000', '#66cc66',' #ff6666',' #ffa500', '#008000',' #cc8400']; 
+  const SENTIMENT_COLORS = ['#ff5154','#ffbf00','#3bb273']
+  const EMOTION_COLOR = ['#8cff98', '#ffd131', '#ff1b1c', '#5c9ead']
+
+  const sentimentNames = ["Positivo", "Negativo", "Neutrale"];
+  const sentimentData = data.filter(item => sentimentNames.includes(item.name));
   
   return (
-    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0'>
-        <div className='text-center mt-4'>
-          <h2 className='display-6' style={{ color: '#171717' }}>
-            <strong>Distribuzione indici per la tematica {getCategoryString(category)}</strong>
-          </h2>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
-          <div>
-            <div className='text-center mt-4'>
-              <p>SENTIMENTO</p>
+    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginTop: '7%'}}>
+      <div className='text-center mt-4'>
+        <h2 className='display-6' style={{ color: '#171717' }}>
+          <strong>Analizza gli Indici per la Tematica {getCategoryString(category)}</strong>
+        </h2>
+      </div>
+
+      {/* Sezione Sentimenti */}
+        <div className='trends-section'>
+          <h3 className='text-center mt-4'>Distribuzione del Sentimento</h3>
+          <div className='charts-container'>
+            {/* Contenitore per PieChart e paragrafo */}
+            <div className='paragraph-container'>
+              {/* PieChart */}
+              <div>
+                <PieChart width={350} height={350}>
+                  <Pie 
+                    data={sentimentData} 
+                    dataKey="value" 
+                    nameKey="name" 
+                    cx="50%" 
+                    cy="50%" 
+                    outerRadius={150}>
+                      {sentimentData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={SENTIMENT_COLORS[index % SENTIMENT_COLORS.length]} />
+                      ))}
+                  </Pie>
+                  <Tooltip content={renderCustomTooltip} />
+                  <Legend />
+                </PieChart>
+              </div>
+
+              {/* Paragrafo esplicativo */}
+              <div style={{ maxWidth: '40%', padding: '20px'}}>
+                <p>
+                  Il grafico a torta mostra la distribuzione dei sentimenti nei post relativi alla tematica selezionata.<br/><br/>
+                  Ogni segmento rappresenta il numero di post che esprimono un determinato sentimento, permettendo di visualizzare rapidamente quale di questi prevale.
+                </p>
+              </div>
             </div>
-            <PieChart width={400} height={400} style={{ marginTop: '2rem' }}>
-              <Pie 
-                  data={data} 
-                  dataKey="value" 
-                  nameKey="name" 
-                  cx="50%" 
-                  cy="50%" 
-                  outerRadius={150} 
-              >
-                  {data.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={SENTIMENT_COLORS[index % COLORS.length]} />
-                  ))}
-              </Pie>
-              <Tooltip content={renderCustomTooltip} />
-              <Legend />
-            </PieChart>
-          </div>
-          <div>
-            <div className='text-center mt-4'>
-              <p>Distribuzione Sentimento nelle subreddit</p>
+
+            {/* Contenitore per BarChart e paragrafo esplicativo */}
+            <div className='paragraph-container'>
+              {/* BarChart Sentimenti per Subreddit */}
+              <div>
+                <BarChart
+                  width={700}
+                  height={300}
+                  data={subredditData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <RechartsTooltip />
+                    <Legend />
+                    <Bar dataKey="Positivo" stackId="a" fill="#3bb273" name="Post Positivi" />
+                    <Bar dataKey="Neutrale" stackId="a" fill="#ffbf00" name="Post Neutrali" />
+                    <Bar dataKey="Negativo" stackId="a" fill="#ff5154" name="Post Negativi" />
+                </BarChart>
+              </div>
+
+              {/* Paragrafo esplicativo per BarChart */}
+              <div style={{ maxWidth: '80%', padding: '20px' }}>
+                <p>
+                  Il grafico a barre mostra la Distribuzione del sentiment nei vari Subreddit analizzati.<br/>
+                  Ogni barra rappresenta il numero di post per ciascun sentimento, offrendo una visione dettagliata di come i sentimenti si distribuiscono tra le diverse comunità.
+                </p>
+              </div>
             </div>
-            <BarChart
-              width={700}
-              height={410}
-              data={subredditData}
-              margin={{
-                top: 20, right: 30, left: 20, bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="Positivo" stackId="a" fill="#82ca9d" name="Post Positivi" />
-              <Bar dataKey="Neutrale" stackId="a" fill="#ffc658" name="Post Neutrali" />
-              <Bar dataKey="Negativo" stackId="a" fill="#f44336" name="Post Negativi" />
-            </BarChart>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
-          <div>
-            <div className='text-center mt-4'>
-                <p>EMOZIONE</p>
-            </div>      
-            <PieChart width={400} height={400}>
-              <Pie
-                data={emotionData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-              >
-                {emotionData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={EMOTION_COLOR[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
+
+      {/* Sezione Emozioni */}
+      <div className='trends-section'>
+          <h3 className='text-center mt-4'>Distribuzione delle Emozioni</h3>
+          <div className='charts-container'>
+            {/* Contenitore per PieChart e paragrafo */}
+            <div className='paragraph-container'>
+              {/* PieChart */}
+              <div>
+                <PieChart width={350} height={350}>
+                  <Pie 
+                    data={emotionData} 
+                    dataKey="value" 
+                    nameKey="name" 
+                    cx="50%" 
+                    cy="50%" 
+                    outerRadius={150}>
+                      {emotionData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={EMOTION_COLOR[index % EMOTION_COLOR.length]} />
+                      ))}
+                  </Pie>
+                  <Tooltip content={renderCustomTooltip} />
+                  <Legend />
+                </PieChart>
+              </div>
+
+              {/* Paragrafo esplicativo */}
+              <div style={{ maxWidth: '40%', padding: '20px'}}>
+                <p>
+                  Il grafico a torta mostra la distribuzione delle emozioni nei post relativi alla tematica selezionata.<br/><br/>
+                  Ogni segmento rappresenta il numero di post che esprimono una determinata emozione, permettendo di visualizzare rapidamente quale di queste prevale.
+                </p>
+              </div>
+            </div>
+
+            {/* Contenitore per BarChart e paragrafo esplicativo */}
+            <div className='paragraph-container'>
+              {/* BarChart Sentimenti per Subreddit */}
+              <div>
+                <BarChart
+                  width={700}
+                  height={300}
+                  data={subredditData}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <RechartsTooltip />
+                    <Legend />
+                    <Bar dataKey="Rabbia" stackId="a" fill="#ff1b1c" name="Rabbia" />
+                    <Bar dataKey="Gioia" stackId="a" fill="#8cff98" name="Gioia" />
+                    <Bar dataKey="Tristezza" stackId="a" fill="#5c9ead" name="Tristezza" />
+                    <Bar dataKey="Paura" stackId="a" fill="#ffd131" name="Paura" />
+                </BarChart>
+              </div>
+
+              {/* Paragrafo esplicativo per BarChart */}
+              <div style={{ maxWidth: '80%', padding: '20px' }}>
+                <p>
+                  Il grafico a barre mostra la distribuzione delle emozioni nei vari Subreddit analizzati.<br/>
+                  Ogni barra rappresenta il numero di post per ciascuna emozione, offrendo una visione dettagliata di come le stesse si distribuiscono tra le diverse comunità.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className='text-center mt-4' style={{ width: '90%' }}>
-          <p style={{ fontSize: '1.2rem' }}>
-            Numero di post per sentimento 
-          </p>
-        </div>
-        <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', height: '50%', marginTop: '2%'}}>
+      
+      
+      {/* Grafici andamento nel tempo (comuni a sentimenti ed emozioni) */}
+      <div className='trends-section'>
+        <div style={{ width: '100%', marginTop: '20px' }}>
+          <h3 className='text-center mt-4'>Andamento dei Sentimenti nel Tempo</h3>
           <LineChart width={1000} height={300} data={trendsOverTime} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
             <YAxis />
             <RechartsTooltip />
             <Legend />
-            <Line type="monotone" dataKey="Positivo" stroke="#82ca9d" name="Post Positivi"/>
-            <Line type="monotone" dataKey="Negativo" stroke="#f44336" name="Post Negativi"/>
-            <Line type="monotone" dataKey="Neutrale" stroke="#ffc658" name="Post Neutrali"/>
+            <Line type="monotone" dataKey="Positivo" stroke="#3bb273" name="Post Positivi"/>
+            <Line type="monotone" dataKey="Negativo" stroke="#ff5154" name="Post Negativi"/>
+            <Line type="monotone" dataKey="Neutrale" stroke="#ffbf00" name="Post Neutrali"/>
           </LineChart>
+          {/* Paragrafo esplicativo per il LineChart dei sentimenti */}
+          <div style={{ padding: '20px' }}>
+            <p>Questo grafico a linee mostra l'evoluzione dei sentimenti nel tempo. Ogni linea rappresenta un sentimento diverso, permettendo di osservare come la prevalenza di sentimenti positivi, negativi o neutri si sia modificata nel corso del periodo analizzato.</p>
+          </div>
         </div>
-        <div className='text-center mt-4' style={{ width: '90%' }}>
-          <p style={{ fontSize: '1.2rem' }}>
-            Numero di post per emozione 
-          </p>
-        </div>
-        <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', height: '50%', marginTop: '2%'}}>
+        <div style={{ width: '100%', marginTop: '20px' }}>
+          <h3 className='text-center mt-4'>Andamento delle Emozioni nel Tempo</h3>
           <LineChart width={1000} height={300} data={emotionsOverTime} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
             <YAxis />
             <RechartsTooltip />
             <Legend />
-            <Line type="monotone" dataKey="Rabbia" stroke="red" name="Rabbia"/>
-            <Line type="monotone" dataKey="Gioia" stroke="green" name="Gioia"/>
-            <Line type="monotone" dataKey="Tristezza" stroke="blue" name="Tristezza"/>
-            <Line type="monotone" dataKey="Paura" stroke="purple" name="Paura"/>
+            <Line type="monotone" dataKey="Rabbia" stroke="#ff1b1c" name="Rabbia"/>
+            <Line type="monotone" dataKey="Gioia" stroke="#8cff98" name="Gioia"/>
+            <Line type="monotone" dataKey="Tristezza" stroke="#5c9ead" name="Tristezza"/>
+            <Line type="monotone" dataKey="Paura" stroke="#ffd131" name="Paura"/>
           </LineChart>
+          {/* Paragrafo esplicativo per il LineChart delle emozioni */}
+          <div style={{ padding: '20px' }}>
+            <p>Questo grafico a linee illustra come le diverse emozioni si siano manifestate nei post nel corso del tempo. Tracciando la frequenza di emozioni come gioia, tristezza, rabbia e paura, si può comprendere meglio il clima emotivo generale e le sue variazioni.</p>
+          </div>
         </div>
+      </div>
     </div>
   );
 
 }
 
 export default NewTrends;
+
+
+

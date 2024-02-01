@@ -12,7 +12,11 @@ def get_posts(category):
         'Negativo': 0,
         'Positivo': 0,
         'Neutrale': 0,
-        'Totale': 0
+        'Totale': 0,
+        'Rabbia': 0,
+        'Gioia': 0,
+        'Tristezza': 0,
+        'Paura': 0
     }
     
     yearly_sentiment = {}
@@ -39,7 +43,7 @@ def get_posts(category):
 
         if subreddit:
             if subreddit not in subreddit_counts:
-                subreddit_counts[subreddit] = {'Negativo': 0, 'Positivo': 0, 'Neutrale': 0, 'Rabbia': 0, 'Gioia': 0, 'Tristezza': 0, 'Paura': 0}
+                subreddit_counts[subreddit] = {'Negativo': 0, 'Positivo': 0, 'Neutrale': 0, 'Totale' : 0, 'Rabbia': 0, 'Gioia': 0, 'Tristezza': 0, 'Paura': 0}
 
             # Classifica il post in base al suo sentiment e aggiorna il conteggio per il subreddit specifico
             if compound == 0:  # assumendo che sentiment negativo sia < 0
@@ -48,6 +52,9 @@ def get_posts(category):
                 subreddit_counts[subreddit]['Positivo'] += 1
             elif compound == 1:  # sentiment neutrale
                 subreddit_counts[subreddit]['Neutrale'] += 1
+            
+            if emotion in ['Rabbia', 'Gioia', 'Tristezza', 'Paura']:
+                subreddit_counts[subreddit][emotion] += 1
 
         if year and year not in yearly_sentiment:
             yearly_sentiment[year] = {'Negativo': 0, 'Positivo': 0, 'Neutrale': 0}

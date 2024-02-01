@@ -22,6 +22,7 @@ import './components/css/header.css';
 import './components/css/footer.css';
 import './components/css/card.css';
 import './components/css/filteredposts.css';
+import './components/css/newtrends.css';
 import './components/css/monthlyTrends.css';
 import './components/css/hottopics.css';
 import './components/css/comment.css';

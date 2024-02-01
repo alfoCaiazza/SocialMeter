@@ -1,0 +1,28 @@
+/* Apply the trends-section style */
+.trends-section {
+    background-color: #fff; /* Match the background color from homepage.css */
+    border-radius: 4px; /* Slightly reduce the border-radius for consistency */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Keep the box shadow */
+    padding: 20px; /* Keep the padding */
+    margin: 20px 0; /* Keep the margin */
+    width: 80%;
+    border-radius: 20px;
+}
+
+/* Apply the charts-container style */
+.charts-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+/* Apply the paragraph-container style */
+.paragraph-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 5%;
+}
