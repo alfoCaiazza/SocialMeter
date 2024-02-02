@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logo from './images/logo_chatGPT.png';
 
 const Header = () => {
   const [showLink, setShowLink] = useState(true);
