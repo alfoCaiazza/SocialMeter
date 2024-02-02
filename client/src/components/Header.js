@@ -28,7 +28,6 @@ const Header = () => {
         <nav id="navbar" className="navbar">
           <ul>
             <li><Link className="nav-link scrollto" to="/">Home</Link></li>
-            <li><Link className="nav-link scrollto" to="/about_us">About</Link></li>
             <li className="dropdown"><Link to="/features"><span>Features</span><i className="bi bi-chevron-down"></i></Link>
               <ul>
                 <li><Link to="/filtered_posts_category">Filtra Post</Link></li>
@@ -37,7 +36,7 @@ const Header = () => {
                 <li><Link to="/matrix_profile">Evoluzione Interazioni</Link></li>
               </ul>
             </li>
-            <li><Link className="nav-link scrollto" to="/results">Ristultati</Link></li>
+            <li><Link className="nav-link scrollto" to="/about_us">About Us</Link></li>
           </ul>
           <i className="bi bi-list mobile-nav-toggle"></i>
         </nav>

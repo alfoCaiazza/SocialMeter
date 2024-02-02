@@ -39,6 +39,7 @@ import './components/css/scorecard.css';
 import './components/css/postemotioncard.css';
 import './components/css/sentimentbar.css';
 import './components/css/sentimentcard.css';
+import './components/css/categorylist.css';
 
 function App() {
   return (

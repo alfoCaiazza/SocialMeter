@@ -13,6 +13,7 @@ const FilteredPosts = () => {
     const [endDate, setEndDate] = useState('');
     const [selectedSentiment, setSelectedSentiment] = useState('');
     const [selectedEmotion, setSelectedEmotion] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const { category } = useParams();
 
     useEffect(() => {
@@ -26,6 +27,14 @@ const FilteredPosts = () => {
         }
         fetchData();
     }, [category]);
+
+    useEffect(() => {
+        if (new Date(startDate) >= new Date(endDate)) {
+            setErrorMessage('La data di inizio deve essere antecedente alla data di fine.');
+        } else {
+            setErrorMessage('');
+        }
+    }, [startDate, endDate]); // Questo useEffect verrà eseguito solo quando startDate o endDate cambiano    
 
     // Funzione per troncare il testo
     const truncateText = (text, maxLength) => {
@@ -139,6 +148,11 @@ const FilteredPosts = () => {
                     </div>
                 </div>
             </div>
+                {errorMessage && (
+                        <div className="errorMessage" role="alert">
+                            {errorMessage}
+                        </div>
+                )}
             <div className='table-responsive'>
                 <table className='table table-striped align-middle'>
                     <thead className='table-dark'>

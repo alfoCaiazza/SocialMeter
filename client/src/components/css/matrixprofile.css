@@ -34,4 +34,33 @@ h2 {
     border-color: #76c7ed !important; /* Colore del bordo al passaggio del mouse */
 }
 
-/* Stili specifici per Recharts potrebbero dover essere definiti inline o tramite props specifiche della libreria */
+.errorMessage {
+    background-color: #f8d7da; /* Colore di sfondo rosso chiaro per gli errori */
+    color: #721c24; /* Colore del testo scuro per un buon contrasto */
+    border-color: #f5c6cb; /* Colore del bordo leggermente più scuro dello sfondo */
+    border-radius: 4px; /* Bordi arrotondati per un aspetto più morbido */
+    padding: 10px; /* Spaziatura interna per non attaccare il testo ai bordi */
+    text-align: center; /* Testo centrato */
+    margin-bottom: 20px; /* Margine inferiore per distanziarlo dagli altri elementi */
+    max-width: 80%; /* Larghezza massima per non estendersi troppo orizzontalmente */
+    margin-left: auto; /* Margini automatici per centrare orizzontalmente il messaggio */
+    margin-right: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Ombra leggera per un effetto sollevato */
+    font-size: 1rem; /* Dimensione del testo */
+}
+
+/* Opzionale: animazione leggera all'apparizione del messaggio di errore */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.errorMessage {
+    animation: slideDown 0.3s ease-out;
+}

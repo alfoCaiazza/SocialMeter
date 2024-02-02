@@ -9,6 +9,7 @@ const MatrixProfileForms = () => {
     const [selectedIndex, setSelectedIndex] = useState('');
     const [chartData, setChartData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const options1 = [
@@ -32,8 +33,19 @@ const MatrixProfileForms = () => {
     };
 
     const handleSubmit = async () => {
+        if (!startDate || !endDate || !selectedCategory || !selectedIndex) {
+            setErrorMessage('Per favore, completa tutti i campi del modulo.');
+            return;
+        }
+
+        if (new Date(startDate) >= new Date(endDate)) {
+            setErrorMessage('La data di inizio deve essere antecedente alla data di fine.');
+            return;
+        }
+
         setIsLoading(true);
-        setChartData([]); // Resetta i dati del grafico per evitare di mostrare vecchi dati
+        setChartData([]);
+        setErrorMessage('');
 
         try {
             const response = await fetch(`http://localhost:5000/api/create_matrix_profile`, {
@@ -50,37 +62,28 @@ const MatrixProfileForms = () => {
     
             const responseData = await response.json();
     
-            let formattedData;
-            if (selectedIndex === 'tot_posts') {
-                formattedData = responseData.dates.map((date, index) => {
-                    return {
-                        date: date,
-                        value: responseData.values[index]
-                    };
-                });
-            } else {
-                formattedData = responseData.dates.map((date, index) => {
-                    let postDetails = responseData.posts[index];
-                    return {
-                        date: date,
-                        value: responseData.values[index],
-                        id: postDetails.id,
-                        score: postDetails.score,
-                        tot_comments: postDetails.tot_comments,
-                        compound: postDetails.compound
-                    };
-                });
-            }
+            const formattedData = responseData.dates.map((date, index) => {
+                return {
+                    date: date,
+                    value: responseData.values[index],
+                    ...(selectedIndex !== 'tot_posts' && {
+                        id: responseData.posts[index]?.id,
+                        score: responseData.posts[index]?.score,
+                        tot_comments: responseData.posts[index]?.tot_comments,
+                        compound: responseData.posts[index]?.compound
+                    })
+                };
+            });
     
             setChartData(formattedData);
         } catch (error) {
             console.error('Si è verificato un errore durante l\'invio dei dati:', error);
+            setErrorMessage('Si è verificato un errore durante il caricamento dei dati.');
         } finally {
             setIsLoading(false);
         }
     };
-    
-    
+
     const CustomTooltip = ({ active, payload }) => {
         return null;
     };
@@ -126,12 +129,12 @@ const MatrixProfileForms = () => {
 
                     <div className="col">
                         <span className="form-label">Data di Inizio</span>
-                        <input type="date" className="form-control" value={startDate} onChange={(e) => setStartDate(e.target.value)} min="2020-1-1"/>
+                        <input type="date" className="form-control" value={startDate} onChange={(e) => setStartDate(e.target.value)} min="2012-01-01" max="2024-01-31"/>
                     </div>
 
                     <div className="col">
                         <span className="form-label">Data di Fine</span>
-                        <input type="date" className="form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} min="2020-1-1" max="2024-1-1"/>
+                        <input type="date" className="form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} min="2012-01-01" max="2024-01-31"/>
                     </div>
 
                     <div className="col d-flex align-items-end">
@@ -139,6 +142,11 @@ const MatrixProfileForms = () => {
                     </div>
                 </div>
             </div>
+                {errorMessage && (
+                    <div className="errorMessage" role="alert">
+                        {errorMessage}
+                    </div>
+                )}
             <div className="d-flex justify-content-center">
                 {isLoading ? (
                     <p>Caricamento in corso...</p>

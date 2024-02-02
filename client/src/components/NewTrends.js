@@ -107,7 +107,8 @@ const NewTrends = () => {
   const processEmotionData = (emotionCounts) => {
     return Object.entries(emotionCounts).map(([emotion, count]) => ({
       name: emotion,
-      value: count
+      value: count,
+      absoluteValue: count,
     }));
   };
 

@@ -26,7 +26,6 @@ const Footer = () => {
                         <li><i className="bx bx-chevron-right"></i> <Link to="/">Home</Link></li>
                         <li><i className="bx bx-chevron-right"></i> <Link to="/about_us">About us</Link></li>
                         <li><i className="bx bx-chevron-right"></i> <Link to="/features">Features</Link></li>
-                        <li><i className="bx bx-chevron-right"></i> <Link to="/results">Risultati</Link></li>
                         </ul>
                     </div>
 

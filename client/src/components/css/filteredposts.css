@@ -15,7 +15,7 @@ body, .table, .pagination-container {
   }
   
   .table thead th {
-      background-color: #49b5e7; /* Colore di sfondo per l'intestazione della tabella */
+      background-color: #225fb1; /* Colore di sfondo per l'intestazione della tabella */
       color: #fff; /* Colore del testo per l'intestazione */
       font-family: "Dosis", sans-serif; /* Font per le intestazioni */
       border: none;;
@@ -41,16 +41,9 @@ body, .table, .pagination-container {
     justify-content: center; /* Allinea gli elementi figli (la paginazione) al centro */
     }
   /* Stile della paginazione */
-  .pagination-container .pagination a {
-      background: #49b5e7; /* Colore di sfondo dei bottoni di paginazione */
-      color: #fff; /* Colore del testo */
-      border-radius: 4px; /* Arrotondamento degli angoli */
-      transition: background 0.3s; /* Transizione morbida per il cambio di sfondo */
-  }
+
   
-  .pagination-container .pagination a:hover {
-      background: #76c7ed; /* Colore di sfondo al passaggio del mouse */
-  }
+
   
   /* Assicurati che il CSS sia applicato correttamente aggiungendo classi specifiche se necessario e testando la tua pagina per garantire che tutto funzioni come previsto. */
   

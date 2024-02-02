@@ -1,0 +1,42 @@
+/* Stili per la lista delle categorie */
+.category-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Stili per gli elementi della lista */
+  .category-list li {
+    margin: 10px;
+    transition: transform 0.2s;
+  }
+  
+  /* Stili per i link delle categorie */
+  .category-list a {
+    display: block;
+    color: #49b5e7;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+  
+  /* Effetto hover per i link delle categorie */
+  .category-list a:hover {
+    background-color: #f0f0f0;
+    color: #6dc4ec;
+    transform: scale(1.05);
+    text-decoration: none;
+  }
+  
+  /* Stili per il titolo della sezione */
+  .category-title {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2rem;
+    color: #171717;
+  }
+  
