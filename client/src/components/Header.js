@@ -37,7 +37,6 @@ const Header = () => {
             </li>
             <li><Link className="nav-link scrollto" to="/about_us">About Us</Link></li>
           </ul>
-          <i className="bi bi-list mobile-nav-toggle"></i>
         </nav>
       </div>
     </header>
