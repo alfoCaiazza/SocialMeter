@@ -7,7 +7,7 @@
   }
   
   .my-link:hover {
-    color: #171717; /* Colore del testo al passaggio del mouse */
+    color: #4bafdc; /* Colore del testo al passaggio del mouse */
     font-size: 1.8em; /* Dimensione del testo al passaggio del mouse */
   }
   

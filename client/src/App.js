@@ -6,7 +6,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Results from './components/Results';
 import FilteredPosts from './components/FilteredPosts';
-import Trends from './components/Trends';
 import HotTopics from './components/HotTopics';
 import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
