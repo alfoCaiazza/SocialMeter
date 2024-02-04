@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   const links = [
-    { to: '/filtered_posts_category', label: 'Filtra Post' },
+    { to: '/filtered_posts_category', label: 'Esplora Post' },
     { to: '/hot_topics_category', label: 'Parole Chiavi' },
     { to: '/trends_category', label: 'Tendenze' },
-    { to: '/matrix_profile', label: 'Evoluzione Interazioni' },
+    { to: '/matrix_profile', label: 'Engagement' },
   ];
 
   return (
