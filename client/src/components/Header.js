@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   const [showLink, setShowLink] = useState(true);
 
-  // Imposta uno stato per nascondere il link quando la larghezza è inferiore Link 768 pixel
+  // Use a state to hide the link when the width of the window is less then 768 pixel
   useEffect(() => {
     const handleResize = () => {
       setShowLink(window.innerWidth > 768);
     };
 
-    // Aggiunge un listener per rilevare i cambiamenti di dimensioni della finestra
+    //Add a listener to detect changes in window dimensions
     window.addEventListener('resize', handleResize);
 
-    // Esegui la funzione di cleanup quando il componente si smonta
+    // Exec cleanup function
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -22,7 +22,6 @@ const Header = () => {
   return (
     <header id="header" className="fixed-top">
       <div className="container d-flex align-items-center justify-content-between">
-        {/* <Link to="/" className="logo"><img src={logo} alt="" className="img-fluid"/></Link>  */}
         <h1 className="logo"><Link to="/">SocialMeter</Link></h1>
         <nav id="navbar" className="navbar">
           <ul>

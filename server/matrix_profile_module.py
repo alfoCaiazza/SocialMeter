@@ -11,14 +11,11 @@ def get_matrix_profile(app):
             category = data.get('category')
             index = data.get('index')
 
-            print("Dati ricevuti:", data)
-
             # Controlla se tutti i campi necessari sono presenti
             if not all([startDate, endDate, category, index]):
                 return jsonify({'error': 'Mancano alcuni dati necessari'}), 400
 
             result = startup(category, index, startDate, endDate)
-            print(result)
             return jsonify(result)
         except Exception as e:
             current_app.logger.error(f"Errore: {e}")

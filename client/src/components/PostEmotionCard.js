@@ -6,9 +6,7 @@ const emotionIcons = {
 };
 
 const PostEmotionCard = ({ emotion }) => {
-    // Determina la classe dell'icona in base al tipo di emozione
     const emotionClass = emotionIcons[emotion] ? `emotion-icon ${emotionIcons[emotion].className}` : 'emotion-icon';
-    // Assegna la classe per il colore in base al tipo di emozione
     const colorClass = emotionIcons[emotion] ? `icon-${emotion.toLowerCase()}` : '';
 
     return (

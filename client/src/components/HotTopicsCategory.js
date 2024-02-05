@@ -17,7 +17,7 @@ const HotTopicsCategory = () => {
             {links.map((link, index) => (
               <li key={index} style={{marginBottom: '5%'}}>
                 <Link to={link.to + '/' + link.category} className="my-link">
-                  <i className={`bi ${link.icon} me-2`}></i> {/* Aggiunta icona Bootstrap */}
+                  <i className={`bi ${link.icon} me-2`}></i>
                   {link.label}
                 </Link>
               </li>

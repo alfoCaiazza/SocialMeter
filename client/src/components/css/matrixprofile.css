@@ -14,42 +14,41 @@ h2 {
 
 .form-select, .form-control {
     border-radius: 4px;
-    border: 1px solid #ced4da; /* Grigio chiaro per i bordi */
-    padding: .375rem .75rem; /* Padding interno */
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; /* Transizione morbida */
+    border: 1px solid #ced4da; 
+    padding: .375rem .75rem; 
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; 
 }
 
 .form-select:focus, .form-control:focus {
-    border-color: #49b5e7; /* Colore di focus coerente con il tema */
-    box-shadow: 0 0 0 .2rem rgba(73, 181, 231, .25); /* Ombra leggera per l'elemento in focus */
+    border-color: #49b5e7; 
+    box-shadow: 0 0 0 .2rem rgba(73, 181, 231, .25);
 }
 
 .btn-dark {
-    background-color: #49b5e7 !important;/* Colore di sfondo del bottone */
-    border-color: #49b5e7 !important; /* Colore del bordo del bottone */
+    background-color: #49b5e7 !important;
+    border-color: #49b5e7 !important; 
 }
 
 .btn-dark:hover {
-    background-color: #76c7ed !important; /* Colore di sfondo al passaggio del mouse */
-    border-color: #76c7ed !important; /* Colore del bordo al passaggio del mouse */
+    background-color: #76c7ed !important; 
+    border-color: #76c7ed !important; 
 }
 
 .errorMessage {
-    background-color: #f8d7da; /* Colore di sfondo rosso chiaro per gli errori */
-    color: #721c24; /* Colore del testo scuro per un buon contrasto */
-    border-color: #f5c6cb; /* Colore del bordo leggermente più scuro dello sfondo */
-    border-radius: 4px; /* Bordi arrotondati per un aspetto più morbido */
-    padding: 10px; /* Spaziatura interna per non attaccare il testo ai bordi */
-    text-align: center; /* Testo centrato */
-    margin-bottom: 20px; /* Margine inferiore per distanziarlo dagli altri elementi */
-    max-width: 80%; /* Larghezza massima per non estendersi troppo orizzontalmente */
-    margin-left: auto; /* Margini automatici per centrare orizzontalmente il messaggio */
+    background-color: #f8d7da; 
+    color: #721c24; 
+    border-color: #f5c6cb; 
+    border-radius: 4px;
+    padding: 10px; 
+    text-align: center; 
+    margin-bottom: 20px; 
+    max-width: 80%; 
+    margin-left: auto; 
     margin-right: auto;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Ombra leggera per un effetto sollevato */
-    font-size: 1rem; /* Dimensione del testo */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    font-size: 1rem; 
 }
 
-/* Opzionale: animazione leggera all'apparizione del messaggio di errore */
 @keyframes slideDown {
     from {
         opacity: 0;

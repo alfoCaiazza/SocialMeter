@@ -9,7 +9,7 @@
   .emotion-value {
     height: 100%;
     transition: width 0.5s ease-in-out;
-    border-radius: 10px; /* Se vuoi bordi arrotondati solo agli estremi, dovrai gestirlo nel JSX */
+    border-radius: 10px; 
   }
   
   .emotion-value.anger {

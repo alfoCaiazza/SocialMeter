@@ -150,7 +150,7 @@ const MatrixProfileForms = () => {
             <div className="d-flex justify-content-center">
                 {isLoading ? (
                     <p>Caricamento in corso...</p>
-                ) : chartData.length > 0 ? ( // Mostra il grafico solo se chartData non è vuoto
+                ) : chartData.length > 0 ? (
                     <LineChart width={1400} height={380} data={chartData}>
                         <XAxis dataKey="date"/>
                         <YAxis values='value'/>

@@ -142,7 +142,7 @@
 
 @media (max-width: 1366px) {
   .navbar ul li a {
-    font-size: 14px; /* Riduci la dimensione del font */
-    padding: 5px 10px; /* Riduci la spaziatura interna */
+    font-size: 14px; 
+    padding: 5px 10px; 
   }
 }

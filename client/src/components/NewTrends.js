@@ -27,12 +27,10 @@ const NewTrends = () => {
           setTrendsOverTime(processYearlyData(result.data.yearly_sentiment));
         }
         if (result.data.emotion_counts) {
-          // Processa e imposta i dati di 'emotion'
           const processedEmotionData = processEmotionData(result.data.emotion_counts);
           setEmotionData(processedEmotionData);
         }
         if (result.data.subreddit_counts) {
-          // Processa e imposta i dati di 'subreddit'
           const processedSubredditData = processSubredditData(result.data.subreddit_counts);
           setSubredditData(processedSubredditData);
         }
@@ -47,26 +45,26 @@ const NewTrends = () => {
   }, [category]);
 
   const processSentimentsData = (sentimentData) => {
-    // Calcola il totale dei sentimenti escludendo il conteggio totale generale
+    // Calcuate the total for each sentiment, not considerig the component 'Totale'
     const totalSentiments = Object.entries(sentimentData)
                                   .filter(([key, _]) => key !== 'Totale')
                                   .reduce((sum, [_, value]) => sum + value, 0);
 
-    // Calcola la percentuale di ciascun sentimento e conserva sia la percentuale sia il valore numerico
+    // Calculates each sentiments percentage and store it, with sentiments total
     return Object.entries(sentimentData)
                  .filter(([key, _]) => key !== 'Totale')
                  .map(([key, value]) => {
-                     const percentage = (value / totalSentiments * 100).toFixed(2); // Arrotonda alla seconda cifra decimale
+                     const percentage = (value / totalSentiments * 100).toFixed(2);
                      return { 
                          name: key, 
-                         value: parseFloat(percentage), // Percentuale
-                         absoluteValue: value // Valore numerico originale
+                         value: parseFloat(percentage), // Percentage
+                         absoluteValue: value // Original value
                      };
                  });
   };
 
   const processYearlyData = (yearlyData) => {
-    // Trasforma i dati in un formato adatto per il grafico a linee
+    // Transform data in a correct format for line chart
     return Object.entries(yearlyData).map(([year, sentiments]) => {
       return { 
         year, 
@@ -78,7 +76,6 @@ const NewTrends = () => {
   };
 
   const processYearlyEmotionData = (yearlyData) => {
-    // Trasforma i dati in un formato adatto per il grafico a linee
     return Object.entries(yearlyData).map(([year, emotions]) => {
       return { 
         year, 
@@ -103,7 +100,7 @@ const NewTrends = () => {
     return categoryStrings[category];
   };
 
-  // Esempio di funzione per processare i dati di 'emotion'
+  // Functions that process emotional data
   const processEmotionData = (emotionCounts) => {
     return Object.entries(emotionCounts).map(([emotion, count]) => ({
       name: emotion,
@@ -112,11 +109,11 @@ const NewTrends = () => {
     }));
   };
 
-  // Esempio di funzione per processare i dati di 'subreddit'
+  // Function that process data for each category and for each subreddit
   const processSubredditData = (subredditCounts) => {
     return Object.entries(subredditCounts).map(([subreddit, sentiments]) => ({
       name: subreddit,
-      Positivo: sentiments.Positivo || 0, // Assicurati di fornire un valore predefinito nel caso in cui non ci siano dati
+      Positivo: sentiments.Positivo || 0,
       Neutrale: sentiments.Neutrale || 0,
       Negativo: sentiments.Negativo || 0,
       Rabbia: sentiments.Rabbia || 0,
@@ -130,7 +127,7 @@ const NewTrends = () => {
     if (active && payload && payload.length) {
         return (
             <div className="custom-tooltip" style={{ backgroundColor: 'white', padding: '10px', border: '1px solid #ccc' }}>
-                <p>{payload[0].name}: {payload[0].payload.absoluteValue}</p> {/* Mostra il valore numerico */}
+                <p>{payload[0].name}: {payload[0].payload.absoluteValue}</p> 
             </div>
         );
     }
@@ -140,7 +137,7 @@ const NewTrends = () => {
 
   const findPercentage = (sentimentType) => {
     const sentiment = data.find(item => item.name === sentimentType);
-    return sentiment ? sentiment.value.toFixed(2) : '0.00'; // Formattato con due cifre decimali
+    return sentiment ? sentiment.value.toFixed(2) : '0.00'; 
   };
 
   const SENTIMENT_COLORS = ['#ff5154','#ffbf00','#3bb273']
@@ -157,11 +154,10 @@ const NewTrends = () => {
         </h2>
       </div>
 
-      {/* Sezione Sentimenti */}
+      {/* Sentiment Section */}
         <div className='trends-section'>
           <h3 className='text-center mt-4'>Distribuzione del Sentimento</h3>
           <div className='charts-container'>
-            {/* Contenitore per PieChart e paragrafo */}
             <div className='paragraph-container'>
               {/* PieChart */}
               <div>
@@ -181,8 +177,6 @@ const NewTrends = () => {
                   <Legend />
                 </PieChart>
               </div>
-
-              {/* Paragrafo esplicativo */}
               <div style={{ maxWidth: '40%', padding: '20px'}}>
                 <p>
                   Il grafico a torta mostra la distribuzione dei sentimenti nei post relativi alla tematica selezionata.<br/><br/>
@@ -191,9 +185,8 @@ const NewTrends = () => {
               </div>
             </div>
 
-            {/* Contenitore per BarChart e paragrafo esplicativo */}
+            {/* BarChart */}
             <div className='paragraph-container'>
-              {/* BarChart Sentimenti per Subreddit */}
               <div>
                 <BarChart
                   width={700}
@@ -210,8 +203,6 @@ const NewTrends = () => {
                     <Bar dataKey="Negativo" stackId="a" fill="#ff5154" name="Post Negativi" />
                 </BarChart>
               </div>
-
-              {/* Paragrafo esplicativo per BarChart */}
               <div style={{ maxWidth: '80%', padding: '20px' }}>
                 <p>
                   Il grafico a barre mostra la Distribuzione del sentiment nei vari Subreddit analizzati.<br/>
@@ -222,11 +213,10 @@ const NewTrends = () => {
           </div>
         </div>
 
-      {/* Sezione Emozioni */}
+      {/* Emotions Section */}
       <div className='trends-section'>
           <h3 className='text-center mt-4'>Distribuzione delle Emozioni</h3>
           <div className='charts-container'>
-            {/* Contenitore per PieChart e paragrafo */}
             <div className='paragraph-container'>
               {/* PieChart */}
               <div>
@@ -246,8 +236,6 @@ const NewTrends = () => {
                   <Legend />
                 </PieChart>
               </div>
-
-              {/* Paragrafo esplicativo */}
               <div style={{ maxWidth: '40%', padding: '20px'}}>
                 <p>
                   Il grafico a torta mostra la distribuzione delle emozioni nei post relativi alla tematica selezionata.<br/><br/>
@@ -256,9 +244,8 @@ const NewTrends = () => {
               </div>
             </div>
 
-            {/* Contenitore per BarChart e paragrafo esplicativo */}
+            {/* BarChart */}
             <div className='paragraph-container'>
-              {/* BarChart Sentimenti per Subreddit */}
               <div>
                 <BarChart
                   width={700}
@@ -276,8 +263,6 @@ const NewTrends = () => {
                     <Bar dataKey="Paura" stackId="a" fill="#ffd131" name="Paura" />
                 </BarChart>
               </div>
-
-              {/* Paragrafo esplicativo per BarChart */}
               <div style={{ maxWidth: '80%', padding: '20px' }}>
                 <p>
                   Il grafico a barre mostra la distribuzione delle emozioni nei vari Subreddit analizzati.<br/>
@@ -289,7 +274,7 @@ const NewTrends = () => {
         </div>
       
       
-      {/* Grafici andamento nel tempo (comuni a sentimenti ed emozioni) */}
+      {/* Time Trends Graphics*/}
       <div className='trends-section'>
         <div style={{ width: '100%', marginTop: '20px' }}>
           <h3 className='text-center mt-4'>Andamento dei Sentimenti nel Tempo</h3>
@@ -303,7 +288,6 @@ const NewTrends = () => {
             <Line type="monotone" dataKey="Negativo" stroke="#ff5154" name="Post Negativi"/>
             <Line type="monotone" dataKey="Neutrale" stroke="#ffbf00" name="Post Neutrali"/>
           </LineChart>
-          {/* Paragrafo esplicativo per il LineChart dei sentimenti */}
           <div style={{ padding: '20px' }}>
             <p>Questo grafico a linee mostra l'evoluzione dei sentimenti nel tempo. Ogni linea rappresenta un sentimento diverso, permettendo di osservare come la prevalenza di sentimenti positivi, negativi o neutri si sia modificata nel corso del periodo analizzato.</p>
           </div>
@@ -321,7 +305,6 @@ const NewTrends = () => {
             <Line type="monotone" dataKey="Tristezza" stroke="#5c9ead" name="Tristezza"/>
             <Line type="monotone" dataKey="Paura" stroke="#ffd131" name="Paura"/>
           </LineChart>
-          {/* Paragrafo esplicativo per il LineChart delle emozioni */}
           <div style={{ padding: '20px' }}>
             <p>Questo grafico a linee illustra come le diverse emozioni si siano manifestate nei post nel corso del tempo. Tracciando la frequenza di emozioni come gioia, tristezza, rabbia e paura, si può comprendere meglio il clima emotivo generale e le sue variazioni.</p>
           </div>

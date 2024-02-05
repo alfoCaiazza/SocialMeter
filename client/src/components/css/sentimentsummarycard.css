@@ -25,7 +25,7 @@
   }
   
   .sentiment-icon {
-    color: red; /* Default, poi sovrascrivi per le altre due icone */
+    color: red; 
   }
   
   .sentiment-icon.neutral {

@@ -5,7 +5,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
     margin: 20px;
-    text-align: center; /* Centralizza il testo per tutti gli elementi nella card */
+    text-align: center; 
   }
   
   .post-emotion-header {
@@ -14,14 +14,14 @@
   }
   
   .post-emotion-count, .post-emotion-icon {
-    font-size: 1.2em; /* Applica la stessa dimensione del font sia al conteggio che all'icona per coerenza */
+    font-size: 1.2em; 
     font-weight: bold;
     margin: 10px 0;
   }
   
   .post-emotion-icon i {
-    font-size: 2.4em; /* Dimensione dell'icona */
-    color: red; /* Colore dell'icona */
-    display: block; /* Assicura che l'icona sia su una nuova riga */
+    font-size: 2.4em; 
+    color: red; 
+    display: block; 
   }
   

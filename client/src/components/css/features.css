@@ -1,50 +1,45 @@
-/* Stile per i link all'interno della sezione Features */
 .my-link {
-    text-decoration: none; /* Rimuove il sottolineamento dal link */
-    color: #0f394c; /* Imposta il colore del testo */
-    font-size: 1.5em; /* Dimensione del testo */
-    transition: color 0.4s, font-size 0.4s; /* Transizione fluida per colore e dimensione del testo */
+    text-decoration: none;
+    color: #0f394c; 
+    font-size: 1.5em; 
+    transition: color 0.4s, font-size 0.4s; 
   }
   
   .my-link:hover {
-    color: #4bafdc; /* Colore del testo al passaggio del mouse */
-    font-size: 1.8em; /* Dimensione del testo al passaggio del mouse */
+    color: #4bafdc;
+    font-size: 1.8em; 
   }
   
-  /* Aumenta il margine dei link successivi al passaggio del mouse sul link corrente */
   .my-link:hover ~ li .my-link {
     margin-top: 10px;
   }
   
-  /* Sezione Features background e layout */
   .features-background {
     background-size: 55%;
     background-position: center;
     background-repeat: no-repeat;
-    text-align: center; /* Centra il testo */
+    text-align: center; 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     margin-top: 5%;
-    padding: 20px; /* Spaziatura interna */
+    padding: 20px; 
   }
   
-  /* Stile per l'intestazione della sezione Features */
   .features-background h2 {
     margin-top: 7%;
     color: #171717;
-    font-weight: bold; /* Testo in grassetto */
+    font-weight: bold; 
   }
-  
-  /* Stile per l'elenco dei link */
+
   .features-background ul {
-    list-style: none; /* Rimuove i punti dell'elenco */
-    padding: 0; /* Rimuove il padding predefinito */
+    list-style: none;
+    padding: 0;
     margin-top: 5%;
   }
   
   .features-background ul li {
-    margin-bottom: 5%; /* Spazio tra gli elementi dell'elenco */
+    margin-bottom: 5%;
   }
   

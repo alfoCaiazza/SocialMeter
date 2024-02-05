@@ -1,4 +1,3 @@
-/* Stile generale, font e colori */
 body, .table, .pagination-container {
     font-family: "Open Sans", sans-serif;
     color: #444444;
@@ -11,13 +10,13 @@ body, .table, .pagination-container {
       border-spacing: 0;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiungi ombreggiatura per elevare la tabella */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
   
   .table thead th {
-      background-color: #225fb1; /* Colore di sfondo per l'intestazione della tabella */
-      color: #fff; /* Colore del testo per l'intestazione */
-      font-family: "Dosis", sans-serif; /* Font per le intestazioni */
+      background-color: #225fb1; 
+      color: #fff; 
+      font-family: "Dosis", sans-serif; 
       border: none;;
   }
   
@@ -25,22 +24,21 @@ body, .table, .pagination-container {
       background-color: rgba(0, 0, 0, .05);
   }
   
-  /* Stile per i link nella tabella, coerente con il CSS iniziale */
   .table tbody tr td a {
-      color: #49b5e7; /* Colore base dei link */
-      transition: color 0.3s; /* Transizione morbida per il cambio di colore */
+      color: #49b5e7; 
+      transition: color 0.3s; 
   }
   
   .table tbody tr td a:hover {
-      color: #76c7ed; /* Colore al passaggio del mouse */
-      text-decoration: none; /* Rimuovi il sottolineato al passaggio del mouse */
+      color: #76c7ed;
+      text-decoration: none; 
   }
 
   .pagination-container {
     display: flex;
-    justify-content: center; /* Allinea gli elementi figli (la paginazione) al centro */
+    justify-content: center;
     }
-  /* Stile della paginazione */
+
 
   
 

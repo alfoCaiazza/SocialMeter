@@ -15,7 +15,7 @@ const PostDetail = () => {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [dataForChart, setDataForChart] = useState([]);
-  const [uniqueUsers, setUniqueUsers] = useState(0); // Stato per tenere traccia del numero di utenti unici
+  const [uniqueUsers, setUniqueUsers] = useState(0); 
   const [selectedComments, setSelectedComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
 
@@ -39,6 +39,7 @@ const PostDetail = () => {
 
   if (!post) return <div>Caricamento...</div>;
 
+  // Function thath counts the number of post for each sentiment category and then the predominant sentiment
   const calculateSentimentCounts = (comments) => {
     const counts = { Negativo: 0, Neutrale: 0, Positivo: 0 };
     comments.forEach(comment => {
@@ -47,7 +48,7 @@ const PostDetail = () => {
         }
     });
 
-    // Trova il sentiment con il conteggio più alto
+    // Finds dominant sentiment 
     let dominantSentiment = null;
     let maxCount = 0;
     Object.entries(counts).forEach(([sentiment, count]) => {
@@ -60,7 +61,7 @@ const PostDetail = () => {
     return { counts, dominantSentiment };
   };
 
-
+  // Function thath counts the number of post for each emotion category and then the predominant emotion
   const calculateEmotionCounts = (comments) => {
     const counts = { Rabbia: 0, Gioia: 0, Tristezza: 0, Paura: 0 };
     comments.forEach(comment => {
@@ -69,7 +70,7 @@ const PostDetail = () => {
         }
     });
 
-    // Trova l'emozione con il conteggio più alto
+    // Finds dominant emotion
     let dominantEmotion = null;
     let maxCount = 0;
     Object.entries(counts).forEach(([emotion, count]) => {
@@ -104,18 +105,18 @@ const PostDetail = () => {
   
   
   function calculateUniqueUsers(comments) {
-    const userSet = new Set(); // Utilizza un Set per garantire l'unicità
+    const userSet = new Set();
     comments.forEach(comment => {
       userSet.add(comment.author);
     });
-    setUniqueUsers(userSet.size); // Aggiorna lo stato con il numero di utenti unici
+    setUniqueUsers(userSet.size); 
   }
 
 
   const handlePointClick = (data) => {
     if (!data.activePayload) return;
   
-    setLoadingComments(true); // Inizia il caricamento
+    setLoadingComments(true); 
   
     const clickedDate = data.activePayload[0].payload.date;
     const filteredComments = post.comments
@@ -128,7 +129,7 @@ const PostDetail = () => {
       .slice(0, 5);
   
     setSelectedComments(filteredComments);
-    setLoadingComments(false); // Termina il caricamento
+    setLoadingComments(false);
   };  
 
   return (
@@ -153,8 +154,8 @@ const PostDetail = () => {
             Dall'analisi congiunta del sentimento e dell'emozione di post e community sono emersi i seguenti risultati:
           </p>
         </div>
-        <div className='row w-100 justify-content-center custom-container' style={{ maxWidth: '1200px' }}> {/* Aggiunta della classe row e impostazione della larghezza massima */}
-          <div className='col-md-4 mb-4'> {/* Ogni card in una colonna di 4 unità */}
+        <div className='row w-100 justify-content-center custom-container' style={{ maxWidth: '1200px' }}> 
+          <div className='col-md-4 mb-4'> 
             <TotalRedditorsCard number={uniqueUsers} />
           </div>
           <div className='col-md-4 mb-4'>
@@ -184,7 +185,7 @@ const PostDetail = () => {
           </p>
         </div>
         <div className='d-flex justify-content-center align-items-center' style={{ width: '100%', marginTop: '5%' }}>
-          <div style={{ width: '1000px' }}> {/* Imposta la larghezza desiderata per il LineChart qui */}
+          <div style={{ width: '1000px' }}> 
             <LineChart width={1000} height={300} data={dataForChart} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} onClick={handlePointClick}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />

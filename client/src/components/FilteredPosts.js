@@ -34,9 +34,9 @@ const FilteredPosts = () => {
         } else {
             setErrorMessage('');
         }
-    }, [startDate, endDate]); // Questo useEffect verrà eseguito solo quando startDate o endDate cambiano    
+    }, [startDate, endDate]); // This useEffect will be used only when startDate or endDate changed    
 
-    // Funzione per troncare il testo
+    // Truncate text function
     const truncateText = (text, maxLength) => {
         if (text.length > maxLength) {
             return text.substring(0, maxLength) + '...';
@@ -44,23 +44,23 @@ const FilteredPosts = () => {
         return text;
     };
 
-    // Filtra i post in base al termine di ricerca
+    // Filter posts with key words
     const searchTerms = searchTerm.toLowerCase().split(' ');
 
     const handleFilter = (post) => {
-        // Filtro per il contenuto del testo
+        // Filter for text content
         const textMatch = searchTerm.length === 0 || post.og_text.toLowerCase().includes(searchTerm.toLowerCase());
 
-        // Filtro per la data
+        // Filter for the dates
         const postDate = new Date(post.year, post.month - 1, post.day);
         const start = startDate ? new Date(startDate) : null;
         const end = endDate ? new Date(endDate) : null;
         const dateMatch = (!start || postDate >= start) && (!end || postDate <= end);
 
-        // Filtro per sentimento
+        // Filter for sentiment
         const sentimentMatch = !selectedSentiment || post.sentiment === selectedSentiment;
 
-        // Filtro per emozione
+        // Filter for emotion
         const emotionMatch = !selectedEmotion || post.emotion === selectedEmotion;
 
         return textMatch && dateMatch && sentimentMatch && emotionMatch;
@@ -84,12 +84,12 @@ const FilteredPosts = () => {
         return categoryStrings[category];
     };
 
-    // Calcola i post da mostrare per la pagina corrente
+    // Calculates post to show in current page
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-    // Cambia la pagina corrente
+    // Change current page
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const options1 = [

@@ -2,8 +2,8 @@ const Pagination = ({ postsPerPage, totalPosts, currentPage, paginate }) => {
     const pageNumbers = [];
     const totalPageNumbers = Math.ceil(totalPosts / postsPerPage);
 
-    // Determina il range di pagine da mostrare
-    const pageRangeDisplayed = 2; // Mostra 2 pagine prima e 2 pagine dopo la pagina corrente
+    // It sets the number of page tho show before and after current page
+    const pageRangeDisplayed = 2;
     let startPage = Math.max(currentPage - pageRangeDisplayed, 1);
     let endPage = Math.min(currentPage + pageRangeDisplayed, totalPageNumbers);
 
