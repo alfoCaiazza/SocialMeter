@@ -27,14 +27,12 @@ def clean_text(text):
     return cleaned_text
 
 def main():
-    #Viene effettuata la pulizia dei dati e il controllo sul contenuto del testo: se corpo del post o dei commenti è vuoto non vengono inseriti nel database
     setup_logging()
     load_dotenv()
     mongo_client, db = connect_to_mongo()
 
     collection = db['posts']
     reddit_posts = collection.find({})
-    clean_reddit_posts = db['cleanedPosts']
 
     index = 1
 
@@ -45,17 +43,21 @@ def main():
         post_comments = post.get('comments', [])
         cleaned_comments = []
         for comment in post_comments:
-            comment['text'] = clean_text(comment.get('text', ''))      
-            cleaned_comments.append(comment)
+            cleaned_comment_text = clean_text(comment.get('text', ''))
+            cleaned_comments.append({**comment, 'text': cleaned_comment_text})
 
-        post['og_text'] = post['text']
-        post['text'] = cleaned_text
-        post['comments'] = cleaned_comments
-        clean_reddit_posts.insert_one(post)
+        update_fields = {
+            'og_text': post['text'],
+            'text': cleaned_text,
+            'comments': cleaned_comments
+        }
+
+        collection.update_one({'_id': post['_id']}, {'$set': update_fields})
 
         index += 1
 
     mongo_client.close()
+
 
 if __name__ == "__main__":
     main()
