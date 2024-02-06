@@ -18,25 +18,25 @@ const AboutUs = () =>{
 
                 
                 <div class="icon-box">
-                    <div class="icon"><i class="bx bx-atom"></i></div>
+                    <div class="icon"><i class="bi bi-search"></i></div>
                     <h4 class="title"><Link to="/filtered_posts_category">Filtraggio dei Post</Link></h4>
                     <p class="description">Consente agli utenti di selezionare categorie di interesse e di essere reindirizzati a una pagina che elenca tutti i post pertinenti. Qui, è possibile affinare ulteriormente la ricerca filtrando per categoria, data di pubblicazione, sentiment ed emozione, facilitando la navigazione mirata attraverso il vasto contenuto delle discussioni online.</p>
                 </div>
 
                 <div class="icon-box">
-                    <div class="icon"><i class="bx bx-gift"></i></div>
+                    <div class="icon"><i class="bi bi-tags"></i></div>
                     <h4 class="title"><Link to="/hot_topics_category">Comprensione delle Parole Chiavi</Link></h4>
                     <p class="description">Viene presentata una word cloud che evidenzia le parole più frequenti nei post di specifiche categorie, offrendo una visione immediata dei temi dominanti e facilitando l'identificazione delle tendenze e dei punti focali all'interno delle conversazioni online.</p>
                 </div>
 
                 <div class="icon-box">
-                    <div class="icon"><i class="bx bx-fingerprint"></i></div>
+                    <div class="icon"><i class="bi bi-graph-up-arrow"></i></div>
                     <h4 class="title"><Link to="/trends_category">Analisi delle Tendenze</Link></h4>
                     <p class="description">Permette di visualizzare la distribuzione temporale dei post per sentiment ed emozioni nelle subreddit analizzate, offrendo una mappa dettagliata delle variazioni annuali e delle dinamiche prevalenti nelle conversazioni online.</p>
                 </div>
 
                 <div class="icon-box">
-                    <div class="icon"><i class="bx bx-atom"></i></div>
+                    <div class="icon"><i class="bi  bi-chat-dots"></i></div>
                     <h4 class="title"><Link to="/matrix_profile">Studio dell'engagement</Link></h4>
                     <p class="description">Consente agli utenti di selezionare categorie e indici di analisi quali sentiment, commenti, post giornalieri e score, insieme a un intervallo temporale, per generare un line chart che illustra le variazioni dell'engagement nel periodo specificato, offrendo insight preziosi sull'evoluzione delle interazioni.</p>
                 </div>
