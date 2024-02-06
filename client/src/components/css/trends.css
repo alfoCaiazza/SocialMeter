@@ -26,3 +26,34 @@
     width: 100%;
     margin-bottom: 5%;
 }
+
+.custom-tooltip {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+  }
+  
+  .custom-tooltip p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .custom-tooltip .label {
+    font-weight: bold;
+  }
+
+  .chart-description {
+    font-size: 14px; 
+    color: #666;
+    text-align: center; 
+    margin-top: 10px;
+    margin-bottom: 10px; 
+    max-width: 80%; 
+    margin-left: auto; 
+    margin-right: auto;
+  }
+  
+  

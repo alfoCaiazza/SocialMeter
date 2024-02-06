@@ -10,7 +10,7 @@ import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
 import PostDetail from './components/PostDetail';
 import EngagementProfile from './components/EngagementProfile';
-import NewTrends from './components/NewTrends';
+import Trends from './components/Trends';
 import FilteredPostsCategory from './components/FilteredPostsCategory';
 import AboutUs from './components/AboutUs';
 import './components/css/homepage.css';
@@ -20,7 +20,7 @@ import './components/css/header.css';
 import './components/css/footer.css';
 import './components/css/card.css';
 import './components/css/filteredposts.css';
-import './components/css/newtrends.css';
+import './components/css/trends.css';
 import './components/css/monthlyTrends.css';
 import './components/css/hottopics.css';
 import './components/css/comment.css';
@@ -53,7 +53,7 @@ function App() {
         <Route path="/hot_topics_category" element={<HotTopicsCategory />} />
         <Route path="/hot_topics/:category" element={<HotTopics />} />
         <Route path="/trends_category" element={<TrendsCategory />} />
-        <Route path="/trends/:category" element={<NewTrends />} />
+        <Route path="/trends/:category" element={<Trends />} />
         <Route path="/engagement_profile" element={<EngagementProfile />} />
       </Routes>
       <Footer />

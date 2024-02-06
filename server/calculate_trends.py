@@ -6,7 +6,7 @@ def get_posts(category):
     client, db = connect_to_mongo()
 
     collection = db['analisedPosts']
-    cursor = collection.find({'category': category})
+    cursor = collection.find({'category': category, 'year': {'$gte': 2019}})
 
     sentiment_counts = {
         'Negativo': 0,
