@@ -7,7 +7,7 @@ def get_filtered_posts(app, db):
     def inner_get_filtered_posts():
         try:
             category = request.args.get('post_category')
-            posts = db["analisedPosts"].find({'category' : category}).sort('pub_date', -1)
+            posts = db["finalResult"].find({'category' : category}).sort('pub_date', -1)
             result = []
             for post in posts:
                 post_dict = dict(post)

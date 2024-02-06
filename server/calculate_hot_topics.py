@@ -11,7 +11,7 @@ def retrieve_posts_per_category(category):
 
     mongo_client, db = connect_to_mongo()
 
-    collection = db['analisedPosts']
+    collection = db['finalResult']
 
     query = {
         "year" : {"$gte": 2023},

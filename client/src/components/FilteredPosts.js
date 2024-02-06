@@ -12,6 +12,7 @@ const FilteredPosts = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [selectedSentiment, setSelectedSentiment] = useState('');
+    const [selectedSentimentFeelIT, setSelectedSentimentFeelIT] = useState('');
     const [selectedEmotion, setSelectedEmotion] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const { category } = useParams();
@@ -57,13 +58,16 @@ const FilteredPosts = () => {
         const end = endDate ? new Date(endDate) : null;
         const dateMatch = (!start || postDate >= start) && (!end || postDate <= end);
 
-        // Filter for sentiment
+        // Filter for BERT sentiment
         const sentimentMatch = !selectedSentiment || post.sentiment === selectedSentiment;
+
+        // Filter for Feel-IT sentiment
+        const sentimentMatchFeelIt = !selectedSentimentFeelIT || post.sentiment_feel_it === selectedSentimentFeelIT;
 
         // Filter for emotion
         const emotionMatch = !selectedEmotion || post.emotion === selectedEmotion;
 
-        return textMatch && dateMatch && sentimentMatch && emotionMatch;
+        return textMatch && dateMatch && sentimentMatch && sentimentMatchFeelIt && emotionMatch;
     };
 
     const filteredPosts = posts.filter(handleFilter);
@@ -105,6 +109,11 @@ const FilteredPosts = () => {
         { value: 'Paura', label: 'Paura' },
     ];
 
+    const options3 = [
+        { value: 'Negativo', label: 'Negativo ' },
+        { value: 'Positivo', label: 'Positivo ' },
+    ];
+
     const renderOptions = (options) => {
         return options.map(option => (
             <option key={option.value} value={option.value}>
@@ -133,10 +142,17 @@ const FilteredPosts = () => {
                         <input type="date" className="form-control" value={endDate} onChange={(e) => setEndDate(e.target.value)} min="2020-1-1" max="2024-1-1"/>
                     </div>
                     <div className="col">
-                        <span className="form-label">Sentimento</span>
+                        <span className="form-label">Sentimento BERT</span>
                         <select className="form-select" value={selectedSentiment} onChange={(e) => setSelectedSentiment(e.target.value)}>
                             <option value="" disabled> </option>
                             {renderOptions(options1)}
+                        </select>
+                    </div>
+                    <div className="col">
+                        <span className="form-label">Sentimento Feel-IT</span>
+                        <select className="form-select" value={selectedSentimentFeelIT} onChange={(e) => setSelectedSentimentFeelIT(e.target.value)}>
+                            <option value="" disabled> </option>
+                            {renderOptions(options3)}
                         </select>
                     </div>
                     <div className="col">
@@ -160,7 +176,8 @@ const FilteredPosts = () => {
                             <th style={{width:'30%'}}>Titolo</th>
                             <th>Testo</th>
                             <th>Pubblicazione</th>
-                            <th>Sentimento</th>
+                            <th>Sentimento BERT</th>
+                            <th>Sentimento Feel-IT</th>
                             <th>Emozione</th>
 
                         </tr>
@@ -172,6 +189,7 @@ const FilteredPosts = () => {
                                 <td className="truncate-text">{truncateText(post.og_text, 50)}</td>
                                 <td>{post.day}/{post.month}/{post.year}</td>
                                 <td>{post.sentiment}</td>
+                                <td>{post.sentiment_feel_it}</td>
                                 <td>{post.emotion}</td>
                             </tr>
                         ))}

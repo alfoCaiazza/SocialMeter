@@ -1,17 +1,18 @@
 from scraping_reddit_data import setup_logging, connect_to_mongo
 from dotenv import load_dotenv
-from feel_it_analizer import get_emotion
-from feel_it import EmotionClassifier
+from feel_it_analizer import get_emotion, get_sentiment
+from feel_it import EmotionClassifier, SentimentClassifier
 import logging
 
 emotion_classifier = EmotionClassifier()
+sentiment_classifier = SentimentClassifier()
 
 def calculate_comments_emotion(comments):
     comments_sentiment = []
 
     for comment in comments:
-        emotion = get_emotion(comment['text'], emotion_classifier)
-        comment['emotion'] = emotion
+        sentiment = get_sentiment(comment['text'], sentiment_classifier)
+        comment['sentiment_feel_it'] = sentiment
 
         comments_sentiment.append(comment)
     
@@ -23,9 +24,9 @@ def calculate_setiment():
     
     mongo_client, db = connect_to_mongo()
 
-    collection = db['dataAnalysis']
-    posts = collection.find({})
-    data_analysis = db['analisedPosts']
+    collection = db['analisedPosts']
+    posts = collection.find({'category' : 'racism'})
+    data_analysis = db['finalResult']
 
     index = 1
 
@@ -40,8 +41,9 @@ def calculate_setiment():
             posts = collection.find({}).skip(index)  # Continua dal prossimo post
             data_analysis = db['dataAnalysis']
         
-        post['emotion'] = get_emotion(post['text'], emotion_classifier)
-        
+        sentiment = get_sentiment(post['text'], sentiment_classifier)
+        post['sentiment_feel_it'] = sentiment
+
         comments = post.get('comments', [])
         comments_sentiment = calculate_comments_emotion(comments=comments)
 

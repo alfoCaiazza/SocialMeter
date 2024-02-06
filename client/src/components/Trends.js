@@ -170,7 +170,7 @@ const processEmotionData = (emotionCounts) => {
       <div className='trends-section'>
         <h3 className='text-center mt-4'>Distribuzione del Sentimento</h3>
         <div className='charts-container'>
-          <div style={{ width: '100%', marginTop: '5%', marginLeft: '20%' }}>
+          <div style={{ width: '100%', marginTop: '5%', marginLeft: '15%' }}>
             <LineChart width={800} height={250} data={trendsOverTime} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="year" />
@@ -205,7 +205,7 @@ const processEmotionData = (emotionCounts) => {
                 <Legend />
               </PieChart>
             </div>
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '20px', width: '100%'}}>
               <p className="chart-description">
                 Il grafico a torta rappresenta la distribuzione percentuale del sentimento, offrendo una visione immediata della prevalenza di ciascuna categoria.
               </p>
@@ -239,7 +239,7 @@ const processEmotionData = (emotionCounts) => {
       <div className='trends-section'>
         <h3 className='text-center mt-4'>Distribuzione delle Emozioni</h3>
         <div className='charts-container'>
-          <div style={{ width: '100%', marginTop: '5%', marginLeft: '20%' }}>
+          <div style={{ width: '100%', marginTop: '5%', marginLeft: '15%' }}>
             <LineChart width={800} height={250} data={emotionsOverTime} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="year" />
