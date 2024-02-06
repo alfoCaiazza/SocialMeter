@@ -5,7 +5,7 @@ const emotionIcons = {
     Paura: { className: "bi bi-emoji-dizzy", color: "purple" },
 };
 
-const PostEmotionCard = ({ emotion }) => {
+const PostEmotionCard = ({ emotion, sentiment }) => {
     const emotionClass = emotionIcons[emotion] ? `emotion-icon ${emotionIcons[emotion].className}` : 'emotion-icon';
     const colorClass = emotionIcons[emotion] ? `icon-${emotion.toLowerCase()}` : '';
 
@@ -18,6 +18,8 @@ const PostEmotionCard = ({ emotion }) => {
                     <i className={`${emotionClass} ${colorClass}`}></i>
                 }
             </div>
+            <div className="post-emotion-header">SENTIMENTO DEL POST (FEEL IT)</div>
+            <div className="post-emotion">{sentiment}</div>
         </div>
     );
 };

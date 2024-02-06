@@ -167,7 +167,7 @@ const PostDetail = () => {
             />
           </div>
           <div className='col-md-4 mb-4'>
-            <PostEmotionCard emotion={post.emotion} />
+            <PostEmotionCard emotion={post.emotion} sentiment={post.sentiment_feel_it} />
           </div>
           <div className='col-md-4 mb-4'>
             <ScoreCard upvotes={post.estimated_upvotes} downvotes={post.estimated_downvotes} />
