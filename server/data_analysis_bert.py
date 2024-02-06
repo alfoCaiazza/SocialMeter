@@ -27,7 +27,7 @@ def calculate_sentiment():
 
     mongo_client, db = connect_to_mongo()
 
-    collection = db['cleanedPosts']
+    collection = db['posts']
     posts = collection.find({'category': 'woman_condition'})
 
     index = 1
@@ -40,7 +40,7 @@ def calculate_sentiment():
             mongo_client.close()
             logging.info("Re-opening MongoDB connection")
             mongo_client, db = connect_to_mongo()  # Ristabilisce la connessione
-            collection = db['cleanedPosts']  # Riassegna la collection in caso di riavvio della connessione
+            collection = db['posts']  # Riassegna la collection in caso di riavvio della connessione
             posts = collection.find({'category': 'woman_condition'}).skip(index)  # Continua dal prossimo post
         
         compound, sentiment, probability = classify_sentiment(post['text'], tokenizer, model)

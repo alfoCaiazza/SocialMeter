@@ -23,7 +23,7 @@ def calculate_sentiment():
     
     mongo_client, db = connect_to_mongo()
 
-    collection = db['dataAnalysis']
+    collection = db['posts']
     posts = collection.find({})
 
     index = 1
@@ -36,7 +36,7 @@ def calculate_sentiment():
             mongo_client.close()
             logging.info("Re-opening MongoDB connection")
             mongo_client, db = connect_to_mongo()
-            collection = db['dataAnalysis']  # Assicurati di riassegnare la collection corretta
+            collection = db['posts']  # Assicurati di riassegnare la collection corretta
             posts = collection.find({}).skip(index)
 
         # Aggiungi l'emozione al post
@@ -60,7 +60,7 @@ def calculate_sentiment():
 def main():
     setup_logging()
     load_dotenv()
-    
+
     calculate_sentiment()
 
 if __name__ == "__main__":
