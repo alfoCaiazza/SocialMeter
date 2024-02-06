@@ -31,7 +31,7 @@ const Header = () => {
                 <li><Link to="/filtered_posts_category">Esplora Post</Link></li>
                 <li><Link to="/hot_topics_category">Parole Chiavi</Link></li>
                 <li><Link to="/trends_category">Tendenze</Link></li>
-                <li><Link to="/matrix_profile">Engagement</Link></li>
+                <li><Link to="/engagement_profile">Engagement</Link></li>
               </ul>
             </li>
             <li><Link className="nav-link scrollto" to="/about_us">About Us</Link></li>

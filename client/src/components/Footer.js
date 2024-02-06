@@ -26,7 +26,7 @@ const Footer = () => {
                             <li><i className="bx bx-chevron-right"></i> <Link to="/filtered_posts_category">Esplora Post</Link></li>
                             <li><i className="bx bx-chevron-right"></i> <Link to="/hot_topics_category">Parole Chiavi</Link></li>
                             <li><i className="bx bx-chevron-right"></i> <Link to="/trends_category">Tendenze</Link></li>
-                            <li><i className="bx bx-chevron-right"></i> <Link to="/matrix_profile">Engagement</Link></li>
+                            <li><i className="bx bx-chevron-right"></i> <Link to="/engagement_profile">Engagement</Link></li>
                             </ul>
                         </div>
                     </div>

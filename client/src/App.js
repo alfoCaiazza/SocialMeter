@@ -4,13 +4,12 @@ import HomePage from './components/HomePage';
 import Features from './components/Features';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Results from './components/Results';
 import FilteredPosts from './components/FilteredPosts';
 import HotTopics from './components/HotTopics';
 import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
 import PostDetail from './components/PostDetail';
-import MatrixProfileForms from './components/MatrixProfileForms';
+import EngagementProfile from './components/EngagementProfile';
 import NewTrends from './components/NewTrends';
 import FilteredPostsCategory from './components/FilteredPostsCategory';
 import AboutUs from './components/AboutUs';
@@ -55,8 +54,7 @@ function App() {
         <Route path="/hot_topics/:category" element={<HotTopics />} />
         <Route path="/trends_category" element={<TrendsCategory />} />
         <Route path="/trends/:category" element={<NewTrends />} />
-        <Route path="/matrix_profile" element={<MatrixProfileForms />} />
-        <Route path='/results' element={<Results />} />
+        <Route path="/engagement_profile" element={<EngagementProfile />} />
       </Routes>
       <Footer />
     </Router>
