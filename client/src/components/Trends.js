@@ -159,7 +159,7 @@ const processEmotionData = (emotionCounts) => {
   const sentimentData = data.filter(item => sentimentNames.includes(item.name));
   
   return (
-    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginTop: '5%'}}>
+    <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginTop: '7%'}}>
       <div className='text-center mt-4'>
         <h2 className='display-6' style={{ color: '#171717' }}>
           <strong>Analizza le Tendenze della Tematica {getCategoryString(category)}</strong>
