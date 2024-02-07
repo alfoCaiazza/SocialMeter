@@ -5,7 +5,7 @@ const FeelItSentimentCard = ({ sentiment }) => {
         <div className="sentiment-card">
             <div className="sentiment-header">SENTIMENTO COMMUNITY</div>
             <div className="dominant-sentiment">{sentiment.dominant}</div>
-            <SentimentBar sentiment={sentiment} />
+            <FeelItSentimentBar sentiment={sentiment} />
             <div className="sentiment-numbers-card">
                 <div>
                     <div>Negativo</div>

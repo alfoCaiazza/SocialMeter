@@ -11,6 +11,7 @@ import PostEmotionCard from './PostEmotionCard';
 import TotalRedditorsCard from './TotalRedditorsCard';
 import Comment from './Comment';
 import FeelItCard from './FeelItCard';
+import FeelItSentimentCard from './FeelItSentimentCard';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -19,7 +20,8 @@ const PostDetail = () => {
   const [uniqueUsers, setUniqueUsers] = useState(0); 
   const [selectedComments, setSelectedComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
-  const [activeComponent, setActiveComponent] = useState('summary');
+  const [activeComponentCard1, setActiveComponentCard1] = useState('summary');
+  const [activeComponentCard2, setActiveComponentCard2] = useState('sentiment');
 
 
   useEffect(() => {
@@ -42,6 +44,14 @@ const PostDetail = () => {
 
   if (!post) return <div>Caricamento...</div>;
 
+  const toggleCard1 = () => {
+    setActiveComponentCard1(prevState => prevState === 'summary' ? 'feelIt' : 'summary');
+  };
+
+  const toggleCard2 = () => {
+    setActiveComponentCard2(prevState => prevState === 'sentiment' ? 'feelItSentiment' : 'sentiment');
+  };
+
   // Function thath counts the number of post for each sentiment category and then the predominant sentiment
   const calculateSentimentCounts = (comments) => {
     const counts = { Negativo: 0, Neutrale: 0, Positivo: 0 };
@@ -62,6 +72,29 @@ const PostDetail = () => {
     });
 
     return { counts, dominantSentiment };
+  };
+
+  
+  // Function thath counts the number of post for each sentiment category and then the predominant sentiment
+  const calculateSentimentFeelItCounts = (comments) => {
+    const counts = { Negativo: 0, Positivo: 0 };
+    comments.forEach(comment => {
+        if (comment.sentiment_feel_it          ) {
+            counts[comment.sentiment_feel_it] += 1;
+        }
+    });
+
+    // Finds dominant sentiment 
+    let dominantSemtimentFeelIt = null;
+    let maxCount = 0;
+    Object.entries(counts).forEach(([sentiment, count]) => {
+        if (count > maxCount) {
+            maxCount = count;
+            dominantSemtimentFeelIt = sentiment;
+        }
+    });
+
+    return { counts, dominantSemtimentFeelIt };
   };
 
   // Function thath counts the number of post for each emotion category and then the predominant emotion
@@ -87,6 +120,7 @@ const PostDetail = () => {
   };
 
   const { counts: sentimentCounts, dominantSentiment } = calculateSentimentCounts(post.comments);
+  const { counts: sentimentCountsFeelIt, dominantSemtimentFeelIt } = calculateSentimentFeelItCounts(post.comments);
   const { counts: emotionCounts, dominantEmotion } = calculateEmotionCounts(post.comments);
 
   function processData(comments) {
@@ -135,9 +169,6 @@ const PostDetail = () => {
     setLoadingComments(false);
   };
 
-  const showSummary = () => setActiveComponent('summary');
-  const showEmotion = () => setActiveComponent('emotion');
-
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginBottom: '5%'}}>
         <div className='text-center' style={{marginTop: "3%"}}>
@@ -165,8 +196,8 @@ const PostDetail = () => {
             <TotalRedditorsCard number={uniqueUsers} />
           </div>
           <div className='col-md-4 mb-4'>
-            <button onClick={showSummary} className="arrow-button"><i class="bi bi-arrow-left"></i></button>
-            {activeComponent === 'summary' ? (
+            <button onClick={toggleCard1} className="arrow-button"><i class="bi bi-arrow-left"></i></button>
+            {activeComponentCard1 === 'summary' ? (
               <SentimentSummaryCard
                 positivity={post.positivity}
                 negativity={post.negativity}
@@ -176,7 +207,7 @@ const PostDetail = () => {
             ) : (
               <FeelItCard sentiment={post.sentiment_feel_it}/>
             )}
-            <button onClick={showEmotion}className="arrow-button"><i class="bi bi-arrow-right"></i></button>
+            <button onClick={toggleCard1}className="arrow-button"><i class="bi bi-arrow-right"></i></button>
           </div>
           <div className='col-md-4 mb-4'>
             <PostEmotionCard emotion={post.emotion}/>
@@ -185,7 +216,14 @@ const PostDetail = () => {
             <ScoreCard upvotes={post.estimated_upvotes} downvotes={post.estimated_downvotes} />
           </div>
           <div className='col-md-4 mb-4'>
-            <SentimentCard sentiment={{ ...sentimentCounts, dominant: dominantSentiment }} />
+            <button onClick={toggleCard2} className="arrow-button"><i class="bi bi-arrow-left"></i></button>
+            {activeComponentCard2 === 'sentiment' ? (
+              <SentimentCard sentiment={{ ...sentimentCounts, dominant: dominantSentiment }} />
+
+            ) : (
+              <FeelItSentimentCard sentiment={{...sentimentCountsFeelIt, dominant: dominantSemtimentFeelIt}}/>
+            )}
+            <button onClick={toggleCard2}className="arrow-button"><i class="bi bi-arrow-right"></i></button>
           </div>
           <div className='col-md-4 mb-4'>
             <EmotionCommunityCard emotion={{ ...emotionCounts, dominant: dominantEmotion }} />
@@ -231,3 +269,4 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
+

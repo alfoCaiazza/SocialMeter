@@ -1,5 +1,5 @@
 const Comment = ({ comment }) => {
-    const { text, author, num_replies, score, emotion, sentiment, created_utc } = comment;
+    const { text, author, num_replies, score, emotion, sentiment, created_utc, sentiment_feel_it} = comment;
     const date = new Date(created_utc * 1000);
     const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   
@@ -13,7 +13,9 @@ const Comment = ({ comment }) => {
           <div className="card-subtitle mb-2 text-body-secondary">
             <span className="comment-detail">Emozione: {emotion}</span>
             <br></br>
-            <span className="comment-detail">Sentimento: {sentiment}</span>
+            <span className="comment-detail">Sentimento BERT: {sentiment}</span>
+            <br></br>
+            <span className="comment-detail">Sentimento Feel-IT: {sentiment_feel_it}</span>
           </div>
         </div>
         <p className="comment-text">{text}</p>
