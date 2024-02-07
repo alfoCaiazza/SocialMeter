@@ -56,4 +56,25 @@
     margin-right: 0;
   }
   
+  .line-chart-container {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente il contenuto */
+    align-items: center; /* Centra verticalmente il contenuto */
+    height: 100%; /* Assicurati che il contenitore occupi l'altezza desiderata */
+  }
+  
+  /* Se il contenitore del LineChart non occupa già l'altezza completa del suo genitore, potresti dover impostare l'altezza del genitore per far funzionare l'allineamento verticale. */
+  .parent-container {
+    height: 300px; /* Ad esempio, l'altezza può essere impostata a 300px o qualsiasi altro valore che desideri. */
+  }
+  
+  .line-chart-description {
+    margin-top: 20px; /* Aggiunge spazio sopra il paragrafo */
+    text-align: center; /* Allinea il testo al centro */
+    font-size: 16px; /* Imposta la dimensione del font */
+    color: #666; /* Imposta il colore del testo */
+    max-width: 800px; /* Imposta la larghezza massima per migliorare la leggibilità */
+    margin-left: auto; /* Centra il paragrafo orizzontalmente */
+    margin-right: auto;
+  }
   

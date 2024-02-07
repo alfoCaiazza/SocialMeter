@@ -157,40 +157,40 @@ const processEmotionData = (emotionCounts) => {
 
   const sentimentNames = ["Positivo", "Negativo", "Neutrale"];
   const sentimentData = data.filter(item => sentimentNames.includes(item.name));
-  
+
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginTop: '7%'}}>
       <div className='text-center mt-4'>
         <h2 className='display-6' style={{ color: '#171717' }}>
-          <strong>Analizza le Tendenze della Tematica {getCategoryString(category)}</strong>
+          <strong>Evoluzione del Sentimento per la Temtica: {getCategoryString(category)}</strong>
         </h2>
       </div>
-      
-      {/* Emotions Section */}
-      <div className='trends-section'>
-        <h3 className='text-center mt-4'>Distribuzione delle Emozioni</h3>
-        <div className='charts-container'>
-          <div style={{ width: '100%', marginTop: '5%', marginLeft: '15%' }}>
+
+      <div className='parent-container'>
+        <div className='line-chart-container'>
             <LineChart width={800} height={250} data={emotionsOverTime} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <RechartsTooltip content={renderCustomTooltip}/>
-              <Legend />
-              <Line type="monotone" dataKey="Rabbia" stroke="#ff1b1c" name="Rabbia"/>
-              <Line type="monotone" dataKey="Gioia" stroke="#8cff98" name="Gioia"/>
-              <Line type="monotone" dataKey="Tristezza" stroke="#5c9ead" name="Tristezza"/>
-              <Line type="monotone" dataKey="Paura" stroke="#ffd131" name="Paura"/>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis />
+                <RechartsTooltip content={renderCustomTooltip}/>
+                <Legend />
+                <Line type="monotone" dataKey="Rabbia" stroke="#ff1b1c" name="Rabbia"/>
+                <Line type="monotone" dataKey="Gioia" stroke="#8cff98" name="Gioia"/>
+                <Line type="monotone" dataKey="Tristezza" stroke="#5c9ead" name="Tristezza"/>
+                <Line type="monotone" dataKey="Paura" stroke="#ffd131" name="Paura"/>
             </LineChart>
-          </div>
-          <div style={{ padding: '20px' }}>
-            <p className="chart-description">
-              Il grafico a linee mostra l'evoluzione delle emozioni nel tempo, evidenziando come rabbia, gioia, paura e tristezza si siano alternate nel periodo considerato.
-            </p>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1%', marginLeft: '5%', marginRight: '5%'}}>
-            <div style={{ flex: 1, marginRight: '2%' }}>
-              <PieChart width={250} height={250}>
+        </div>
+        <p className='line-chart-description'>
+          Il grafico a linee mostra l'andamento del sentimento negli anni. Spostando il cursore sopra il periodo interessato, verranno visualizzati il numero di post associato a ciascuna categoria di sentimento.
+        </p>
+      </div>
+
+      <div className='parent-container' style={{marginTop: '7%', marginBottom: '15%', display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
+        <h3 className='text-center mt-4' style={{width: '100%'}}>In che modo si distribuiscono i post in base al sentimento?</h3>
+        <div className='charts-container' style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '400px'}}>
+          {/* Pie Chart Container */}
+          <div style={{flex: '1 1 auto', maxWidth: '300px'}}>
+            <PieChart width={250} height={250}>
                 <Pie 
                   data={emotionData} 
                   dataKey="value" 
@@ -204,33 +204,34 @@ const processEmotionData = (emotionCounts) => {
                 </Pie>
                 <Tooltip content={renderCustomTooltip} />
                 <Legend />
-              </PieChart>
-            </div>
-            <div style={{ padding: '20px' }}>
-              <p className="chart-description">
-                Il grafico a torta rappresenta la distribuzione percentuale delle emozioni, offrendo una visione immediata della prevalenza di ciascuna categoria emotiva.
+            </PieChart>
+            <div style={{padding: '20px', textAlign: 'center'}}>
+              <p className="line-chart-description">
+                Il grafico a torta rappresenta la distribuzione percentuale del sentimento, offrendo una visione immediata della prevalenza di ciascuna categoria.
               </p>
             </div>
-            <div style={{ flex: 1 }}>
-              <BarChart
+          </div>
+
+          {/* Bar Chart Container */}
+          <div style={{flex: '1 1 auto', maxWidth: '600px'}}>
+            <BarChart
                 width={500}
                 height={250}
                 data={subredditData}
                 margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <RechartsTooltip content={renderCustomTooltip}/>
-                  <Legend />
-                  <Bar dataKey="Rabbia" stackId="a" fill="#ff1b1c" name="Rabbia" />
-                  <Bar dataKey="Gioia" stackId="a" fill="#8cff98" name="Gioia" />
-                  <Bar dataKey="Tristezza" stackId="a" fill="#5c9ead" name="Tristezza" />
-                  <Bar dataKey="Paura" stackId="a" fill="#ffd131" name="Paura" />
-              </BarChart>
-            </div>
-            <div style={{ padding: '20px' }}>
-              <p className="chart-description">
-                Il grafico a barre mostra la distribuzione delle emeozioni nei diversi subreddit, permettendo di comparare direttamente le differenti comunità.
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <RechartsTooltip content={renderCustomTooltip}/>
+                <Legend />
+                <Bar dataKey="Rabbia" stackId="a" fill="#ff1b1c" name="Rabbia" />
+                <Bar dataKey="Gioia" stackId="a" fill="#8cff98" name="Gioia" />
+                <Bar dataKey="Tristezza" stackId="a" fill="#5c9ead" name="Tristezza" />
+                <Bar dataKey="Paura" stackId="a" fill="#ffd131" name="Paura" />
+            </BarChart>
+            <div style={{padding: '20px', textAlign: 'center'}}>
+              <p className="line-chart-description">
+                Il grafico a barre mostra la distribuzione dei sentimenti nelle diverse subreddit, permettendo di comparare direttamente le differenti comunità.
               </p>
             </div>
           </div>
@@ -238,7 +239,6 @@ const processEmotionData = (emotionCounts) => {
       </div>
     </div>
   );
-
 }
 
 export default TrendsEmotion;
