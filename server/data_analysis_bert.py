@@ -1,6 +1,6 @@
-from RedditAnalysis.server.data_analysis.scraping_reddit_data import setup_logging, connect_to_mongo
+from scraping_reddit_data import setup_logging, connect_to_mongo
 from dotenv import load_dotenv
-from RedditAnalysis.server.data_analysis.ita_BERT import classify_sentiment
+from ita_BERT import classify_sentiment
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import logging
 

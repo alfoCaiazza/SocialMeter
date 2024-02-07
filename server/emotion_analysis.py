@@ -1,6 +1,6 @@
-from RedditAnalysis.server.data_analysis.scraping_reddit_data import setup_logging, connect_to_mongo
+from scraping_reddit_data import setup_logging, connect_to_mongo
 from dotenv import load_dotenv
-from RedditAnalysis.server.data_analysis.feel_it_analizer import get_emotion
+from feel_it_analizer import get_emotion
 from feel_it import EmotionClassifier
 import logging
 

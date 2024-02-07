@@ -1,4 +1,4 @@
-from RedditAnalysis.server.data_analysis.scraping_reddit_data import connect_to_mongo
+from scraping_reddit_data import connect_to_mongo
 from dotenv import load_dotenv
 import pandas as pd
 
@@ -10,7 +10,7 @@ def startup(category, index, startDate, endDate):
     start_date = pd.to_datetime(startDate)
     end_date = pd.to_datetime(endDate)
 
-    collection = db['dataAnalysis']
+    collection = db['finalResult']
     query = {"category": category, "pub_date": {"$gte": start_date, "$lte": end_date}}
     cursor = collection.find(query)
 
