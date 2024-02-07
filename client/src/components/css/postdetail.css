@@ -62,3 +62,16 @@
         width: 100%; /* Rende il grafico responsive */
     }
 }
+
+/* styles.css */
+.arrow-button {
+    background-color: #f0f0f000; /* Colore di sfondo */
+    border: none; /* Bordo */
+    border-radius: 5px; /* Angoli arrotondati */
+    cursor: pointer; /* Cambia il cursore in una manina */
+    padding: 5px 10px; /* Spaziatura interna */
+    margin: 0 5px; /* Margine esterno */
+    font-size: 16px; /* Dimensione del testo*/
+    color: #0f394c;
+}
+

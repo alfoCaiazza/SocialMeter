@@ -8,7 +8,7 @@ const SentimentSummaryCard = ({ positivity, negativity, neutrality, dominantSent
 
   return (
     <div className="sentiment-summary-card">
-      <div className="sentiment-header">SENTIMENTO POST</div>
+      <div className="sentiment-header">SENTIMENTO POST<br/>BERT</div>
       <div className="sentiment-value">{dominantSentiment}</div>
       <SentimentSummaryBar
         positivity={positivity}

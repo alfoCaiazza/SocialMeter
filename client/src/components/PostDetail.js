@@ -10,6 +10,7 @@ import EmotionCommunityCard from './EmotionCommunityCard';
 import PostEmotionCard from './PostEmotionCard';
 import TotalRedditorsCard from './TotalRedditorsCard';
 import Comment from './Comment';
+import FeelItCard from './FeelItCard';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -18,6 +19,8 @@ const PostDetail = () => {
   const [uniqueUsers, setUniqueUsers] = useState(0); 
   const [selectedComments, setSelectedComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
+  const [activeComponent, setActiveComponent] = useState('summary');
+
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -130,7 +133,10 @@ const PostDetail = () => {
   
     setSelectedComments(filteredComments);
     setLoadingComments(false);
-  };  
+  };
+
+  const showSummary = () => setActiveComponent('summary');
+  const showEmotion = () => setActiveComponent('emotion');
 
   return (
     <div className='container-fluid d-flex flex-column align-items-center min-vh-100 p-0' style={{marginBottom: '5%'}}>
@@ -159,15 +165,21 @@ const PostDetail = () => {
             <TotalRedditorsCard number={uniqueUsers} />
           </div>
           <div className='col-md-4 mb-4'>
-            <SentimentSummaryCard
-              positivity={post.positivity}
-              negativity={post.negativity}
-              neutrality={post.neutrality}
-              dominantSentiment={post.sentiment}
-            />
+            <button onClick={showSummary} className="arrow-button"><i class="bi bi-arrow-left"></i></button>
+            {activeComponent === 'summary' ? (
+              <SentimentSummaryCard
+                positivity={post.positivity}
+                negativity={post.negativity}
+                neutrality={post.neutrality}
+                dominantSentiment={post.sentiment}
+              />
+            ) : (
+              <FeelItCard sentiment={post.sentiment_feel_it}/>
+            )}
+            <button onClick={showEmotion}className="arrow-button"><i class="bi bi-arrow-right"></i></button>
           </div>
           <div className='col-md-4 mb-4'>
-            <PostEmotionCard emotion={post.emotion} sentiment={post.sentiment_feel_it} />
+            <PostEmotionCard emotion={post.emotion}/>
           </div>
           <div className='col-md-4 mb-4'>
             <ScoreCard upvotes={post.estimated_upvotes} downvotes={post.estimated_downvotes} />
