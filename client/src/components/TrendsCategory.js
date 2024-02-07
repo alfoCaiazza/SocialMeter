@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const TrendsCategory = () => {
   const links = [
-    { to: '/trends', label: 'Sessismo', category: 'woman_condition', icon: 'bi-gender-ambiguous'},
-    { to: '/trends', label: 'Razzismo', category: 'racism',  icon: 'bi bi-people-fill'},
-    { to: '/trends', label: 'Cambiamento Climatico', category: 'climate_change',icon: 'bi bi-thermometer-sun'},
+    { to: '/trends_index', label: 'Sessismo', category: 'woman_condition', icon: 'bi-gender-ambiguous'},
+    { to: '/trends_index', label: 'Razzismo', category: 'racism',  icon: 'bi bi-people-fill'},
+    { to: '/trends_index', label: 'Cambiamento Climatico', category: 'climate_change',icon: 'bi bi-thermometer-sun'},
   ];
 
   return (

@@ -5,7 +5,7 @@ import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
 import { LineChart, BarChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip } from 'recharts';
 
 
-const Trends = () => {
+const TrendsEmotion = () => {
   const [data, setData] = useState([]);
   const [trendsOverTime, setTrendsOverTime] = useState([]);
   const { category } = useParams();
@@ -165,76 +165,7 @@ const processEmotionData = (emotionCounts) => {
           <strong>Analizza le Tendenze della Tematica {getCategoryString(category)}</strong>
         </h2>
       </div>
-
-      {/* Sentiment Section */}
-      <div className='trends-section'>
-        <h3 className='text-center mt-4'>Distribuzione del Sentimento</h3>
-        <div className='charts-container'>
-          <div style={{ width: '100%', marginTop: '5%', marginLeft: '15%' }}>
-            <LineChart width={800} height={250} data={trendsOverTime} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <RechartsTooltip content={renderCustomTooltip}/>
-              <Legend />
-              <Line type="monotone" dataKey="Positivo" stroke="#3bb273" name="Post Positivi"/>
-              <Line type="monotone" dataKey="Negativo" stroke="#ff5154" name="Post Negativi"/>
-              <Line type="monotone" dataKey="Neutrale" stroke="#ffbf00" name="Post Neutrali"/>
-            </LineChart>
-          </div>
-          <div style={{ padding: '20px' }}>
-            <p className="chart-description">
-              Il grafico a linee mostra l'evoluzione dei sentimenti nel tempo, evidenziando come sentimenti positivi, negativi e neutri si siano alternati nel periodo considerato.
-            </p>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1%', marginLeft: '5%', marginRight: '5%'}}>
-            <div style={{ flex: 1, marginRight: '2%' }}>
-              <PieChart width={250} height={250}>
-                <Pie 
-                  data={sentimentData} 
-                  dataKey="value" 
-                  nameKey="name" 
-                  cx="50%" 
-                  cy="50%" 
-                  outerRadius={90}>
-                    {sentimentData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={SENTIMENT_COLORS[index % SENTIMENT_COLORS.length]} />
-                    ))}
-                </Pie>
-                <Tooltip content={renderCustomTooltip} />
-                <Legend />
-              </PieChart>
-            </div>
-            <div style={{ padding: '20px', width: '100%'}}>
-              <p className="chart-description">
-                Il grafico a torta rappresenta la distribuzione percentuale del sentimento, offrendo una visione immediata della prevalenza di ciascuna categoria.
-              </p>
-            </div>
-            <div style={{ flex: 1 }}>
-              <BarChart
-                width={500}
-                height={250}
-                data={subredditData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <RechartsTooltip content={renderCustomTooltip}/>
-                  <Legend />
-                  <Bar dataKey="Positivo" stackId="a" fill="#3bb273" name="Post Positivi" />
-                  <Bar dataKey="Neutrale" stackId="a" fill="#ffbf00" name="Post Neutrali" />
-                  <Bar dataKey="Negativo" stackId="a" fill="#ff5154" name="Post Negativi" />
-              </BarChart>
-            </div>
-            <div style={{ padding: '20px' }}>
-              <p className="chart-description">
-                Il grafico a barre mostra la distribuzione dei sentimenti nei diversi subreddit, permettendo di comparare direttamente le differenti comunità.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
       {/* Emotions Section */}
       <div className='trends-section'>
         <h3 className='text-center mt-4'>Distribuzione delle Emozioni</h3>
@@ -310,7 +241,4 @@ const processEmotionData = (emotionCounts) => {
 
 }
 
-export default Trends;
-
-
-
+export default TrendsEmotion;

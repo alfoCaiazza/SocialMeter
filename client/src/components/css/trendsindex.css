@@ -1,0 +1,44 @@
+.card {
+    border: none;
+    border-radius: 60px; /* Bordo arrotondato */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombreggiatura */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transizione fluida per hover */
+    overflow: hidden; /* Assicura che tutto resti all'interno dei bordi arrotondati */
+    background-color: #ffffff00;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px); /* Sposta leggermente verso l'alto al passaggio del mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombreggiatura più evidente al passaggio del mouse */
+  }
+  
+  .card-img-top {
+    font-size: 100px; /* Dimensione dell'icona */
+    color: #49b5e7; /* Colore dell'icona */
+    padding-top: 20px; /* Spazio sopra l'icona */
+  }
+  
+  .card-body {
+    padding: 20px; /* Spazio intorno al contenuto della card */
+    background-color: rgba(23, 23, 23, 0);
+  }
+  
+  .card-title {
+    color: #171717; /* Colore del titolo */
+    font-size: 1.5rem; /* Dimensione del titolo */
+    margin-bottom: 0; /* Rimuove lo spazio extra sotto il titolo */
+    text-align: center; /* Centra il titolo */
+  }
+  
+  .btn-primary {
+    background-color: transparent; /* Rendi lo sfondo del bottone trasparente */
+    border: none; /* Rimuovi il bordo del bottone */
+    padding: 0; /* Rimuovi il padding del bottone per evitare spazi extra intorno alle card */
+    display: block; /* Assicura che il link occupi lo spazio della card */
+  }
+  
+  .btn-primary:hover {
+    background-color: transparent; /* Mantieni lo sfondo del bottone trasparente anche al hover */
+    box-shadow: none; /* Nessuna ombreggiatura al hover del bottone */
+  }
+  

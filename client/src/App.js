@@ -10,9 +10,11 @@ import TrendsCategory from './components/TrendsCategory';
 import HotTopicsCategory from './components/HotTopicsCategory';
 import PostDetail from './components/PostDetail';
 import EngagementProfile from './components/EngagementProfile';
-import Trends from './components/Trends';
+import TrendsSentiment from './components/TrendsSentiment';
+import TrendsEmotion from './components/TrendsEmotion';
 import FilteredPostsCategory from './components/FilteredPostsCategory';
 import AboutUs from './components/AboutUs';
+import TrendsIndex from './components/TrendsIndex';
 import './components/css/homepage.css';
 import './components/css/aboutus.css';
 import './components/css/features.css';
@@ -38,6 +40,7 @@ import './components/css/postemotioncard.css';
 import './components/css/sentimentbar.css';
 import './components/css/sentimentcard.css';
 import './components/css/categorylist.css';
+import './components/css/trendsindex.css';
 
 function App() {
   return (
@@ -53,7 +56,9 @@ function App() {
         <Route path="/hot_topics_category" element={<HotTopicsCategory />} />
         <Route path="/hot_topics/:category" element={<HotTopics />} />
         <Route path="/trends_category" element={<TrendsCategory />} />
-        <Route path="/trends/:category" element={<Trends />} />
+        <Route path="/trends_index/:category" element={<TrendsIndex />} />
+        <Route path="/trends_sentiment/:category" element={<TrendsSentiment />} />
+        <Route path="/trends_emotions/:category" element={<TrendsEmotion />} />
         <Route path="/engagement_profile" element={<EngagementProfile />} />
       </Routes>
       <Footer />
