@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from scraping_reddit_data import connect_to_mongo
+from RedditAnalysis.server.data_analysis.scraping_reddit_data import connect_to_mongo
 
 def get_posts(category):
     load_dotenv()

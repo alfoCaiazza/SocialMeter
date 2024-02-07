@@ -1,4 +1,4 @@
-from scraping_reddit_data import connect_to_mongo
+from RedditAnalysis.server.data_analysis.scraping_reddit_data import connect_to_mongo
 from dotenv import load_dotenv
 import pandas as pd
 
