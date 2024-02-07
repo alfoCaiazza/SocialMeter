@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import hero from './images/amico.png'
+import hero from './images/homepage.gif'
 const HomePage = () => {
   return (
       <section id="hero" class="d-flex align-items-center" style={{marginBottom: '10%'}}>
