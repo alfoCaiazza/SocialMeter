@@ -181,7 +181,7 @@ const processEmotionData = (emotionCounts) => {
             </LineChart>
         </div>
         <p className='line-chart-description'>
-          Il grafico a linee mostra l'andamento del sentimento negli anni. Spostando il cursore sopra il periodo interessato, verranno visualizzati il numero di post associato a ciascuna categoria di sentimento.
+          Il grafico a linee mostra l'andamento delle emozioni negli anni. Spostando il cursore sopra il periodo interessato, verranno visualizzati il numero di post associato a ciascuna categoria emotiva.
         </p>
       </div>
 
@@ -189,15 +189,15 @@ const processEmotionData = (emotionCounts) => {
         <h3 className='text-center mt-4' style={{width: '100%'}}>In che modo si distribuiscono i post in base al sentimento?</h3>
         <div className='charts-container' style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '400px'}}>
           {/* Pie Chart Container */}
-          <div style={{flex: '1 1 auto', maxWidth: '300px'}}>
-            <PieChart width={250} height={250}>
+          <div style={{flex: '1 1 auto', maxWidth: '500px'}}>
+            <PieChart width={500} height={300}>
                 <Pie 
                   data={emotionData} 
                   dataKey="value" 
                   nameKey="name" 
                   cx="50%" 
                   cy="50%" 
-                  outerRadius={90}>
+                  outerRadius={120}>
                     {emotionData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={EMOTION_COLOR[index % EMOTION_COLOR.length]} />
                     ))}
@@ -207,16 +207,16 @@ const processEmotionData = (emotionCounts) => {
             </PieChart>
             <div style={{padding: '20px', textAlign: 'center'}}>
               <p className="line-chart-description">
-                Il grafico a torta rappresenta la distribuzione percentuale del sentimento, offrendo una visione immediata della prevalenza di ciascuna categoria.
+                Il grafico a torta rappresenta la distribuzione percentuale delle emozioni, offrendo una visione immediata della prevalenza di ciascuna categoria.
               </p>
             </div>
           </div>
 
           {/* Bar Chart Container */}
-          <div style={{flex: '1 1 auto', maxWidth: '600px'}}>
+          <div style={{flex: '1 1 auto', maxWidth: '700px'}}>
             <BarChart
-                width={500}
-                height={250}
+                width={700}
+                height={280}
                 data={subredditData}
                 margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -231,7 +231,7 @@ const processEmotionData = (emotionCounts) => {
             </BarChart>
             <div style={{padding: '20px', textAlign: 'center'}}>
               <p className="line-chart-description">
-                Il grafico a barre mostra la distribuzione dei sentimenti nelle diverse subreddit, permettendo di comparare direttamente le differenti comunità.
+                Il grafico a barre mostra la distribuzione delle emozioni nelle diverse subreddit, permettendo di comparare direttamente le differenti comunità.
               </p>
             </div>
           </div>

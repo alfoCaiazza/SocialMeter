@@ -184,12 +184,12 @@ const processEmotionData = (emotionCounts) => {
         </p>
       </div>
 
-      <div className='parent-container' style={{marginTop: '7%', marginBottom: '15%', display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
+      <div className='parent-container' style={{marginTop: '4%', marginBottom: '15%', display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}>
         <h3 className='text-center mt-4' style={{width: '100%'}}>In che modo si distribuiscono i post in base al sentimento?</h3>
         <div className='charts-container' style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '400px'}}>
           {/* Pie Chart Container */}
-          <div style={{flex: '1 1 auto', maxWidth: '300px'}}>
-            <PieChart width={300} height={300}>
+          <div style={{flex: '1 1 auto', maxWidth: '500px'}}>
+            <PieChart width={500} height={300}>
               <Pie 
                 data={sentimentData} 
                 dataKey="value" 
@@ -212,10 +212,10 @@ const processEmotionData = (emotionCounts) => {
           </div>
 
           {/* Bar Chart Container */}
-          <div style={{flex: '1 1 auto', maxWidth: '600px'}}>
+          <div style={{flex: '1 1 auto', maxWidth: '700px'}}>
             <BarChart
-              width={600}
-              height={300}
+              width={700}
+              height={280}
               data={subredditData}
               margin={{top: 20, right: 30, left: 20, bottom: 5}}>
                 <CartesianGrid strokeDasharray="3 3" />
